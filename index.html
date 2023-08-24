@@ -14,17 +14,6 @@
       <script type="text/javascript" src="gestionDIV.js"> </script>
     </head>
     <body>
-    <?php
-        header("Pragma: no-cache");
-        $file=@fopen("count.txt", "r+");
-        fscanf($file, "%d", $count);
-        $count++;
-        rewind($file);
-        fputs($file, $count);
-        fclose($file);
-         // On affiche le nombre de visiteurs
-        echo "document.write(\"<a href='http://www.votre_site.com'>Cette page a été vue ".$count." fois</a>\");";
-    ?>
         <header id="entete_page1">
             <h1>diagramm Gantt</h1>
         </header>
