@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- 21-08-2023 -->
+<!-- V1******** -->
+<meta charset = "utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang = "fr">
+    <head>
+      <title>Diagramm LLA</title>
+      <link rel="stylesheet" media="screen" href="canevas.css" type="text/css">
+      <script type="text/javascript" src="canevasV2.js"> </script>
+      <script type="text/javascript" src="diagram.js"> </script>
+      <script type="text/javascript" src="gestionIF.js"> </script>
+      <script type="text/javascript" src="gestionDB.js"> </script>
+      <script type="text/javascript" src="gestionDIV.js"> </script>
+    </head>
+    <body>
+    <?php
+        header("Pragma: no-cache");
+        $file=@fopen("count.txt", "r+");
+        fscanf($file, "%d", $count);
+        $count++;
+        rewind($file);
+        fputs($file, $count);
+        fclose($file);
+         // On affiche le nombre de visiteurs
+        echo "document.write(\"<a href='http://www.votre_site.com'>Cette page a été vue ".$count." fois</a>\");";
+    ?>
+        <header id="entete_page1">
+            <h1>diagramm Gantt</h1>
+        </header>
+        <p> <label>today's date <input type="text" id="date_jour" value="" size="14"></label> </p>
+        <p> <label>Project start <input type="date" id="start_date_project" name="trip-start" value="2023-06-29" min="01-01-2023" max="31-12-2043" ></label> </p>
+        <p> <button id="newproject" >new project</button> </label> </p>
+        <p> <label>Name project <input type="text" id="file_name_db" value="" size="14"></label> </p>
+        <p>
+            <button id="write_db"   >save datas</button>
+            <button id="read_db"    >read datas</button>
+            <button id="display_datas"  >display datas</button>
+        </p>
+        <p>
+            <input type="checkbox" id="Choicerows" name="contact" value="" checked>
+            <label for="Choicerows">row display</label>
+            <input type="checkbox" id="Choicecol" name="contact" value="" checked>
+            <label for="Choicecol">column display</label>
+        </p>
+        <p><label>width name task <input type="number" id="w_task" value="245" size="5"></label>
+           <label>letter size task<input type="number" id="l_size" value="14" size="5"></label></p>
+        <p><label>gap columns <input type="number" id="g_columns"  value="17"  size="5"></label>
+           <label>gap rows <input type="number" id="g_rows" value="27" size="5"></label></p>
+
+        <!-- ========= barre de progression =========== -->
+        <div id="pwidget">
+        <div id="progressbar">
+            <div id="indicator"></div>
+        </div>
+        <div id="progressnum">0</div>
+        <!--<div id="dialogoverlay"></div> -->
+        <div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>
+        </div>
+        <button id="essai_task" >About </button>
+        <div class="dessin_lla">
+            <img id="image_L1" src="image_lla_V1.PNG" alt="dessin LLA" >
+        </div>
+        <!--<p><label>message 1<input type="text" id="message1" value="" size="25"> </label></p> -->
+        <!--<p><label>message 2<input type="text" id="message2" value="" size="25"> </label></p> -->
+        <canvas class="diagramme" id = "schema" height = "500" width = "1500" style="border:1px solid">
+            <p>Votre navigateur ne supporte pas la balise canvas</p>
+        </canvas>
+        <!-- ========= creation page datas =========== -->
+          <iframe title="myFrame1" id="page2" src="canevas2.html" name="iframe_datas" hidden="hidden"></iframe>
+     </body>
+</html>
