@@ -29,10 +29,10 @@ p {	text-align:left; color:black; line-height:60%;}
 #display_datas:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 #essai_task {margin: 10px 0px 0px 100px;width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #essai_task:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#w_task {width: 35px; height: 20px; margin: 0px 0px 0px 0px; border: 2px solid #9C9898; font-size:12px;}
-#l_size {width: 35px; height: 20px; margin: 0px 0px 0px 10px; border: 2px solid #9C9898; font-size:12px;}
-#g_columns {width: 35px; height: 20px; margin: 0px 0px 0px 20px; border: 2px solid #9C9898; font-size:12px;}
-#g_rows {width: 35px; height: 20px; margin: 0px 0px 0px 35px; border: 2px solid #9C9898; font-size:12px;}
+#w_task {width: 45px; height: 20px; margin: 0px 0px 0px 0px; border: 2px solid #9C9898; font-size:12px;}
+#l_size {width: 45px; height: 20px; margin: 0px 0px 0px 15px; border: 2px solid #9C9898; font-size:12px;}
+#g_columns {width: 45px; height: 20px; margin: 0px 0px 0px 20px; border: 2px solid #9C9898; font-size:12px;}
+#g_rows {width: 45px; height: 20px; margin: 0px 0px 0px 40px; border: 2px solid #9C9898; font-size:12px;}
 /* #message1 {width: 200px; height: 20px; margin: 0px 0px 0px 5px; border: 2px solid #9C9898; font-size:12px;} */
 /* #message2 {width: 200px; height: 20px; margin: 0px 0px 0px 5px; border: 2px solid #9C9898; font-size:12px;} */
 
@@ -60,7 +60,7 @@ p {	text-align:left; color:black; line-height:60%;}
 #T7{ width: 50px; margin: 0px 0px 0px 100px;} /* main task */
 #bouton_Iframe{ width: 100px; height: 20px; margin: 40px 0px 0px 0px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;}
 #SET_start_tasks{ width: 150px; height: 20px; margin: 0px 0px 0px 950px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;}
-.dessin_lla img {display: block; margin: 0 auto; height : 50px; width : 50px; position : absolute; top : 445px; left : 50px;}
+.dessin_lla img {display: block; margin: 0 auto; height : 50px; width : 50px; position : absolute; top : 525px; left : 50px;}
 
 input:enabled {color: black;}
 input:disabled {color: black;background-color: lightgray}
