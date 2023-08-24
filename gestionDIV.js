@@ -63,8 +63,8 @@ function affiche_progression(){
 
 function affiche_donnes_diverses() { /* fonction qui affiche des donnes diverses pour debug */
     let loc=location.origin
-    let texte_lla="Freelance EXPERTISE :      PYTHON, HTML, CSS, Javascript, PHP, RobotFrameWork, IndexedDB  \\ développement et maintenance soft"
-    CustomAlert(texte_lla,"V1.0 - Contact : 2l.informatique.automatisme@gmail.com")
+    let texte_lla="Freelance EXPERTISE :      Python, HTML, CSS, Javascript, PHP, RobotFrameWork, IndexedDB  \\ développement et maintenance soft"
+    CustomAlert(texte_lla,"V1.0 - Contact : luc.lassalle@sfr.fr")
     //alert(array_tasks_display_save);
 }
 
