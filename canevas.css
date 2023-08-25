@@ -60,7 +60,7 @@ p {	text-align:left; color:black; line-height:60%;}
 #T7{ width: 50px; margin: 0px 0px 0px 100px;} /* main task */
 #bouton_Iframe{ width: 100px; height: 20px; margin: 40px 0px 0px 0px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;}
 #SET_start_tasks{ width: 150px; height: 20px; margin: 0px 0px 0px 950px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;}
-.dessin_lla img {display: block; margin: 0 auto; height : 50px; width : 50px; position : absolute; top : 525px; left : 50px;}
+.dessin_lla img {display: block; margin: 0 auto; height : 50px; width : 50px; position : absolute; top : 65px; left : 20px;}
 
 input:enabled {color: black;}
 input:disabled {color: black;background-color: lightgray}
