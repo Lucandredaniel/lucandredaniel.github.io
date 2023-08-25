@@ -178,7 +178,7 @@ function insert_task(){
     let compteur_index=0;
     let int_array_tasks=[];
     index_task=(this.id.match(/\d+/g).join(''));
-    var_int=index_task-1;
+    let var_int=index_task-1;
     /* recherche les taches aval et amont pour savoir si elles sont indexée (upstream/downstream) avec la tache en cours */
     for (let i = 0; i < (array_tasks.length); i++) {
         if (array_tasks[i][7]>var_int) {
@@ -238,6 +238,21 @@ function delete_task(){
     if (var_int==array_tasks.length-1){
         int_array_tasks=array_tasks.pop();
     } else {
+        /* recherche les taches aval et amont pour savoir si elles sont indexée (upstream/downstream) avec la tache en cours */
+        for (let i = 0; i < (array_tasks.length); i++) {
+            if (array_tasks[i][7]==var_int+1) {
+                array_tasks[i][7]=0;
+            }else { if (array_tasks[i][7]>var_int+1){
+                 array_tasks[i][7]=array_tasks[i][7]-1;
+                }
+            }
+            if (array_tasks[i][5]==var_int+1){
+                array_tasks[i][5]=0;
+            }else { if (array_tasks[i][5]>var_int+1){
+                 array_tasks[i][5]=array_tasks[i][5]-1;
+                }
+            }
+        }
         for (let i = 0; i < array_tasks.length; i++) {
             int_array_tasks[compteur_index]=[];
             if (i!=var_int) {
@@ -365,6 +380,7 @@ function affect_donnees_display(inc) {
         variable1.checked=true;
     }
 }
+/* ========= rajout d'une tache en fin de Iframe =========*/
 function rajout_one_task() {
     if (array_tasks.length <number_tasks_max) {
         array_tasks.push([]); /* ajout d'une tache  */
@@ -374,12 +390,14 @@ function rajout_one_task() {
         /* initialisation de la tache */
         if (array_tasks.length>1){
             array_tasks[array_tasks.length-2][5]=array_tasks.length;
-            array_tasks[array_tasks.length-1][1]=array_tasks[array_tasks.length-2][1]+array_tasks[array_tasks.length-2][2];
+            array_tasks[array_tasks.length-1][1]=array_tasks[array_tasks.length-2][1]+array_tasks[array_tasks.length-2][2]+array_tasks[array_tasks.length-2][3];
         }
         let in_indice=array_tasks.length;
         display_one_task(in_indice);
-        affect_donnees_display(in_indice);
+        affect_donnees_display(in_indice-1); /* affecte la tache précédente */
+        affect_donnees_display(in_indice); /* affecte la tache rajoutée */
         recopy_array_2D();
+
     } else { CustomAlert("too much task","Definition of tasks")}
 }
 function display_one_task(int_indice) {
