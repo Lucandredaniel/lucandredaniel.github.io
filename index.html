@@ -15,8 +15,12 @@
     </head>
     <body>
         <header id="entete_page1">
-            <h1>diagramm Gantt</h1>
+            <h1>Gantt Chart</h1>
         </header>
+        <button id="essai_task" >About </button>
+        <div class="dessin_lla">
+            <img id="image_L1" src="image_lla_V1.PNG" alt="dessin LLA" >
+        </div>
         <p> <label>today's date <input type="text" id="date_jour" value="" size="14"></label> </p>
         <p> <label>Project start <input type="date" id="start_date_project" name="trip-start" value="2023-06-29" min="01-01-2023" max="31-12-2043" ></label> </p>
         <p> <button id="newproject" >new project</button> </label> </p>
@@ -46,12 +50,9 @@
         <!--<div id="dialogoverlay"></div> -->
         <div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>
         </div>
-        <button id="essai_task" >About </button>
-        <div class="dessin_lla">
-            <img id="image_L1" src="image_lla_V1.PNG" alt="dessin LLA" >
-        </div>
-        <!--<p><label>message 1<input type="text" id="message1" value="" size="25"> </label></p> -->
-        <!--<p><label>message 2<input type="text" id="message2" value="" size="25"> </label></p> -->
+
+        <label>message 1<input type="text" id="message1" value="" size="25"> </label></p>
+        <label>message 2<input type="text" id="message2" value="" size="25"> </label></p>
         <canvas class="diagramme" id = "schema" height = "500" width = "1500" style="border:1px solid">
             <p>Votre navigateur ne supporte pas la balise canvas</p>
         </canvas>
