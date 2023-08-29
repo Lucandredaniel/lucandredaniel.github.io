@@ -229,6 +229,28 @@ function draw_liaison_task_down(graphe,drawing_area){
                 graphe.stroke(); /* affiche la ligne */
             }
         }
+        /* verifie si tache principale . Si oui alors liaison avec la tache downstream (plus basse) */
+        if (array_tasks_display[i][6]==1){
+            if (i+1<array_tasks_display.length){ /* verifie si la tache existe et donc inferieure a la longueur de la liste */
+                message("pass",i)
+                downstream_task=i+1;
+                deb_column_task_1 = (array_tasks_display[i][1]*space_column);
+                deb_column_task_2 = (array_tasks_display[downstream_task][1]*space_column);
+                pos_line_task_1=start_line+((i+1)*space_between_line);
+                pos_line_task_2=start_line+((downstream_task+1)*space_between_line);
+                //graphe.beginPath();
+                graphe.lineCap='square';
+                graphe.moveTo(deb_column_task_1+start_column, pos_line_task_1); /* trace <-- */
+                graphe.lineTo(deb_column_task_1+start_column-(space_column/4), pos_line_task_1);
+                graphe.moveTo(deb_column_task_1+start_column-(space_column/4), pos_line_task_1); /* trace | */
+                graphe.lineTo(deb_column_task_1+start_column-(space_column/4), pos_line_task_2);
+                graphe.moveTo(deb_column_task_2+start_column-(space_column/4), pos_line_task_2); /* trace --> */
+                graphe.lineTo(deb_column_task_2+start_column, pos_line_task_2);
+                graphe.strokeStyle= '#000000'; //Nuance de rouge
+                graphe.lineWidth= 1;
+                graphe.stroke(); /* affiche la ligne */
+            }
+        }
     }
 }
 /* ---- */
@@ -332,7 +354,7 @@ function writing_times (graphe,drawing_area,type_time){
     let aujourdhui = new Date();
     let account_day=0
     let nbr_m_second = 86400000 /* nbr de seconde en 1 journée */
-    /* calcul date de depart en fonctiond de l'increment de déplacement du canvas */
+    /* calcul date de depart en fonction de l'increment de déplacement du canvas */
     if (int_increment>0){
         let start_int=start_project.getTime()
         start_int=start_int+(int_increment*nbr_m_second);
@@ -344,6 +366,7 @@ function writing_times (graphe,drawing_area,type_time){
     date_start=start_project;
     start_day=date_start.getTime()
     /* display month */
+    let memo_year=-1;
     let memo_month=-1;
     let memo_week=-1;
     let interval_month=0;
@@ -361,6 +384,7 @@ function writing_times (graphe,drawing_area,type_time){
         date_start_y = date_start.getFullYear();
         date_start_w = recupere_num_semaine(date_start);
         inter_space = (i*space_column)+start_column
+        /* ecriture du mois */
         if (date_start_m!=memo_month){
             interval_space=interval_month+((inter_space-interval_month)/2)
             if (memo_month!=-1){
@@ -368,7 +392,11 @@ function writing_times (graphe,drawing_area,type_time){
                 graphe.globalAlpha = 1;
                 graphe.fillStyle = "black";
                 graphe.font = 'bold 14px serif';
-                texte_m="M"+String(memo_month)
+                if (memo_month<12) {
+                    texte_m="M"+String(memo_month)+"  / "+String(date_start_y)
+                }else {
+                    texte_m="M"+String(memo_month)+"  / "+String(date_start_y-1)
+                }
                 graphe.fillText(texte_m,interval_space,10 );
                 /* trace une ligne sur le mois */
                 if (color_month == "#0ec9e6") {

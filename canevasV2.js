@@ -329,12 +329,18 @@ function check_datas_downstream(){
         /* verifie si tache principal (annule les liaions filles et additionne le delai total de chaque tache fille */
         if (array_tasks_display_save[i][6]==1){
             j=i+1;
+            array_tasks_display_save[i][2]=0;
             array_tasks_display_save[i][3]=0;
             array_tasks_display_save[i][4]=0;
             array_tasks_display_save[i][5]=0;
+            /* le debut de la tache devient le debut de la tache suivante (1ere tache de la tache principale) */
+            if (i<array_tasks_display_save.length-1) {
+                array_tasks_display_save[i][1]=array_tasks_display_save[i+1][1];
+                fin_tache_principale_precedent=array_tasks_display_save[i][1];
+            }
             while (j < (array_tasks_display_save.length)){
                 if (array_tasks_display_save[j][6]==1){
-                    j=number_tasks_max;
+                    j=number_tasks_max+1;
                     /* trouvé :  autre tache principale */
                 }
                 else {
@@ -370,6 +376,9 @@ function set_tasks(){
     }
     for (let i = 0; i < (array_tasks.length); i++) {
         array_tasks[i][1]= array_tasks_display_save[i][1]-array_tasks_display_save[i][3];
+        if (array_tasks_display_save[i][6]==1){
+            array_tasks[i][2]=0;
+        }
     }
     reafecte_donnees();
 }

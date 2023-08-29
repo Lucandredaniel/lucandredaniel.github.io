@@ -229,8 +229,10 @@ function fermeture_db() {
 
 function write_datas() {
     if(!onload_donnees_base){
-        save_donnees_base=true;
-        etape_write=0;
+        if (!save_donnees_base){ /* attente si sauvegarde deja en cours */
+            save_donnees_base=true;
+            etape_write=0;
+        }
     }
 }
 
@@ -301,8 +303,10 @@ function onwrite_datas() {
 
 function read_datas() {
     if(!save_donnees_base){
-        onload_donnees_base= true;
-        etape_write=0;
+        if (!onload_donnees_base){ /* verifie si chargemnt non en cours */
+            onload_donnees_base= true;
+            etape_write=0;
+        }
     }
 }
 
