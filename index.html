@@ -12,34 +12,35 @@
       <script type="text/javascript" src="gestionIF.js"> </script>
       <script type="text/javascript" src="gestionDB.js"> </script>
       <script type="text/javascript" src="gestionDIV.js"> </script>
+      <script type="text/javascript" src="gestionLangue.js"> </script>
     </head>
     <body>
-        <header id="entete_page1">
-            <h1>Gantt Chart</h1>
+        <header id="entete_page1" class="entete">
+            <h1 >Gantt Chart</h1>
         </header>
         <button id="essai_task" >About </button>
         <div class="dessin_lla">
             <img id="image_L1" src="image_lla_V1.PNG" alt="dessin LLA" >
         </div>
-        <p> <label>today's date <input type="text" id="date_jour" value="" size="14"></label> </p>
-        <p> <label>Project start <input type="date" id="start_date_project" name="trip-start" value="2023-06-29" min="01-01-2023" max="31-12-2043" ></label> </p>
-        <p> <button id="newproject" >new project</button> </label> </p>
-        <p> <label>Name project <input type="text" id="file_name_db" value="" size="14"></label> </p>
+        <p> <label id="text1" class="message">today's date </label> <input type="text" id="date_jour" value="" size="14"> </p>
+        <p> <label id="text2" class="message">Project start</label> <input type="date" id="start_date_project" name="trip-start" value="2023-06-29" min="01-01-2023" max="31-12-2043" > </p>
+        <p> <button id="newproject" >new project</button> </p>
+        <p> <label id="text3"  class="message">Name project  </label><input type="text" id="file_name_db" value="" size="14"> </p>
         <p>
-            <button id="write_db"   >save datas</button>
-            <button id="read_db"    >read datas</button>
-            <button id="display_datas"  >display datas</button>
+            <button id="write_db"   >save datas in DB</button>
+            <button id="read_db"    >read datas in DB</button>
+            <button id="display_datas">display datas on screen</button>
         </p>
         <p>
             <input type="checkbox" id="Choicerows" name="contact" value="" checked>
-            <label for="Choicerows">row display</label>
+            <label id="text4" class="message" for="Choicerows">row display</label>
             <input type="checkbox" id="Choicecol" name="contact" value="" checked>
-            <label for="Choicecol">column display</label>
+            <label id="text5" class="message for="Choicecol">column display</label>
         </p>
-        <p><label> width name task <input type="number" id="w_task" value="245" size="5"></label></p>
-        <p> <label>letter size task<input type="number" id="l_size" value="14" size="5"></label></p>
-        <p><label>gap columns <input type="number" id="g_columns"  value="17"  size="5"></label></p>
-        <p> <label>gap rows <input type="number" id="g_rows" value="27" size="5"></label></p>
+        <p> <label id="text6" class="message"> width name task </label><input type="number" id="w_task" value="245" size="5"></p>
+        <p> <label id="text7" class="message">letter size task </label><input type="number" id="l_size" value="14" size="5"></p>
+        <p> <label id="text8" class="message">gap columns </label><input type="number" id="g_columns"  value="17"  size="5"></p>
+        <p> <label id="text9" class="message">gap rows </label><input type="number" id="g_rows" value="27" size="5"></p>
 
         <!-- ========= barre de progression =========== -->
         <div id="pwidget">
@@ -50,9 +51,11 @@
         <!--<div id="dialogoverlay"></div> -->
         <div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>
         </div>
+        <div class="drapeaux_lla"> <img id="drapeau_F" src="D_francais.png" alt="Francais" ></div>
+        <div class="drapeaux_lla"> <img id="drapeau_A" src="D_anglais.png" alt="Anglais" ></div>
 
-        <label>message 1<input type="text" id="message1" value="" size="25"> </label></p>
-        <label>message 2<input type="text" id="message2" value="" size="25"> </label></p>
+        <label>message 1<input type="text" id="message1" value="" size="100"> </label></p>
+        <label>message 2<input type="text" id="message2" value="" size="100"> </label></p>
         <canvas class="diagramme" id = "schema" height = "500" width = "1500" style="border:1px solid">
             <p>Votre navigateur ne supporte pas la balise canvas</p>
         </canvas>
