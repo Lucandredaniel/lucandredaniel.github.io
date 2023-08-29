@@ -232,7 +232,6 @@ function draw_liaison_task_down(graphe,drawing_area){
         /* verifie si tache principale . Si oui alors liaison avec la tache downstream (plus basse) */
         if (array_tasks_display[i][6]==1){
             if (i+1<array_tasks_display.length){ /* verifie si la tache existe et donc inferieure a la longueur de la liste */
-                message("pass",i)
                 downstream_task=i+1;
                 deb_column_task_1 = (array_tasks_display[i][1]*space_column);
                 deb_column_task_2 = (array_tasks_display[downstream_task][1]*space_column);
@@ -419,7 +418,9 @@ function writing_times (graphe,drawing_area,type_time){
                 graphe.globalAlpha = 1;
                 graphe.fillStyle = "black";
                 graphe.font = 'bold 11px serif';
-                texte_w="W"+String(memo_week)
+                let entete_text="W";
+                if (langue==2){entete_text="S" }
+                texte_w=entete_text+String(memo_week)
                 graphe.fillText(texte_w,interval_space,25 );
                 /* trace une ligne sur la semaine */
                 if (color_week == "#0af25f") {

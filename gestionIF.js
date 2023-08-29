@@ -73,7 +73,7 @@ function affiche_datas_iframe() { /* affiche les donnees dans l Iframe */
         iframe_hidden=true;
         affiche_datas_effectue=false;
         let element_a_modifier=window.parent.document.getElementById("display_datas");
-        element_a_modifier.innerHTML="display datas"
+        element_a_modifier.innerHTML=array_langue[8][langue+2];
     }
     else {
         if (!deplace_iframe){
@@ -85,8 +85,11 @@ function affiche_datas_iframe() { /* affiche les donnees dans l Iframe */
             page2_top=550;
             iframe_hidden = document.getElementById("page2");
             iframe_hidden.removeAttribute("hidden");
+            document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").innerHTML=array_langue_iframe[5][langue];
+            document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").innerHTML=array_langue_iframe[6][langue];
+            document.getElementById("page2").contentWindow.document.getElementById("entete_page2").innerHTML=array_langue_iframe[0][langue];
             let element_a_modifier=window.parent.document.getElementById("display_datas");
-            element_a_modifier.innerHTML="hide datas"
+            element_a_modifier.innerHTML=array_langue[8][langue];
             /* initialisation donnees du canvas */
             init_donnees_affichage_canvas();
         }
@@ -398,7 +401,13 @@ function rajout_one_task() {
         affect_donnees_display(in_indice); /* affecte la tache rajoutée */
         recopy_array_2D();
 
-    } else { CustomAlert("too much task","Definition of tasks")}
+    } else {
+        if (langue=1) {
+            CustomAlert("too much task","Definition of tasks")
+        }else {
+            CustomAlert("trop de tache déclarée >49","Definition des taches")
+        }
+    }
 }
 function display_one_task(int_indice) {
     let indice=int_indice;
@@ -466,7 +475,7 @@ function display_one_task(int_indice) {
     idvar="label_downstream_task"+String(indice)+" ";
     variable1= document.createElement('label');
     variable1.setAttribute("id",idvar);
-    variable1.innerHTML = '- downstream task : ';
+    variable1.innerHTML = array_langue_iframe[2][langue];
     list.appendChild(variable1);
     idvar="downstream_task"+String(indice);
     variable2= document.createElement('input');
@@ -483,7 +492,7 @@ function display_one_task(int_indice) {
     idvar="label_upstream_task"+String(indice)+" ";
     variable1= document.createElement('label');
     variable1.setAttribute("id",idvar);
-    variable1.innerHTML = '- upstream task : ';
+    variable1.innerHTML = array_langue_iframe[3][langue];
     list.appendChild(variable1);
     idvar="upstream_task"+String(indice);
     variable2= document.createElement('input');
@@ -500,7 +509,7 @@ function display_one_task(int_indice) {
     idvar="label_milestone"+String(indice)+" ";
     variable1= document.createElement('label');
     variable1.setAttribute("id",idvar);
-    variable1.innerHTML = '- milestone : ';
+    variable1.innerHTML = array_langue_iframe[1][langue];
     list.appendChild(variable1);
     idvar="milestone"+String(indice);
     variable2= document.createElement('input');
@@ -512,7 +521,7 @@ function display_one_task(int_indice) {
     idvar="label_principal_task"+String(indice)+" ";
     variable1= document.createElement('label');
     variable1.setAttribute("id",idvar);
-    variable1.innerHTML = '- principal task : ';
+    variable1.innerHTML = array_langue_iframe[4][langue];
     list.appendChild(variable1);
     idvar="principal_task"+String(indice);
     variable2= document.createElement('input');

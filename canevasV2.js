@@ -152,6 +152,7 @@ let array_tasks_display_save=[]; /* pour sauvegarde de l'affichage */
 
 let etape=0;
 let etape_a_froid=0;
+let langue=1; /* choix de la langue de départ */
 
 function recopy_array_2D(){
     array_tasks_display_save=[]
@@ -461,6 +462,7 @@ function principal(){
            CustomAlert("take Browser Mozilla for full use","Choice of Browser")
         }
         init_exemple();
+        init_langue();
         first=false;
     }  else {
         if (demarrage_a_froid){
@@ -476,6 +478,7 @@ function principal(){
                 page2_width = iframe_page2.offsetWidth;
                 page2_height = iframe_page2.offsetHeight;
             }
+            affichage_langue();
         }
         if (!demarrage_a_froid) {
             /* apres demarrage à froid */
@@ -509,6 +512,8 @@ function principal(){
                 document.querySelector('button[id="display_datas"]').onclick=affiche_datas_iframe;
                 document.querySelector('button[id="essai_task"]').onclick=affiche_donnes_diverses;
                 document.querySelector('button[id="newproject"]').onclick=clear_project;
+                document.getElementById("drapeau_F").onclick=langue_Francaise;
+                document.getElementById("drapeau_A").onclick=langue_Anglaise;
                 document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").onclick=rajout_one_task;
                 document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").onclick=set_tasks;
                 /* lecture BP dans Iframe */
