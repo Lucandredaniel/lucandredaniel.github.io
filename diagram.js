@@ -632,7 +632,6 @@ function listen_mouse_on_canvas(graphe,drawing_area){
             /* modification start_column */
             int=Number(start_column)+5;
             document.getElementById("w_task").value=String(int);
-            message("start_column",int);
         }
     } else{ if (delta<0){
             delta=0;
@@ -644,7 +643,6 @@ function listen_mouse_on_canvas(graphe,drawing_area){
                 incm_letter_size=0
                 /* modification taille des taches */
                 let int=Number(letter_size)-1 // increment seulement de l'entier
-                message("letter_size",int);
                 document.getElementById("l_size").value=String(int);
                 /* modification taille des month + semaine + jours */
                 letter_size_month-=1;
@@ -653,7 +651,6 @@ function listen_mouse_on_canvas(graphe,drawing_area){
                 /* modification start_column */
                 int=Number(start_column)-5;
                 document.getElementById("w_task").value=String(int);
-                message("start_column",int);
             }
         }
     }

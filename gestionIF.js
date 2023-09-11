@@ -380,7 +380,6 @@ function reafecte_donnees(){
 }
 
 function affect_donnees_display(inc) {
-    message(inc,"essai");
     idvar="name_task"+String(inc);
     variable1 = document.getElementById("page2").contentWindow.document.getElementById(idvar)
     variable1.value = array_tasks[inc-1][0];

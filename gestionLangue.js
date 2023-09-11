@@ -151,7 +151,6 @@ function affichage_langue(){
         catch (err){
             let texte=" err = "+String(err);
             alert(texte+" : "+i + " ident : "+array_langue[i][0]+" : "+array_langue[i][langue]);
-            message(texte,i);
         }
     }
 }
