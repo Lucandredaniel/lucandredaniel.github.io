@@ -437,6 +437,9 @@ function affect_donnees_display(inc) {
 /* ========= rajout d'une tache en fin de Iframe =========*/
 function rajout_one_task() {
     if (array_tasks.length <number_tasks_max) {
+        /* demande affichage parametre au complet */
+        iframe_hidden=true;
+        affiche_datas_iframe();
         array_tasks.push([]); /* ajout d'une tache  */
         for (let i = 0; i < (number_datas_in_array); i++) {
             array_tasks[array_tasks.length-1].push(array_task_vide[i]) ;
