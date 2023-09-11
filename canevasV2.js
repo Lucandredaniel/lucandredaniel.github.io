@@ -383,6 +383,9 @@ function check_datas_downstream(){
 }
 
 function set_tasks(){
+    /* demande affichage parametre au complet */
+    iframe_hidden=true;
+    affiche_datas_iframe();
     if (changement_affichage_en_cours_graph){
         changement_affichage_en_cours_graph =false;
         recopy_array_2D()
