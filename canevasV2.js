@@ -493,6 +493,7 @@ function principal(){
         if (browserName != "Mozilla"){
            CustomAlert("take Browser Mozilla for full use","Choice of Browser")
         }
+        message("browser",browserName)
         init_exemple();
         init_langue();
         first=false;
