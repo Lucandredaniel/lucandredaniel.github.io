@@ -1,7 +1,7 @@
 /* ===== gestion Iframe =======*/
 /*============================*/
 
-function remove_datas_iframe(){
+function remove_datas_iframe(){ /* enleve l'affichage de toutes les taches */
     if (affichage_donnees_effectue) {
         for (let i = 0; i < (array_tasks.length); i++) {
             let in_indice=i+1;
@@ -81,17 +81,15 @@ function affiche_datas_iframe() { /* affiche les donnees dans l Iframe */
             element_a_bouger.style.position="absolute";
             element_a_bouger.style.left=String(300) + "px";
             element_a_bouger.style.top=String(550) + "px";
+            element_a_bouger.style.height=String(400) + "px";
             page2_left=300;
             page2_top=550;
             iframe_hidden = document.getElementById("page2");
             iframe_hidden.removeAttribute("hidden");
-            document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").innerHTML=array_langue_iframe[5][langue];
-            document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").innerHTML=array_langue_iframe[6][langue];
-            document.getElementById("page2").contentWindow.document.getElementById("entete_page2").innerHTML=array_langue_iframe[0][langue];
-            let element_a_modifier=window.parent.document.getElementById("display_datas");
-            element_a_modifier.innerHTML=array_langue[8][langue];
+            changement_langue_iframe();
             /* initialisation donnees du canvas */
             init_donnees_affichage_canvas();
+            affiche_une_seule_tache=false; /* affichage de toutes les taches */
         }
         iframe_hidden=false;
         affiche_datas();
@@ -109,12 +107,16 @@ function affiche_datas(){ /* affiche donneees des taches dans l'Iframe */
     initialisation_affichage_datas=false
     affiche_datas_effectue=true;
 }
-function lecture_datas(){ /* lecture de toutes les donnees tant que l'iframe est ouvert */
+function lecture_datas(numero_tache){ /* lecture de toutes les donnees tant que l'iframe est ouvert */
     if (affiche_datas_effectue) {
-        if (!initialisation_affichage_datas){
-            for (let i = 0; i < (array_tasks.length); i++) {
-                let in_indice=i+1;
-                read_one_task(in_indice);
+        if (numero_tache!=0){
+            read_one_task(numero_de_la_tache_a_afficher)
+        }else{
+            if (!initialisation_affichage_datas){
+                for (let i = 0; i < (array_tasks.length); i++) {
+                    let in_indice=i+1;
+                    read_one_task(in_indice);
+                }
             }
         }
         recopy_array_2D();
@@ -155,24 +157,34 @@ function read_one_task(int_indice){ /* lecture donnees dans l iframe */
     }
 }
 
-
 /* =============couleur des taches  ==================== */
-function lecture_bp_color(){
-    if (!iframe_hidden) {
-        for (let i = 0; i < (array_tasks.length); i++) {
-            idvar="bouton_couleur"+String(i+1);
-            var int_color=document.getElementById("page2").contentWindow.document.getElementById(idvar).value
-            array_tasks[i][9]=String(int_color);
+function lecture_bp_color(numero_tache){
+    if (numero_tache!=0){
+        idvar="bouton_couleur"+String(numero_tache);
+        var int_color=document.getElementById("page2").contentWindow.document.getElementById(idvar).value
+        array_tasks[numero_tache-1][9]=String(int_color);
+    }else{
+        if (!iframe_hidden) {
+            for (let i = 0; i < (array_tasks.length); i++) {
+                idvar="bouton_couleur"+String(i+1);
+                var int_color=document.getElementById("page2").contentWindow.document.getElementById(idvar).value
+                array_tasks[i][9]=String(int_color);
+            }
         }
     }
 }
 
 /* =============insert une tache  ==================== */
-function lecture_bp_insert(){
-    if (!iframe_hidden) {
-        for (let i = 0; i < (array_tasks.length); i++) {
-            idvar="bouton_insert"+String(i+1);
-            document.getElementById("page2").contentWindow.document.getElementById(idvar).onclick=insert_task;
+function lecture_bp_insert(numero_tache){
+    if (numero_tache!=0){
+        idvar="bouton_insert"+String(numero_tache);
+        document.getElementById("page2").contentWindow.document.getElementById(idvar).onclick=insert_task;
+    }else{
+        if (!iframe_hidden) {
+            for (let i = 0; i < (array_tasks.length); i++) {
+                idvar="bouton_insert"+String(i+1);
+                document.getElementById("page2").contentWindow.document.getElementById(idvar).onclick=insert_task;
+            }
         }
     }
 }
@@ -218,86 +230,109 @@ function insert_task(){
             array_tasks[i][j]=int_array_tasks[i][j];
         }
     }
-    affiche_datas();
+    if (!affiche_une_seule_tache){
+        affiche_datas(0);
+    }else{
+        affiche_une_tache_specifique(index_task);
+    }
 }
 
 /* =============delete une tache ==================== */
-function lecture_bp_delete(){
-    if (!iframe_hidden) {
-        for (let i = 0; i < (array_tasks.length); i++) {
-            idvar="bouton_delete"+String(i+1);
-            document.getElementById("page2").contentWindow.document.getElementById(idvar).onclick=delete_task;
+function lecture_bp_delete(numero_tache){
+    if (numero_tache!=0){
+       idvar="bouton_delete"+String(numero_tache);
+       document.getElementById("page2").contentWindow.document.getElementById(idvar).onclick=delete_task;
+    }else{
+        if (!iframe_hidden) {
+            for (let i = 0; i < (array_tasks.length); i++) {
+                idvar="bouton_delete"+String(i+1);
+                document.getElementById("page2").contentWindow.document.getElementById(idvar).onclick=delete_task;
+            }
         }
     }
 }
 function delete_task(){
     /* recherche index dans l'ID */
-    affichage_donnees_effectue=true;
-    remove_datas_iframe();
-    index_task=(this.id.match(/\d+/g).join(''));
-    let var_int=Number(index_task)-1;
-    let compteur_index=0;
-    let int_array_tasks=[];
-    if (var_int==array_tasks.length-1){
-        int_array_tasks=array_tasks.pop();
-    } else {
-        /* recherche les taches aval et amont pour savoir si elles sont indexée (upstream/downstream) avec la tache en cours */
-        for (let i = 0; i < (array_tasks.length); i++) {
-            if (array_tasks[i][7]==var_int+1) {
-                array_tasks[i][7]=0;
-            }else { if (array_tasks[i][7]>var_int+1){
-                 array_tasks[i][7]=array_tasks[i][7]-1;
+    if (array_tasks.length>0){
+        affichage_donnees_effectue=true;
+        remove_datas_iframe();
+        index_task=(this.id.match(/\d+/g).join(''));
+        let var_int=Number(index_task)-1;
+        let compteur_index=0;
+        let int_array_tasks=[];
+        if (var_int==array_tasks.length-1){
+            int_array_tasks=array_tasks.pop();
+        } else {
+            /* recherche les taches aval et amont pour savoir si elles sont indexée (upstream/downstream) avec la tache en cours */
+            for (let i = 0; i < (array_tasks.length); i++) {
+                if (array_tasks[i][7]==var_int+1) {
+                    array_tasks[i][7]=0;
+                }else { if (array_tasks[i][7]>var_int+1){
+                     array_tasks[i][7]=array_tasks[i][7]-1;
+                    }
+                }
+                if (array_tasks[i][5]==var_int+1){
+                    array_tasks[i][5]=0;
+                }else { if (array_tasks[i][5]>var_int+1){
+                     array_tasks[i][5]=array_tasks[i][5]-1;
+                    }
                 }
             }
-            if (array_tasks[i][5]==var_int+1){
-                array_tasks[i][5]=0;
-            }else { if (array_tasks[i][5]>var_int+1){
-                 array_tasks[i][5]=array_tasks[i][5]-1;
-                }
-            }
-        }
-        for (let i = 0; i < array_tasks.length; i++) {
-            int_array_tasks[compteur_index]=[];
-            if (i!=var_int) {
-                for  (let j = 0; j < array_tasks[0].length ; j++) {
-                    int_array_tasks[compteur_index][j]=array_tasks[i][j];
+            for (let i = 0; i < array_tasks.length; i++) {
+                int_array_tasks[compteur_index]=[];
+                if (i!=var_int) {
+                    for  (let j = 0; j < array_tasks[0].length ; j++) {
+                        int_array_tasks[compteur_index][j]=array_tasks[i][j];
+                    };
+                    compteur_index+=1;
                 };
-                compteur_index+=1;
             };
-        };
-        array_tasks=[];
-        for (let i = 0; i < int_array_tasks.length; i++) {
-            array_tasks[i]=[]
-            for (let j = 0; j < int_array_tasks[0].length; j++) {
-                array_tasks[i][j]=int_array_tasks[i][j];
+            array_tasks=[];
+            for (let i = 0; i < int_array_tasks.length; i++) {
+                array_tasks[i]=[]
+                for (let j = 0; j < int_array_tasks[0].length; j++) {
+                    array_tasks[i][j]=int_array_tasks[i][j];
+                }
             }
         }
+        affiche_datas_effectue=true;
+        if (!affiche_une_seule_tache){
+            affiche_datas(0);
+        }else{
+            if (numero_de_la_tache_a_afficher>array_tasks.length) {
+                remove_datas_iframe();
+            }else {
+                affiche_une_tache_specifique(numero_de_la_tache_a_afficher);
+            }
+        }
+        recopy_array_2D();
     }
-    initialisation_affichage_datas=true;
-    for (let i = 0; i < (array_tasks.length); i++) {
-        let in_indice=i+1;
-        display_one_task(in_indice);
-        affect_donnees_display(in_indice);
-    }
-    initialisation_affichage_datas=false
-    affiche_datas_effectue=true;
-    recopy_array_2D();
 }
 
 /* =============validation devalidation radio button milstone & main task ==================== */
-function lecture_bp_radio_task_principale(){
-    if (!iframe_hidden) {
-        for (let i = 0; i < (array_tasks.length); i++) {
-            idvar="principal_task"+String(i+1);
-            document.getElementById("page2").contentWindow.document.getElementById(idvar).onclick=set_button_radio;
+function lecture_bp_radio_task_principale(numero_tache){
+    if (numero_tache!=0){
+       idvar="principal_task"+String(numero_tache);
+       document.getElementById("page2").contentWindow.document.getElementById(idvar).onclick=set_button_radio;
+    }else{
+        if (!iframe_hidden) {
+            for (let i = 0; i < (array_tasks.length); i++) {
+                idvar="principal_task"+String(i+1);
+                document.getElementById("page2").contentWindow.document.getElementById(idvar).onclick=set_button_radio;
+            }
         }
     }
 }
-function lecture_bp_radio_milstone(){
-    if (!iframe_hidden) {
-        for (let i = 0; i < (array_tasks.length); i++) {
-            idvar="milestone"+String(i+1);
-            document.getElementById("page2").contentWindow.document.getElementById(idvar).onclick=set_milstone_radio;
+function lecture_bp_radio_milstone(numero_tache){
+    if (numero_tache!=0){
+       idvar="milestone"+String(numero_tache);
+       document.getElementById("page2").contentWindow.document.getElementById(idvar).onclick=set_milstone_radio;
+    }else{
+        if (!iframe_hidden) {
+            for (let i = 0; i < (array_tasks.length); i++) {
+                idvar="milestone"+String(i+1);
+                document.getElementById("page2").contentWindow.document.getElementById(idvar).onclick=set_milstone_radio;
+            }
         }
     }
 }
@@ -312,9 +347,13 @@ function set_milstone_radio(){
     else {
         array_tasks[var_int][4]=0;
     }
-    reafecte_donnees()
+    if (!affiche_une_seule_tache){
+        reafecte_donnees();
+    }else {
+        affect_donnees_display(numero_de_la_tache_a_afficher);
+    }
 }
-function set_button_radio(index_task){
+function set_button_radio(){
     /* recherche index dans l'ID */
     index_task=(this.id.match(/\d+/g).join(''))
     var_int=index_task-1;
@@ -325,10 +364,23 @@ function set_button_radio(index_task){
     else {
         array_tasks[var_int][6]=0;
     }
-    reafecte_donnees();
+    if (!affiche_une_seule_tache){
+        reafecte_donnees();
+    }else {
+        affect_donnees_display(numero_de_la_tache_a_afficher);
+    }
 }
+
 /* ============== affiche variable dans Iframe ============== */
+function reafecte_donnees(){
+    for (let i = 0; i < (array_tasks.length); i++) {
+        let in_indice=i+1;
+        affect_donnees_display(in_indice);
+    }
+}
+
 function affect_donnees_display(inc) {
+    message(inc,"essai");
     idvar="name_task"+String(inc);
     variable1 = document.getElementById("page2").contentWindow.document.getElementById(idvar)
     variable1.value = array_tasks[inc-1][0];
@@ -554,6 +606,20 @@ function display_one_task(int_indice) {
     variable2.setAttribute("id",idvar);
     variable2.setAttribute("class","color_task");
     list.appendChild(variable2);
+}
+
+function affiche_une_tache_specifique(numero_de_la_tache_a_afficher){
+    remove_datas_iframe()
+    /* modification de la hauteur de l'Iframe */
+    // iframe_page2=document.querySelector('iframe')
+    element_a_bouger = window.parent.document.getElementById("page2");
+    element_a_bouger.style.position="absolute";
+    element_a_bouger.style.left=String(300) + "px";
+    element_a_bouger.style.top=String(700) + "px";
+    element_a_bouger.style.height=String(120) + "px";
+    display_one_task(numero_de_la_tache_a_afficher);
+    affect_donnees_display(numero_de_la_tache_a_afficher)
+    affiche_une_seule_tache=true;
 }
 
 //Get Mouse Position

@@ -38,7 +38,7 @@ function creation_base_donnees_complete(){
    }
     /* sauvegarde des parametres d'environnement */
    base_donnees_complete[pos_index][0] = ["parametre1"];
-   base_donnees_complete[pos_index][1] = ["finlla"];
+   base_donnees_complete[pos_index][1] = ["finlla"];     /* finlla obligatoire */
    base_donnees_complete[pos_index][2] = [width_schema];
    base_donnees_complete[pos_index][3] = [height_schema];
    base_donnees_complete[pos_index][4] = [start_column];
@@ -52,8 +52,8 @@ function creation_base_donnees_complete(){
    pos_index+=1;
    base_donnees_complete[pos_index][0] = ["parametre2"];
    base_donnees_complete[pos_index][1] = ["finlla"];
-   base_donnees_complete[pos_index][2] = [width_schema];
-   base_donnees_complete[pos_index][3] = [height_schema];
+   base_donnees_complete[pos_index][2] = [langue];
+   base_donnees_complete[pos_index][3] = ["para"];
    base_donnees_complete[pos_index][4] = ["para"];
    base_donnees_complete[pos_index][5] = ["para"];
    base_donnees_complete[pos_index][6] = ["para"];
@@ -181,7 +181,6 @@ function lecture_datas_db() {
                 etape_write=6; /* fin de transfert */
             }
         }
-
     };
     getarray.onerror   = function() {
         let texte="error lecture donnees tache : "+String(titre_tache);

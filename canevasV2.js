@@ -61,20 +61,25 @@ let remove_listener=0;
 let deplace_iframe=false;
 let memo_mouse_x=0;
 let memo_mouse_y=0;
-
+/* variable pour remote Ifame */
+let affichage_donnees_effectue=false;
+let ask_write_parameters=false;
 /* variables pour creation des taches */
-/* --------------------------------- */
 let iframe_hidden=Boolean(true) ;
 let affiche_datas_effectue=Boolean(false);
 let indice=0;
 let initialisation_affichage_datas= Boolean(false);
 let variable_inc=0;
+/* pour affichage d'une seule tache */
+let numero_de_la_tache_a_afficher=2;
+let calcul_numero_de_la_tache_a_afficher=0;
+let affiche_une_seule_tache=false;
 
 /* variable pour affichage graph Canvas */
 /* ----------------------------------- */
 let graphe=0;
 let drawing_area=0;
-let width_schema=2000;
+let width_schema=600;
 let height_schema=1000;
 let start_column=150;  /* debut pour le graphe */
 let start_line=50
@@ -87,7 +92,13 @@ let save_start_project= new Date();
 let texte_save_date="2023-07-14";
 let with_rows =0;
 let with_columns =0;
-let letter_size = 14;
+let letter_size = 14; /* taille lettre du nom des taches */
+let letter_size_month = 14; /* taille lettre du mois et de l'année */
+let letter_size_semaine = 11; /* taille lettre de la semaine */
+let letter_size_jour = 9; /* taille lettre de la semaine */
+let increment_pour_size_letter=0.2;
+let incp_letter_size=0;
+let incm_letter_size=0;
 let passage="none";
 let colonne_du_jour=0;
 let affichage_axes=false;
@@ -102,10 +113,9 @@ let memo_mouse_canvas_x=0;
 let int_increment=0;
 let memo_mouse_canvas_y=0;
 let deplace_canvas=false;
-
-/* variable pour remote Ifame */
-let affichage_donnees_effectue=false;
-let ask_write_parameters=false;
+let delta=0; /* zoom avec molette mouse */
+let double_click=false; /* gestion click souris */
+let scroll_bloquer=false; /* bloquage de du scroll de la molette */
 
 /* liste des taches et variables associées */
 let first=true;                     /* init au demarrage a froid */
@@ -153,6 +163,15 @@ let array_tasks_display_save=[]; /* pour sauvegarde de l'affichage */
 let etape=0;
 let etape_a_froid=0;
 let langue=1; /* choix de la langue de départ */
+
+/* variables pour lecture fichier Txt ou CSV */
+let brouillon_file=[];
+    brouillon_file.push([]);
+let brouillon_file1=[];
+    brouillon_file1.push([]);
+let charge_fichier_en_cours=false;
+let charge_fichier_txt_fini=false;
+let reader  = new FileReader();
 
 function recopy_array_2D(){
     array_tasks_display_save=[]
@@ -202,13 +221,6 @@ function recopy_array_for_display(){
                 index+=1;
             }
         }
-    }
-}
-
-function reafecte_donnees(){
-    for (let i = 0; i < (array_tasks.length); i++) {
-        let in_indice=i+1;
-        affect_donnees_display(in_indice);
     }
 }
 
@@ -412,6 +424,16 @@ function read_parameters(){
 /* apres lecture paramatre dans DB mise a jour des parametres affichés */
 function write_parameters(){
     if (ask_write_parameters){
+        let int_langue=Number(array_parametre_environnement2[2]);
+        if (int_langue!=1 && int_langue!=2){
+            langue=1;
+        }
+        if (int_langue!=langue){
+            langue=int_langue;
+            affiche_datas();
+            affichage_langue()
+            changement_langue_iframe();
+        }
         width_schema=String(array_parametre_environnement1[2]);
         height_schema=String(array_parametre_environnement1[3]);
         document.getElementById("g_columns").value=Number(array_parametre_environnement1[6]);
@@ -438,15 +460,25 @@ function write_parameters(){
     }
 }
 function clear_project(){
+    increment_top_canvas=0;
+    increment_left_canvas=0;
+    numero_de_la_tache_a_afficher=0;
+    letter_size = 14; /* taille lettre du nom des taches */
+    letter_size_month = 14; /* taille lettre du mois et de l'année */
+    letter_size_semaine = 11; /* taille lettre de la semaine */
+    letter_size_jour = 9; /* taille lettre de la semaine */
+    document.getElementById("l_size").value=String(letter_size);
     remove_datas_iframe();
     array_tasks=[];
     array_tasks.push([]); /* ajout d'une tache  */
     for (let i = 0; i < (number_datas_in_array); i++) {
         array_tasks[array_tasks.length-1].push(array_task_vide[i]) ;
     }
+    affiche_une_seule_tache=true;
+    numero_de_la_tache_a_afficher=1;
     recopy_array_2D();
-    //demarrage_a_froid=true;
-    affiche_datas();
+    affiche_une_tache_specifique(numero_de_la_tache_a_afficher)
+    //affiche_datas();
 }
 
 /* ======= debut prg principal =======================*/
@@ -478,7 +510,7 @@ function principal(){
                 page2_width = iframe_page2.offsetWidth;
                 page2_height = iframe_page2.offsetHeight;
             }
-            affichage_langue();
+            //affichage_langue();
         }
         if (!demarrage_a_froid) {
             /* apres demarrage à froid */
@@ -508,23 +540,34 @@ function principal(){
             /* ========================================================= */
             /* si pas de lecture ecriture sur DB alors affichage possible des datas sur Iframe ==== */
              if ((transfert_datas_fini ) && (!deplace_iframe)) {
-                lecture_datas(); /* lecture donnees dans l Iframe */
                 document.querySelector('button[id="display_datas"]').onclick=affiche_datas_iframe;
                 document.querySelector('button[id="essai_task"]').onclick=affiche_donnes_diverses;
                 document.querySelector('button[id="newproject"]').onclick=clear_project;
+                lecture_fichier_text;
                 document.getElementById("drapeau_F").onclick=langue_Francaise;
                 document.getElementById("drapeau_A").onclick=langue_Anglaise;
                 document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").onclick=rajout_one_task;
                 document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").onclick=set_tasks;
                 /* lecture BP dans Iframe */
-                lecture_bp_insert();
-                lecture_bp_delete();
-                lecture_bp_radio_task_principale();
-                lecture_bp_radio_milstone();
-                lecture_bp_color();
+                if (!affiche_une_seule_tache){
+                    lecture_datas(0); /* lecture donnees dans l Iframe */
+                    lecture_bp_insert(0);
+                    lecture_bp_delete(0);
+                    lecture_bp_radio_task_principale(0);
+                    lecture_bp_radio_milstone(0);
+                    lecture_bp_color(0);
+                } else {
+                    lecture_datas(numero_de_la_tache_a_afficher);
+                    lecture_bp_insert(numero_de_la_tache_a_afficher);
+                    lecture_bp_delete(numero_de_la_tache_a_afficher);
+                    lecture_bp_radio_task_principale(numero_de_la_tache_a_afficher);
+                    lecture_bp_radio_milstone(numero_de_la_tache_a_afficher);
+                    lecture_bp_color(numero_de_la_tache_a_afficher)
+                }
                 /* lecture souris */
                 listen_mouse_on_canvas(graphe,drawing_area);
                 listen_mouse_on_page2();
+                lecture_fichier_text();
             }
         }
     }

@@ -3,25 +3,29 @@
 let array_langue=[];
 let array_langue_iframe=[];
 
+function changement_langue_iframe(){
+    document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").innerHTML=array_langue_iframe[5][langue];
+    document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").innerHTML=array_langue_iframe[6][langue];
+    document.getElementById("page2").contentWindow.document.getElementById("entete_page2").innerHTML=array_langue_iframe[0][langue];
+    document.getElementById("page2").contentWindow.document.getElementById("T1").innerHTML=array_langue_iframe[7][langue];
+    document.getElementById("page2").contentWindow.document.getElementById("T2").innerHTML=array_langue_iframe[8][langue];
+    document.getElementById("page2").contentWindow.document.getElementById("T3").innerHTML=array_langue_iframe[9][langue];
+    document.getElementById("page2").contentWindow.document.getElementById("T4").innerHTML=array_langue_iframe[10][langue];
+    let element_a_modifier=window.parent.document.getElementById("display_datas");
+    element_a_modifier.innerHTML=array_langue[8][langue];
+}
+
 function langue_Anglaise(){
     langue=1;
     affiche_datas();
     affichage_langue()
-    document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").innerHTML=array_langue_iframe[5][langue];
-    document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").innerHTML=array_langue_iframe[6][langue];
-    document.getElementById("page2").contentWindow.document.getElementById("entete_page2").innerHTML=array_langue_iframe[0][langue];
-    let element_a_modifier=window.parent.document.getElementById("display_datas");
-    element_a_modifier.innerHTML=array_langue[8][langue];
+    changement_langue_iframe();
 };
 function langue_Francaise(){
     langue=2;
     affiche_datas();
     affichage_langue()
-    document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").innerHTML=array_langue_iframe[5][langue];
-    document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").innerHTML=array_langue_iframe[6][langue];
-    document.getElementById("page2").contentWindow.document.getElementById("entete_page2").innerHTML=array_langue_iframe[0][langue];
-    let element_a_modifier=window.parent.document.getElementById("display_datas");
-    element_a_modifier.innerHTML=array_langue[8][langue];
+    changement_langue_iframe();
 };
 
 function init_langue(){
@@ -118,15 +122,36 @@ function init_langue(){
     array_langue_iframe[6].push("SET_start_tasks");
     array_langue_iframe[6].push("Calcul start tasks");
     array_langue_iframe[6].push("Calcul départ tache");
-
+    array_langue_iframe.push([]); /* ================= */
+    array_langue_iframe[7].push("T1");
+    array_langue_iframe[7].push("definition");
+    array_langue_iframe[7].push("definition");
+    array_langue_iframe.push([]); /* ================= */
+    array_langue_iframe[8].push("T2");
+    array_langue_iframe[8].push("start task.");
+    array_langue_iframe[8].push("début tache");
+    array_langue_iframe.push([]); /* ================= */
+    array_langue_iframe[9].push("T3");
+    array_langue_iframe[9].push("delay");
+    array_langue_iframe[9].push("durée");
+    array_langue_iframe.push([]); /* ================= */
+    array_langue_iframe[10].push("T4");
+    array_langue_iframe[10].push("Gap");
+    array_langue_iframe[10].push("Ecart");
 }
 
 function affichage_langue(){
     for (let i = 0; i < (array_langue.length); i++){
-        if (i!=8){
-            let identificateur1=array_langue[i][0];
-            document.getElementById(identificateur1).innerHTML=array_langue[i][langue];
-            //message(identificateur1,i);
+        try {
+            if (i!=8){
+                let identificateur1=array_langue[i][0];
+                document.getElementById(identificateur1).innerHTML=array_langue[i][langue];
+            }
+        }
+        catch (err){
+            let texte=" err = "+String(err);
+            alert(texte+" : "+i + " ident : "+array_langue[i][0]+" : "+array_langue[i][langue]);
+            message(texte,i);
         }
     }
 }
