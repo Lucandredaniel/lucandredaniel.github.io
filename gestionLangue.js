@@ -121,7 +121,7 @@ function init_langue(){
     array_langue_iframe.push([]); /* ================= */
     array_langue_iframe[6].push("SET_start_tasks");
     array_langue_iframe[6].push("Calcul start tasks");
-    array_langue_iframe[6].push("Calcul départ tache");
+    array_langue_iframe[6].push("Recalcul début tache");
     array_langue_iframe.push([]); /* ================= */
     array_langue_iframe[7].push("T1");
     array_langue_iframe[7].push("definition");

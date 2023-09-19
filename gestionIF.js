@@ -343,6 +343,8 @@ function set_milstone_radio(){
     if ( array_tasks[var_int][4]==0) {
         array_tasks[var_int][4]=1;
         array_tasks[var_int][6]=0;  /* devalide la tache principale */
+        set_one_tasks(var_int) /* recalcul start de la tache */
+        reafecte_one_donnees(var_int);
     }
     else {
         array_tasks[var_int][4]=0;
@@ -377,6 +379,10 @@ function reafecte_donnees(){
         let in_indice=i+1;
         affect_donnees_display(in_indice);
     }
+}
+function reafecte_one_donnees(indice){
+    let in_indice=indice+1;
+    affect_donnees_display(in_indice);
 }
 
 function affect_donnees_display(inc) {

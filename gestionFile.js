@@ -1,10 +1,13 @@
 
 function lecture_fichier_text() {
-    if (!charge_fichier_en_cours) {brouillon_file[0]=[] }
-    document.getElementById('inputfile').addEventListener('change', function() {
+    if (!charge_fichier_en_cours && !load_fichier_en_cours) {brouillon_file[0]=[] }
+    document.getElementById('inputfile').addEventListener('change', function(e) {
         charge_fichier_en_cours=true;
+        const essai_file=e.target.files[0];
+        file_name_csv.push(essai_file.name)
         const [file] = document.querySelector("input[type=file]").files;
-        reader.readAsText(file,"utf-8");
+        //reader.readAsText(file,"utf-8");
+        reader.readAsText(essai_file,"utf-8");
         reader.onload  = function (event) { brouillon_file[0] = reader.result};
         reader.onerror = function(event) {alert(reader.error);charge_fichier_en_cours=false;charge_fichier_txt_fini=false }
         //reader.readAsBinaryString(file) ;
@@ -70,6 +73,24 @@ function lecture_fichier_text() {
             recopy_array_2D();
             iframe_hidden=true;
             affiche_datas_iframe();
+            document.getElementById("file_name_db").value=file_name_csv[0];
         }
+    }
+}
+
+function ecriture_fichier_text() { /* uniquement coté serveur et non coté client */
+    if (!charge_fichier_en_cours && !load_fichier_en_cours) {
+        file_name_csv=[];
+        brouillon_file[0]=[];
+        file_name_csv.push(document.getElementById("file_name_db").value);
+        const fs=require('fs') // importe le module fs (file system) qui permet de manipuler les fichiers.
+        creation_base_donnees_complete();
+        const fichier="C:\\LLA\\-python\\-PyCharm\\Canvas\\essai12.csv";
+        CustomAlert(fichier,"essai")
+        fs.writeFile(fichier, "essai d' ecriture", (err) => {
+        // ???????????????????????????????????????????
+        // In case of a error throw err.
+        if (err) throw err
+        })
     }
 }

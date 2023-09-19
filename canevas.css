@@ -36,6 +36,8 @@ p {	text-align:left; color:black; line-height:60%;}
 #g_rows {width: 45px; height: 20px;    position:absolute; top : 438px; left : 123px; border: 2px solid #9C9898; font-size:12px;}
 #inputfile { position:absolute; top : 650px; left : 0px; width: 72px; height: 22px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #inputfile:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
+#outputfile { position:absolute; top : 650px; left : 100px; width: 72px; height: 22px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#outputfile:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 
 #text1 { width: 200px;  margin: 0px 0px 0px 0px;}
 #text2 { width: 200px;  margin: 0px 0px 0px 0px;}
@@ -92,7 +94,33 @@ input:disabled {color: black;background-color: lightgray}
 #dialogbox{ display: none; position: absolute; background: rgb(0, 47, 43); border-radius:7px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.575); transition: 0.3s; width: 50%;
   z-index: 10; top:0; left: 0; right: 0; margin: auto;}
 #dialogbox:hover {box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.911);}
-.pure-material-button-contained {
+.pure-material-button-ok {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 4px;
+  padding: 0 16px;
+  min-width: 64px;
+  height: 36px;
+  vertical-align: middle;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));
+  background-color: rgb(var(--pure-material-primary-rgb, 0, 77, 70));
+  /* background-color: rgb(1, 47, 61) */
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  font-family: var(--pure-material-font, "Roboto", "Segoe UI", BlinkMacSystemFont, system-ui, -apple-system);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 36px;
+  overflow: hidden;
+  outline: none;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+.pure-material-button-Nok {
   position: relative;
   display: inline-block;
   box-sizing: border-box;

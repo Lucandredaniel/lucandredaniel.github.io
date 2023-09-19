@@ -163,6 +163,7 @@ let array_tasks_display_save=[]; /* pour sauvegarde de l'affichage */
 let etape=0;
 let etape_a_froid=0;
 let langue=1; /* choix de la langue de départ */
+let reponse_boite=false; /* retour de la boite de dialogue oui ou non */
 
 /* variables pour lecture fichier Txt ou CSV */
 let brouillon_file=[];
@@ -172,6 +173,9 @@ let brouillon_file1=[];
 let charge_fichier_en_cours=false;
 let charge_fichier_txt_fini=false;
 let reader  = new FileReader();
+let file_name_csv=[];
+let load_fichier_en_cours=false;
+let laod_fichier_txt_fini=false;
 
 function recopy_array_2D(){
     array_tasks_display_save=[]
@@ -313,8 +317,9 @@ function check_datas_downstream(){
     }
     /* contrôle les suites de taches en défaut */
     for (let i = (array_tasks.length-1); i > 0; i--) {
-        numero_tache_aval=Number(array_tasks_display_save[i][5]-1);
-        if (numero_tache_aval>0) {
+        if (array_tasks_display_save[i][5]>0){
+            numero_tache_aval=Number(array_tasks_display_save[i][5]-1);
+            if (array_tasks_display_save[i][5]==2){message(i,numero_tache_aval)}
             tache_en_defaut=array_tasks_display_save[numero_tache_aval][8];
             if (tache_en_defaut==1){
                 let debut_tache=Number(array_tasks_display_save[numero_tache_aval][1]);
@@ -324,6 +329,8 @@ function check_datas_downstream(){
                     array_tasks_display_save[i][8]=1;
                 }
             }
+        }else {
+            array_tasks[i][8]=0; /* tache non en defaut */
         }
     }
     /* verifie le gap et prise en compte */
@@ -383,20 +390,32 @@ function check_datas_downstream(){
 }
 
 function set_tasks(){
-    /* demande affichage parametre au complet */
-    iframe_hidden=true;
-    affiche_datas_iframe();
-    if (changement_affichage_en_cours_graph){
-        changement_affichage_en_cours_graph =false;
-        recopy_array_2D()
-    }
-    for (let i = 0; i < (array_tasks.length); i++) {
-        array_tasks[i][1]= array_tasks_display_save[i][1]-array_tasks_display_save[i][3];
-        if (array_tasks_display_save[i][6]==1){
-            array_tasks[i][2]=0;
+    if (!affiche_une_seule_tache){
+        /* demande affichage parametre au complet */
+        iframe_hidden=true;
+        affiche_datas_iframe();
+        if (changement_affichage_en_cours_graph){
+            changement_affichage_en_cours_graph =false;
+            recopy_array_2D()
         }
+        for (let i = 0; i < (array_tasks.length); i++) {
+            array_tasks[i][1]= array_tasks_display_save[i][1]-array_tasks_display_save[i][3];
+            if (array_tasks_display_save[i][6]==1){
+                array_tasks[i][2]=0;
+            }
+        }
+        reafecte_donnees();
+    }else{
+        set_one_tasks(numero_de_la_tache_a_afficher-1)
     }
-    reafecte_donnees();
+}
+function set_one_tasks(indice){
+    /* recalcul unqiement le depart de la tache demandée */
+        array_tasks[indice][1]= array_tasks_display_save[indice][1]-array_tasks_display_save[indice][3];
+        if (array_tasks_display_save[indice][6]==1){
+            array_tasks[indice][2]=0;
+        }
+    reafecte_one_donnees(indice);
 }
 
 /* lecture des parametres affichés */
@@ -463,6 +482,22 @@ function write_parameters(){
     }
 }
 function clear_project(){
+    let titre="";
+    let message_avert="";
+    if (langue==1){
+        titre="New Project";
+        message_avert="Action witch reset all datas";
+    } else {
+        titre="Nouveau Projet";
+        message_avert="Action qui réinitialise toutes les données";
+    }
+    reponse_boite=false;
+    CustomConfirm(message_avert,titre);
+}
+
+function valid_clear_project() {
+    document.getElementById('dialogbox').style.display = "none";
+    //CustomAlert(message_avert,titre);
     increment_top_canvas=0;
     increment_left_canvas=0;
     numero_de_la_tache_a_afficher=0;
@@ -496,7 +531,6 @@ function principal(){
         if (browserName != "Mozilla"){
            CustomAlert("take Browser Mozilla for full use","Choice of Browser")
         }
-        message("browser",browserName)
         init_exemple();
         init_langue();
         first=false;
@@ -547,9 +581,13 @@ function principal(){
                 document.querySelector('button[id="display_datas"]').onclick=affiche_datas_iframe;
                 document.querySelector('button[id="essai_task"]').onclick=affiche_donnes_diverses;
                 document.querySelector('button[id="newproject"]').onclick=clear_project;
-                lecture_fichier_text;
                 document.getElementById("drapeau_F").onclick=langue_Francaise;
                 document.getElementById("drapeau_A").onclick=langue_Anglaise;
+                /* provisoir rend les 2 BP invisibles */
+                document.getElementById('essai_file').style.display = "none";
+                document.getElementById('outputfile').style.display = "none";
+                document.getElementById('inputfile').style.display = "none";
+                document.getElementById("outputfile").onclick=ecriture_fichier_text;
                 document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").onclick=rajout_one_task;
                 document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").onclick=set_tasks;
                 /* lecture BP dans Iframe */

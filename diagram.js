@@ -83,7 +83,7 @@ function display_arrow(graphe,drawing_area,end_column_task,inc_line_task){
     graphe.strokeStyle="red";
     graphe.beginPath();
     graphe.lineCap='square';
-    graphe.moveTo(end_column_task-space_column, inc_line_task); /* point de depart */
+    graphe.moveTo(end_column_task-space_column+5, inc_line_task); /* point de depart */
     graphe.lineTo(end_column_task, inc_line_task); /* ligne point final*/
     graphe.stroke(); /* affiche la ligne */
 }
@@ -612,6 +612,7 @@ function listen_mouse_on_canvas(graphe,drawing_area){
         delta= Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)))
     }, false);
     drawing_area.addEventListener("mousewheel", function(e){ /* pour chrome, safari, opera */
+        document.getElementsByTagName("body")[0].style.overflow="hidden"; /* bloque le croll */
         delta= Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)))
     }, false);
     if (delta>0) {
