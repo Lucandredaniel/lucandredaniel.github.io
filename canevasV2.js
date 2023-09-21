@@ -2,7 +2,7 @@
 /* ===================================================== */
 
  window.onload = function (){
-   var intervalle=setInterval(principal,60); /* lancement automatique de la fonction toutes les 60ms */
+   var intervalle=setInterval(principal,30); /* lancement automatique de la fonction toutes les 60ms */
    }
 
 let brouillon=0;
@@ -319,7 +319,6 @@ function check_datas_downstream(){
     for (let i = (array_tasks.length-1); i > 0; i--) {
         if (array_tasks_display_save[i][5]>0){
             numero_tache_aval=Number(array_tasks_display_save[i][5]-1);
-            if (array_tasks_display_save[i][5]==2){message(i,numero_tache_aval)}
             tache_en_defaut=array_tasks_display_save[numero_tache_aval][8];
             if (tache_en_defaut==1){
                 let debut_tache=Number(array_tasks_display_save[numero_tache_aval][1]);
@@ -497,7 +496,6 @@ function clear_project(){
 
 function valid_clear_project() {
     document.getElementById('dialogbox').style.display = "none";
-    //CustomAlert(message_avert,titre);
     increment_top_canvas=0;
     increment_left_canvas=0;
     numero_de_la_tache_a_afficher=0;
@@ -529,7 +527,7 @@ function principal(){
     if (first) {
         detecte_browser();
         if (browserName != "Mozilla"){
-           CustomAlert("take Browser Mozilla for full use","Choice of Browser")
+           //CustomAlert("take Browser Mozilla for full use","Choice of Browser")
         }
         init_exemple();
         init_langue();
@@ -542,7 +540,7 @@ function principal(){
                 graphe = drawing_area.getContext('2d');
                 demarrage_a_froid=false;
                 affiche_datas_iframe();
-                iframe_page2=document.querySelector('iframe')
+                let iframe_page2=document.getElementById("entete_iframe");
                 page2_left = iframe_page2.offsetLeft;
                 page2_top  = iframe_page2.offsetTop;
                 page2_width = iframe_page2.offsetWidth;
@@ -578,15 +576,15 @@ function principal(){
             /* ========================================================= */
             /* si pas de lecture ecriture sur DB alors affichage possible des datas sur Iframe ==== */
              if ((transfert_datas_fini ) && (!deplace_iframe)) {
-                document.querySelector('button[id="display_datas"]').onclick=affiche_datas_iframe;
+                /* lecture des BP */
                 document.querySelector('button[id="essai_task"]').onclick=affiche_donnes_diverses;
                 document.querySelector('button[id="newproject"]').onclick=clear_project;
+                document.querySelector('button[id="display_datas"]').onclick=affiche_datas_iframe;
                 document.getElementById("drapeau_F").onclick=langue_Francaise;
                 document.getElementById("drapeau_A").onclick=langue_Anglaise;
-                /* provisoir rend les 2 BP invisibles */
-                document.getElementById('essai_file').style.display = "none";
-                document.getElementById('outputfile').style.display = "none";
-                document.getElementById('inputfile').style.display = "none";
+                /* provisoire rend les 2 BP invisibles */
+                inhibe_identity();
+
                 document.getElementById("outputfile").onclick=ecriture_fichier_text;
                 document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").onclick=rajout_one_task;
                 document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").onclick=set_tasks;
@@ -608,7 +606,8 @@ function principal(){
                 }
                 /* lecture souris */
                 listen_mouse_on_canvas(graphe,drawing_area);
-                listen_mouse_on_page2();
+                //listen_mouse_on_page2();
+                listen_mouse_on_page1();
                 lecture_fichier_text();
             }
         }

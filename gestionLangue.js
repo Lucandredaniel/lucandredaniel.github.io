@@ -4,9 +4,9 @@ let array_langue=[];
 let array_langue_iframe=[];
 
 function changement_langue_iframe(){
-    document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").innerHTML=array_langue_iframe[5][langue];
-    document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").innerHTML=array_langue_iframe[6][langue];
-    document.getElementById("page2").contentWindow.document.getElementById("entete_page2").innerHTML=array_langue_iframe[0][langue];
+    document.getElementById("page2").contentWindow.document.getElementById(array_langue_iframe[5][0]).innerHTML=array_langue_iframe[5][langue];
+    document.getElementById("page2").contentWindow.document.getElementById(array_langue_iframe[6][0]).innerHTML=array_langue_iframe[6][langue];
+    document.getElementById(array_langue_iframe[0][0]).innerHTML=array_langue_iframe[0][langue];
     document.getElementById("page2").contentWindow.document.getElementById("T1").innerHTML=array_langue_iframe[7][langue];
     document.getElementById("page2").contentWindow.document.getElementById("T2").innerHTML=array_langue_iframe[8][langue];
     document.getElementById("page2").contentWindow.document.getElementById("T3").innerHTML=array_langue_iframe[9][langue];
@@ -33,8 +33,8 @@ function init_langue(){
     /*============================ texte sur page HTML page 1 ==================*/
     array_langue.push([]); /* ================= */
     array_langue[0].push("entete_page1");
-    array_langue[0].push("Gantt Chart");
-    array_langue[0].push("Diagramme de Gantt");
+    array_langue[0].push("Chart");
+    array_langue[0].push("Diagramme");
     array_langue.push([]); /* ================= */
     array_langue[1].push("essai_task");
     array_langue[1].push("About");
@@ -57,17 +57,17 @@ function init_langue(){
     array_langue[5].push("Nom du projet");
     array_langue.push([]); /* ================= */
     array_langue[6].push("write_db");
-    array_langue[6].push("save of datas");
+    array_langue[6].push("save datas");
     array_langue[6].push("sauvegarde donnees");
     array_langue.push([]); /* ================= */
     array_langue[7].push("read_db");
-    array_langue[7].push("read of datas");
+    array_langue[7].push("read datas");
     array_langue[7].push("Charge donnees");
     array_langue.push([]); /* ================= */
-    array_langue[8].push("display datas");
-    array_langue[8].push("hide datas on screen");
+    array_langue[8].push("display datas ");
+    array_langue[8].push("hide datas");
     array_langue[8].push("cache les donnees");
-    array_langue[8].push("display datas on screen");
+    array_langue[8].push("display datas");
     array_langue[8].push("affiche les donnees");
     array_langue.push([]); /* ================= */
     array_langue[9].push("text4");
@@ -95,7 +95,7 @@ function init_langue(){
     array_langue[14].push("largeur des lignes");
     /*============================ texte dans Iframe ==================*/
     array_langue_iframe.push([]); /* ================= */
-    array_langue_iframe[0].push("Titre_set_task");
+    array_langue_iframe[0].push("entete_iframe");
     array_langue_iframe[0].push("Set task");
     array_langue_iframe[0].push("parametres taches");
     array_langue_iframe.push([]); /* ================= */

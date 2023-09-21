@@ -2,14 +2,17 @@
 body {font-family:"Times New Roman"; font-size:14px; font-weight:normal; background-color:white;overflow:auto;}
 #entete_page1 { background-color: green; color: white; width: 1850px; height: 40px; line-height: 30px; position:absolute; top: 5px;	left: 5px; text-align: center;font-size:30px}
 .entete {}
-#entete_page2 { background-color: green; color: white; width: 1240px; height: 40px; line-height: 30px; position:absolute; top: 5px;	left: 5px; text-align: center;font-size:30px;}
-#page2        { pointer-events: auto; position : absolute; top : 550px;  left: 300px;  width: 1250px;  height: 400px; background-color: white; border-width: 5px;}
+#entete_iframe { background-color: green; color: white; width: 1260px; height: 40px; line-height: 30px; position:absolute; top: 660px;	left: 300px; z-index: 1;text-align: center;font-size:30px;border-radius:5px}
+#entete_iframe:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: grab;filter: brightness(1.2);}
+#entete_iframe:active {filter: brightness(1.5);border-radius:50px;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);}
+#entete_page2 {}
+#page2  { pointer-events: auto; position : absolute; top : 850px;  left: 300px;  width: 1250px;  height: 400px; background-color: white; border-width: 5px;}
 table { table-layout:auto;width:100%;}
 
 pre {line-height:120%;}
 p {	text-align:left; color:black; line-height:60%;}
 
-#schema {position:absolute;	top: 55px;	left: 300px; border: 2px solid #9C9898;}
+#schema {position:absolute;	top: 55px;	left: 300px; border: 2px ; solid #9C9898; backgroundColor=gray;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);}
 
 #date_jour          { width: 120px;height: 20px;text-align:center;font-size:14px;font-family: Verdana, Geneva, Tahoma, sans-serif ;margin: 0px 0px 0px 31px; border: 2px solid #9C9898;} /* date jour */
 #start_date_project { width: 120px;height: 20px;text-align:center;font-size:12px;font-family: Verdana, Geneva, Tahoma, sans-serif ;margin: 0px 0px 0px 30px; border: 2px solid #9C9898;} /* date projet */
@@ -20,7 +23,7 @@ p {	text-align:left; color:black; line-height:60%;}
 #g_rows      { width: 20px; height: 20px; margin: 0px 0px 0px 27px;} /* hauteur ligne */
 #message1 {	width: 100px;  margin: 10px 0px 0px 27px; border: 2px solid #9C9898;}
 #message2 {	width: 100px;  margin: 0px 0px 0px 27px; border: 2px solid #9C9898;}
-#newproject {margin: 0px 0px 0px 105px; width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#newproject {margin: 0px 0px 0px 100px; width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #newproject:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 #write_db {width: 85px; height: 40px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #write_db:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
@@ -28,7 +31,7 @@ p {	text-align:left; color:black; line-height:60%;}
 #read_db:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 #display_datas {width: 100px; height: 40px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #display_datas:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#essai_task {margin: 70px 0px 0px 105px;width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#essai_task {margin: 70px 0px 0px 100px;width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #essai_task:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 #w_task {width: 45px; height: 20px;    position:absolute; top : 365px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
 #l_size {width: 45px; height: 20px;    position:absolute; top : 389px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
@@ -73,18 +76,18 @@ p {	text-align:left; color:black; line-height:60%;}
 #T5{ width: 50px; margin: 0px 0px 0px 100px;} /* milestone Iframe*/
 #T6{ width: 50px; margin: 0px 0px 0px 100px;} /* downstream task Iframe*/
 #T7{ width: 50px; margin: 0px 0px 0px 100px;} /* main task Iframe*/
-#bouton_Iframe{ width: 100px; height: 20px; margin: 40px 0px 0px 0px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;}
-#SET_start_tasks{ width: 150px; height: 20px; margin: 0px 0px 0px 950px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;}
+#bouton_Iframe{ width: 100px; height: 20px; margin: 0px 0px 0px 0px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5)}
+#SET_start_tasks{ width: 150px; height: 20px; margin: 0px 0px 0px 950px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5)}
 .dessin_lla img {display: block; margin: 0 auto; height : 50px; width : 50px; position : absolute; top : 60px; left : 20px;}
-#drapeau_F {height:15px; width:20px;position : absolute; top : 620px; left : 10px;}
+#drapeau_F {height:15px; width:20px;position : absolute; top : 50px; left : 150px;}
 #drapeau_F:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#drapeau_A {height:15px; width:20px;position : absolute; top : 620px; left : 40px;}
+#drapeau_A {height:15px; width:20px;position : absolute; top : 50px; left :180px;}
 #drapeau_A:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 
 input:enabled {color: black;}
 input:disabled {color: black;background-color: lightgray}
 
-#pwidget { background-color:lightgray; width:260px; padding:5px; border-radius:3px; border-radius:3px; text-align:left; border:1px solid gray;}
+#pwidget { margin: 20px 0px 0px 0px;background-color:lightgray; width:260px; padding:5px; border-radius:3px; border-radius:3px; text-align:left; border:1px solid gray;}
 #progressbar { width:255px; padding:1px; background-color:white; border:1px solid black; height:28px;}
 #indicator { width:0px; background-image:url("barre_progression.png"); height:28px; margin:0;}
 #progressnum { text-align:center; width:255px;}

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- 11-09-2023 -->
-<!-- V1******** -->
+<!-- 21-09-2023 -->
+<!-- V1.1 ******** -->
 <meta charset = "utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <html lang = "fr">
@@ -16,9 +16,9 @@
       <script type="text/javascript" src="gestionFile.js"> </script>
     </head>
     <body>
-        <header id="entete_page1" class="entete">
-            Gantt Chart
-        </header>
+        <header id="entete_page1" class="entete"> Chart </header>
+        <div class="drapeaux_lla"> <img id="drapeau_F" src="D_francais.png" alt="Francais" ></div>
+        <div class="drapeaux_lla"> <img id="drapeau_A" src="D_anglais.png" alt="Anglais" ></div>
         <button id="essai_task" >About </button>
         <div class="dessin_lla">
             <img id="image_L1" src="image_lla_V1.PNG" alt="dessin LLA" >
@@ -28,8 +28,8 @@
         <p> <button id="newproject" >new project</button> </p>
         <p> <label id="text3"  class="message">Name project  </label><input type="text" id="file_name_db" value="" size="14"> </p>
         <p>
-            <button id="write_db"   >save datas in DB</button>
-            <button id="read_db"    >read datas in DB</button>
+            <button id="write_db"   >save datas</button>
+            <button id="read_db"    >read datas</button>
             <button id="display_datas">display datas on screen</button>
         </p>
         <p>
@@ -52,16 +52,16 @@
         <!--<div id="dialogoverlay"></div> -->
         <div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>
         </div>
-        <div class="drapeaux_lla"> <img id="drapeau_F" src="D_francais.png" alt="Francais" ></div>
-        <div class="drapeaux_lla"> <img id="drapeau_A" src="D_anglais.png" alt="Anglais" ></div>
 
-        <label>message 1<input type="text" id="message1" value="" size="100"> </label></p>
-        <label>message 2<input type="text" id="message2" value="" size="100"> </label></p>
+
+        <label> <input type="text" id="message1" value="" size="100"> </label></p>
+        <label> <input type="text" id="message2" value="" size="100"> </label></p>
         <button id="essai_file" >lire fichier texte </button>
         <input type="file" name="inputfile" id="inputfile" accept=".txt, .csv" <br>
         <pre id="output"></pre>
         <button id="outputfile" >Export</button>
         <pre id="output2"></pre>
+        <div id="entete_iframe" > Set tasks </div>
 
         <canvas class="diagramme" id = "schema" height = "500" width = "1500" style="border:1px solid">
             <p>Votre navigateur ne supporte pas la balise canvas</p>

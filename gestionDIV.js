@@ -12,6 +12,14 @@ function detecte_browser(){
  }
 }
 
+function inhibe_identity(){
+    document.getElementById('essai_file').style.display = "none";
+    document.getElementById('outputfile').style.display = "none";
+    document.getElementById('inputfile').style.display = "none";
+    document.getElementById('message1').style.display = "none";
+    document.getElementById('message2').style.display = "none";
+}
+
 function affiche_texte_mineure(texte_message){
     prompt(texte_message);
 }
@@ -83,7 +91,7 @@ function affiche_progression(){
 function affiche_donnes_diverses() { /* fonction qui affiche des donnes diverses pour debug */
     let loc=location.origin
     let texte_lla="Freelance EXPERTISE :      Python, HTML, CSS, Javascript, PHP, RobotFrameWork, IndexedDB  \\ développement et maintenance soft"
-    CustomAlert(texte_lla,"V1.0 - Contact : luc.lassalle@sfr.fr")
+    CustomAlert(texte_lla,"V1.1 - Contact : luc.lassalle@sfr.fr")
     //alert(array_tasks_display_save);
 }
 

@@ -68,8 +68,11 @@ function remove_one_task(int_indice){
 }
 function affiche_datas_iframe() { /* affiche les donnees dans l Iframe */
     if (!iframe_hidden) {
-        iframe_hidden = document.getElementById("page2");
-        iframe_hidden.setAttribute("hidden","hidden");
+        /* cache les elements */
+        let iframe_page2=document.getElementById("entete_iframe");
+        iframe_page2.setAttribute("hidden","hidden");
+        let iframe_hidden_element = document.getElementById("page2");
+        iframe_hidden_element.setAttribute("hidden","hidden");
         iframe_hidden=true;
         affiche_datas_effectue=false;
         let element_a_modifier=window.parent.document.getElementById("display_datas");
@@ -77,15 +80,18 @@ function affiche_datas_iframe() { /* affiche les donnees dans l Iframe */
     }
     else {
         if (!deplace_iframe){
+            /* montre les elements */
+            let iframe_page2=document.getElementById("entete_iframe");
+            iframe_page2.removeAttribute("hidden");
+            page2_left = iframe_page2.offsetLeft;
+            page2_top  = iframe_page2.offsetTop;
             element_a_bouger = window.parent.document.getElementById("page2");
             element_a_bouger.style.position="absolute";
-            element_a_bouger.style.left=String(300) + "px";
-            element_a_bouger.style.top=String(550) + "px";
+            element_a_bouger.style.left=String(page2_left) + "px";
+            element_a_bouger.style.top=String(page2_top+40) + "px";
             element_a_bouger.style.height=String(400) + "px";
-            page2_left=300;
-            page2_top=550;
-            iframe_hidden = document.getElementById("page2");
-            iframe_hidden.removeAttribute("hidden");
+            let iframe_hidden_element = document.getElementById("page2");
+            iframe_hidden_element.removeAttribute("hidden");
             changement_langue_iframe();
             /* initialisation donnees du canvas */
             init_donnees_affichage_canvas();
@@ -618,16 +624,20 @@ function display_one_task(int_indice) {
 
 function affiche_une_tache_specifique(numero_de_la_tache_a_afficher){
     remove_datas_iframe()
+    let iframe_page2=document.getElementById("entete_iframe");
+    page2_left = iframe_page2.offsetLeft;
+    page2_top  = iframe_page2.offsetTop;
     /* modification de la hauteur de l'Iframe */
-    // iframe_page2=document.querySelector('iframe')
     element_a_bouger = window.parent.document.getElementById("page2");
     element_a_bouger.style.position="absolute";
-    element_a_bouger.style.left=String(300) + "px";
-    element_a_bouger.style.top=String(700) + "px";
+    element_a_bouger.style.left=String(page2_left) + "px";
+    element_a_bouger.style.top=String(page2_top+40) + "px";
     element_a_bouger.style.height=String(120) + "px";
     display_one_task(numero_de_la_tache_a_afficher);
     affect_donnees_display(numero_de_la_tache_a_afficher)
     affiche_une_seule_tache=true;
+    /* force un click pour eviter la selection en bleu de l'iframe ==> solution tiré par les cheveux */
+    drawing_area.dispatchEvent(new MouseEvent("click",{bubbles: true, cancellable: true}));
 }
 
 //Get Mouse Position
@@ -690,6 +700,57 @@ function listen_mouse_on_page2(){
         deplace_iframe=false;
      }, false);
     elmnt.addEventListener("mousedown", function(c){
+        if (!deplace_iframe){
+            let mousePos=getMousePos_iframe(elmnt,c);
+            memo_mouse_x=mousePos.x
+            memo_mouse_y=mousePos.y
+            deplace_iframe=true;
+        }
+      }, false);
+}
+function affichage_de_iframe(){
+    if (!iframe_hidden){
+        let iframe_hidden_element = document.getElementById("page2");
+        iframe_hidden_element.style.position="absolute";
+        iframe_hidden_element.style.left=String(page2_left) + "px";
+        iframe_hidden_element.style.top=String(page2_top+40) + "px";
+        iframe_hidden_element.removeAttribute("hidden");
+        deplace_iframe=false;
+    }
+}
+function listen_mouse_on_page1(){
+     elmnt =document.getElementById("entete_iframe");
+     elmnt.addEventListener("mousemove", function(e){
+
+        // elmnt.style.cursor="grab";
+        page2_left_x=elmnt.getBoundingClientRect().left;
+        page2_top_y=elmnt.getBoundingClientRect().top;
+
+        if (deplace_iframe){
+            let mousePos=getMousePos_iframe(elmnt,e);
+            let deltax=Number(mousePos.x)-Number(memo_mouse_x);
+            let deltay=Number(mousePos.y)-Number(memo_mouse_y);
+            let ok=true;
+            // if ((page2_left_x==page2_left) && (page2_top_y==page2_top)) {
+            page2_left=page2_left+deltax;
+            page2_top=page2_top+deltay;
+            elmnt.style.position="absolute";
+            elmnt.style.left=String(parseInt(page2_left))+"px";
+            elmnt.style.top=String(parseInt(page2_top))+"px";
+        }else {inc=0}
+     }, false);
+    elmnt.addEventListener("mouseup", function(a){
+         affichage_de_iframe();
+         deplace_iframe=false;
+     }, false);
+     elmnt.addEventListener("mouseleave", function(b){
+        affichage_de_iframe();
+        deplace_iframe=false;
+     }, false);
+    elmnt.addEventListener("mousedown", function(c){
+        /* cache l'Iframe */
+        let iframe_hidden_element = document.getElementById("page2");
+        iframe_hidden_element.setAttribute("hidden","hidden");
         if (!deplace_iframe){
             let mousePos=getMousePos_iframe(elmnt,c);
             memo_mouse_x=mousePos.x
