@@ -18,6 +18,7 @@ function myFunction(xml) {
     tableau_donnees_xml[i].push( x[i].getElementsByTagName("FRANCAIS")[0].childNodes[0].nodeValue);
     tableau_donnees_xml[i+1]=[];
   }
+  fin_chargement_xml=true;
 }
 
 function onread_datas_xml() {
@@ -27,6 +28,7 @@ function onread_datas_xml() {
             case 0 :
                 if (onload_file_xml) {
                     etape_read_xml=1;
+                    fin_chargement_xml=false;
                 }
                 break;
             case 1 :
@@ -42,9 +44,11 @@ function onread_datas_xml() {
                     etape_read_xml=3;
                 break;
             case 3 :
-                    Helpmessage(tableau_donnees_xml,"HELP")
-                    etape_read_xml=0;
-                    onload_file_xml=false;
+                    if (fin_chargement_xml){
+                        Helpmessage(tableau_donnees_xml,"HELP")
+                        etape_read_xml=0;
+                        onload_file_xml=false;
+                    }
                 break;
             case 99 :
                 CustomAlert("error on xml step 99 : file not found","xml error");

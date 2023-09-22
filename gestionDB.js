@@ -305,10 +305,25 @@ function onwrite_datas() {
     }
 }
 
-function read_datas() {
+function read_datas_1() {
     if(!save_donnees_base){
         if (!onload_donnees_base){ /* verifie si chargemnt non en cours */
+            if (langue==1){
+                titre="New Project";
+                message_avert="Action witch reset all datas";
+            } else {
+                titre="Nouveau Projet";
+                message_avert="Action qui réinitialise toutes les données";
+            }
+            CustomConfirm_1(message_avert,titre)
+        }
+    }
+}
 
+function read_datas() {
+    document.getElementById('dialogbox').style.display = "none";
+    if(!save_donnees_base){
+        if (!onload_donnees_base){ /* verifie si chargemnt non en cours */
             onload_donnees_base= true;
             etape_write=0;
         }

@@ -45,6 +45,7 @@ let etape_read_xml=0;
 let nom_fichier_xml="fichier1.xml";
 let xhttp =""; /* objet pour lecture fichier xmk */
 let tableau_donnees_xml=[]; /* pour sauvegarde des donnees */
+let fin_chargement_xml=false;
 
 /* variables pour affichage page 2 IFRAME */
 /* ------------------------------------- */
@@ -581,7 +582,7 @@ function principal(){
             /* ======== gestion des DB read and write =================== */
             document.querySelector('button[id="write_db"]').onclick=write_datas;
             onwrite_datas();
-            document.querySelector('button[id="read_db"]').onclick=read_datas;
+            document.querySelector('button[id="read_db"]').onclick=read_datas_1;
             onread_datas();
             /* ========================================================= */
             /* si pas de lecture ecriture sur DB alors affichage possible des datas sur Iframe ==== */
