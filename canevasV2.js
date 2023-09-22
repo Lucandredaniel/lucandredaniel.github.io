@@ -2,7 +2,7 @@
 /* ===================================================== */
 
  window.onload = function (){
-   var intervalle=setInterval(principal,30); /* lancement automatique de la fonction toutes les 60ms */
+   var intervalle=setInterval(principal,30); /* lancement automatique de la fonction toutes les 30ms */
    }
 
 let brouillon=0;
@@ -37,6 +37,14 @@ let time_milliseconds=100000; /* temps d attente avant exécution fonction */
 let maxprogress = 250;   // total à atteindre pour barre graph
 let actualprogress = 0;  // valeur courante pour barre graph
 let multiplicateur = 10; // pour affichage
+
+/* variable pour lecture fichier XML */
+/* --------------------------------- */
+let onload_file_xml=false;
+let etape_read_xml=0;
+let nom_fichier_xml="fichier1.xml";
+let xhttp =""; /* objet pour lecture fichier xmk */
+let tableau_donnees_xml=[]; /* pour sauvegarde des donnees */
 
 /* variables pour affichage page 2 IFRAME */
 /* ------------------------------------- */
@@ -116,6 +124,8 @@ let deplace_canvas=false;
 let delta=0; /* zoom avec molette mouse */
 let double_click=false; /* gestion click souris */
 let scroll_bloquer=false; /* bloquage de du scroll de la molette */
+let pos_scroll_y=0; /* position du scroll monte et baisse */
+let pos_scroll_x=0; /* position du scroll droite gauche */
 
 /* liste des taches et variables associées */
 let first=true;                     /* init au demarrage a froid */
@@ -578,13 +588,13 @@ function principal(){
              if ((transfert_datas_fini ) && (!deplace_iframe)) {
                 /* lecture des BP */
                 document.querySelector('button[id="essai_task"]').onclick=affiche_donnes_diverses;
+                document.querySelector('button[id="Help"]').onclick=read_xml;
                 document.querySelector('button[id="newproject"]').onclick=clear_project;
                 document.querySelector('button[id="display_datas"]').onclick=affiche_datas_iframe;
                 document.getElementById("drapeau_F").onclick=langue_Francaise;
                 document.getElementById("drapeau_A").onclick=langue_Anglaise;
                 /* provisoire rend les 2 BP invisibles */
                 inhibe_identity();
-
                 document.getElementById("outputfile").onclick=ecriture_fichier_text;
                 document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").onclick=rajout_one_task;
                 document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").onclick=set_tasks;
@@ -609,6 +619,7 @@ function principal(){
                 //listen_mouse_on_page2();
                 listen_mouse_on_page1();
                 lecture_fichier_text();
+                onread_datas_xml();
             }
         }
     }

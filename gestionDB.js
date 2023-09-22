@@ -131,55 +131,60 @@ function lecture_datas_db() {
     titre_tache="titre"+String(index_db);
     let getarray = index_inside_db.get(titre_tache);
     getarray.onsuccess = function() {
-        array_tasks_lecture_datas=getarray.result.name;
-        word_restant=String(array_tasks_lecture_datas);
-        let index_virgule=0;
-        let word=[];
-        let j=0;
-        let analyse_fini=false
-        while (!analyse_fini){
-            if (word_restant.length==0){analyse_fini=true }
-            index_virgule=word_restant.search(",");
-            if (index_virgule==-1){
-                analyse_fini=true;
-                word[j]=word_restant;
-            }else {
-                word[j]=word_restant.slice(0,index_virgule);
-                word_restant=word_restant.slice(index_virgule+1)
-                j++;
-            }
-        }
-        if (word[1]!="finlla"){
-          array_tasks[index_db]=[];
-          for (let j = 0; j < word.length; j++) {
-            if (j==0) {
-                array_tasks[index_db][j]=word[j];
-            }else {
-                if (j==9) {
-                    array_tasks[index_db][j]=word[j];
+        try {
+            array_tasks_lecture_datas=getarray.result.name;
+            word_restant=String(array_tasks_lecture_datas);
+            let index_virgule=0;
+            let word=[];
+            let j=0;
+            let analyse_fini=false
+            while (!analyse_fini){
+                if (word_restant.length==0){analyse_fini=true }
+                index_virgule=word_restant.search(",");
+                if (index_virgule==-1){
+                    analyse_fini=true;
+                    word[j]=word_restant;
                 }else {
-                    array_tasks[index_db][j]=Number(word[j]);
+                    word[j]=word_restant.slice(0,index_virgule);
+                    word_restant=word_restant.slice(index_virgule+1)
+                    j++;
                 }
             }
-          }
-          etape_write=4;
-        } else {
-            if (word[0]=="parametre1"){
-              array_parametre_environnement1=[];
+            if (word[1]!="finlla"){
+              array_tasks[index_db]=[];
               for (let j = 0; j < word.length; j++) {
-                    array_parametre_environnement1[j]=word[j];
+                if (j==0) {
+                    array_tasks[index_db][j]=word[j];
+                }else {
+                    if (j==9) {
+                        array_tasks[index_db][j]=word[j];
+                    }else {
+                        array_tasks[index_db][j]=Number(word[j]);
+                    }
+                }
               }
               etape_write=4;
-            }else if (word[0]=="parametre2"){
-                      array_parametre_environnement2=[];
-                      for (let j = 0; j < word.length; j++) {
-                            array_parametre_environnement2[j]=word[j];
-                      }
-                      etape_write=4;
+            } else {
+                if (word[0]=="parametre1"){
+                  array_parametre_environnement1=[];
+                  for (let j = 0; j < word.length; j++) {
+                        array_parametre_environnement1[j]=word[j];
                   }
-            else{
-                etape_write=6; /* fin de transfert */
+                  etape_write=4;
+                }else if (word[0]=="parametre2"){
+                          array_parametre_environnement2=[];
+                          for (let j = 0; j < word.length; j++) {
+                                array_parametre_environnement2[j]=word[j];
+                          }
+                          etape_write=4;
+                      }
+                else{
+                    etape_write=6; /* fin de transfert */
+                }
             }
+        } catch (e) {
+            CustomAlert(e.name + " : " + e.message,"db error");
+            etape_write=100;
         }
     };
     getarray.onerror   = function() {
@@ -303,6 +308,7 @@ function onwrite_datas() {
 function read_datas() {
     if(!save_donnees_base){
         if (!onload_donnees_base){ /* verifie si chargemnt non en cours */
+
             onload_donnees_base= true;
             etape_write=0;
         }
@@ -340,7 +346,12 @@ function onread_datas() {
                     if (!window.indexedDB) {
                         CustomAlert("Your browser does not support a stable version of IndexedDB. Some features will not be available.","db error");
                     }
-                    open_db();
+                    try {
+                        open_db();
+                    } catch (e) {
+                        CustomAlert(e.name + " : " + e.message,"db error");
+                        etape_write=100;
+                    }
                 break;
             case 3 :
                     etape_write=4;
@@ -353,7 +364,12 @@ function onread_datas() {
                     etape_write=5;
                 break;
             case 5 :
-                    lecture_datas_db();
+                    try {
+                        lecture_datas_db();
+                    } catch (e) {
+                        CustomAlert(e.name + " : " + e.message,"db error");
+                        etape_write=100;
+                    }
                 break;
             case 6 :
                     fermeture_db();
@@ -373,6 +389,9 @@ function onread_datas() {
                 break;
             case 99 :
                 CustomAlert("error on DB step 99 : Project not found","db error");
+                etape_write=7;
+                break;
+            case 100 :
                 etape_write=7;
                 transfert_datas_fini=true;
                 onload_donnees_base= false;

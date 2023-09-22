@@ -113,6 +113,7 @@ function affiche_datas(){ /* affiche donneees des taches dans l'Iframe */
     initialisation_affichage_datas=false
     affiche_datas_effectue=true;
 }
+
 function lecture_datas(numero_tache){ /* lecture de toutes les donnees tant que l'iframe est ouvert */
     if (affiche_datas_effectue) {
         if (numero_tache!=0){
@@ -632,7 +633,7 @@ function affiche_une_tache_specifique(numero_de_la_tache_a_afficher){
     element_a_bouger.style.position="absolute";
     element_a_bouger.style.left=String(page2_left) + "px";
     element_a_bouger.style.top=String(page2_top+40) + "px";
-    element_a_bouger.style.height=String(120) + "px";
+    element_a_bouger.style.height=String(80) + "px";
     display_one_task(numero_de_la_tache_a_afficher);
     affect_donnees_display(numero_de_la_tache_a_afficher)
     affiche_une_seule_tache=true;
@@ -667,31 +668,12 @@ function listen_mouse_on_page2(){
                     element_a_ecouter.style.position="absolute";
                     element_a_ecouter.style.left=String(parseInt(page2_left))+"px";
                     element_a_ecouter.style.top=String(parseInt(page2_top))+"px";
-                }else {
-                    /*
-                    if (deltax>0){
-                        page2_left+=1;}
-                    if (deltax<0){
-                        page2_left-=1;}
-                     if (deltay>0){
-                        page2_top+=1;}
-                    if (deltax<0){
-                        page2_top-=1;}
-                    element_a_ecouter.style.position="absolute";
-                    element_a_ecouter.style.left=String(page2_left)+"px";
-                    element_a_ecouter.style.top=String(page2_top)+"px";
-                    */
                 }
             }
         }else {inc=0}
      }, false);
     elmnt.addEventListener("mouseup", function(a){
         if (deplace_iframe){
-            //element_a_ecouter.style.position="absolute";
-            //page2_left=page2_left+1;
-            //page2_top=page2_top+1;
-            //element_a_ecouter.style.left=String(parseInt(page2_left))+"px";
-            //element_a_ecouter.style.top=String(parseInt(page2_top))+"px";
             deplace_iframe=false;
         }
         deplace_iframe=false;
@@ -721,12 +703,10 @@ function affichage_de_iframe(){
 function listen_mouse_on_page1(){
      elmnt =document.getElementById("entete_iframe");
      elmnt.addEventListener("mousemove", function(e){
-
-        // elmnt.style.cursor="grab";
         page2_left_x=elmnt.getBoundingClientRect().left;
         page2_top_y=elmnt.getBoundingClientRect().top;
-
         if (deplace_iframe){
+            pos_scroll_y=window.scrollY;
             let mousePos=getMousePos_iframe(elmnt,e);
             let deltax=Number(mousePos.x)-Number(memo_mouse_x);
             let deltay=Number(mousePos.y)-Number(memo_mouse_y);
@@ -737,6 +717,7 @@ function listen_mouse_on_page1(){
             elmnt.style.position="absolute";
             elmnt.style.left=String(parseInt(page2_left))+"px";
             elmnt.style.top=String(parseInt(page2_top))+"px";
+            message(window.scrollY,page2_top);
         }else {inc=0}
      }, false);
     elmnt.addEventListener("mouseup", function(a){
@@ -749,13 +730,16 @@ function listen_mouse_on_page1(){
      }, false);
     elmnt.addEventListener("mousedown", function(c){
         /* cache l'Iframe */
-        let iframe_hidden_element = document.getElementById("page2");
-        iframe_hidden_element.setAttribute("hidden","hidden");
+        //let iframe_hidden_element = document.getElementById("page2");
+        /* iframe_hidden_element.setAttribute("hidden","hidden"); */
+        //iframe_hidden_element.style.height=String(0) + "px";
+        //iframe_hidden_element.style.width=String(0) + "px";
         if (!deplace_iframe){
             let mousePos=getMousePos_iframe(elmnt,c);
             memo_mouse_x=mousePos.x
             memo_mouse_y=mousePos.y
             deplace_iframe=true;
         }
+
       }, false);
 }

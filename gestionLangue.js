@@ -17,13 +17,21 @@ function changement_langue_iframe(){
 
 function langue_Anglaise(){
     langue=1;
-    affiche_datas();
+    if (!affiche_une_seule_tache){
+        affiche_datas(0);
+    }else{
+        affiche_une_tache_specifique(numero_de_la_tache_a_afficher);
+    }
     affichage_langue()
     changement_langue_iframe();
 };
 function langue_Francaise(){
     langue=2;
-    affiche_datas();
+    if (!affiche_une_seule_tache){
+        affiche_datas(0);
+    }else{
+        affiche_une_tache_specifique(numero_de_la_tache_a_afficher);
+    }
     affichage_langue()
     changement_langue_iframe();
 };
@@ -93,6 +101,10 @@ function init_langue(){
     array_langue[14].push("text9");
     array_langue[14].push("gap between. rows.");
     array_langue[14].push("largeur des lignes");
+    array_langue.push([]); /* ================= */
+    array_langue[15].push("Help");
+    array_langue[15].push("Help");
+    array_langue[15].push("aide");
     /*============================ texte dans Iframe ==================*/
     array_langue_iframe.push([]); /* ================= */
     array_langue_iframe[0].push("entete_iframe");

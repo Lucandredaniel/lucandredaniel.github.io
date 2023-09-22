@@ -2,11 +2,11 @@
 body {font-family:"Times New Roman"; font-size:14px; font-weight:normal; background-color:white;overflow:auto;}
 #entete_page1 { background-color: green; color: white; width: 1850px; height: 40px; line-height: 30px; position:absolute; top: 5px;	left: 5px; text-align: center;font-size:30px}
 .entete {}
-#entete_iframe { background-color: green; color: white; width: 1260px; height: 40px; line-height: 30px; position:absolute; top: 660px;	left: 300px; z-index: 1;text-align: center;font-size:30px;border-radius:5px}
+#entete_iframe { background-color: green; color: white; width: 1360px; height: 40px; line-height: 30px; position:absolute; top: 660px;	left: 300px; z-index: 1;text-align: center;font-size:30px;border-radius:5px}
 #entete_iframe:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: grab;filter: brightness(1.2);}
-#entete_iframe:active {filter: brightness(1.5);border-radius:50px;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);}
+#entete_iframe:active {filter: brightness(1.5); height: 100px;border-radius:50px;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);}
 #entete_page2 {}
-#page2  { pointer-events: auto; position : absolute; top : 850px;  left: 300px;  width: 1250px;  height: 400px; background-color: white; border-width: 5px;}
+#page2  { pointer-events: auto; position : absolute; top : 850px; left: 300px;  width: 1350px;  height: 400px; background-color: white; border-width: 5px;}
 table { table-layout:auto;width:100%;}
 
 pre {line-height:120%;}
@@ -31,8 +31,10 @@ p {	text-align:left; color:black; line-height:60%;}
 #read_db:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 #display_datas {width: 100px; height: 40px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #display_datas:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#essai_task {margin: 70px 0px 0px 100px;width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#essai_task {margin: 70px 0px 0px 100px;width: 65px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #essai_task:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
+#Help {margin: 70px 0px 0px 0px;width: 65px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#Help:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 #w_task {width: 45px; height: 20px;    position:absolute; top : 365px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
 #l_size {width: 45px; height: 20px;    position:absolute; top : 389px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
 #g_columns {width: 45px; height: 20px; position:absolute; top : 414px; left : 131px; border: 2px solid #9C9898; font-size:12px;}

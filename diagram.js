@@ -537,16 +537,7 @@ function draw_axes(graphe,drawing_area){
 }
 
 function listen_mouse_on_canvas(graphe,drawing_area){
-    if (!scroll_bloquer) {
-        function noScroll(evt) {   // bon pour Firefox, mais il me semble que Chrome et IE situent 'scrollTop' et 'scrollLeft' sur le document... à vérifier
-            var x = document.documentElement.scrollLeft;
-            var y = document.documentElement.scrollTop;
-            window.scrollTo(x, y);
-        }
-        window.addEventListener('scroll', noScroll); /* on bloque le scroll de la molette */
-        //window.removeEventListener('scroll', noScroll); /* on debloque le scroll */
-        //scroll_bloquer=true;
-    }
+
     if (deplace_canvas){
         drawing_area.style.cursor="grab";
     }
@@ -592,6 +583,10 @@ function listen_mouse_on_canvas(graphe,drawing_area){
       }, false);
     drawing_area.addEventListener("dblclick", function (e) {
         if (double_click==false) {
+            let iframe_page2=document.getElementById("entete_iframe");
+            iframe_page2.removeAttribute("hidden");
+            page2_left = iframe_page2.offsetLeft;
+            page2_top  = iframe_page2.offsetTop;
             iframe_hidden = document.getElementById("page2");
             iframe_hidden.removeAttribute("hidden");
             iframe_hidden=false;
@@ -608,6 +603,7 @@ function listen_mouse_on_canvas(graphe,drawing_area){
         increment_left_canvas=0;
      }, false);
     drawing_area.addEventListener("DOMMouseScroll", function(e){ /* pour Firefox */
+        window.scroll(0, 0); /* remontage scroll en haut */
         document.getElementsByTagName("body")[0].style.overflow="hidden"; /* bloque le croll */
         delta= Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)))
     }, false);

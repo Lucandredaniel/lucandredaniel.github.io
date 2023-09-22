@@ -1,0 +1,18 @@
+<CATALOG>
+<TACHE>
+    <FRANCAIS>Gestion de la souris souris</FRANCAIS>
+    <ANGLAIS>using mouse</ANGLAIS>
+</TACHE>
+<TACHE>
+    <FRANCAIS>  * Double click gauche sur le diagramme ==> affichage des parametres de la tache selectionnée</FRANCAIS>
+    <ANGLAIS>   * Double left click on the chart ==> select task and display datas</ANGLAIS>
+</TACHE>
+<TACHE>
+    <FRANCAIS>  * rotation molette sur diagramme  ==> ZOOM</FRANCAIS>
+    <ANGLAIS>   * mouse wheel rotation over chart ==> ZOOM</ANGLAIS>
+</TACHE>
+<TACHE>
+    <FRANCAIS>  *  </FRANCAIS>
+    <ANGLAIS>   *  </ANGLAIS>
+</TACHE>
+</CATALOG>
