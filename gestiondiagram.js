@@ -500,10 +500,15 @@ function writing_times (graphe,drawing_area,type_time){
         if ((date_start_N_jour_semaine==0) ||(date_start_N_jour_semaine==6))  { /* detection du dimanche ou du samedi} */
             graphe.fillStyle = couleur_weekend;
             if (affichage_weekend) {
-                if (verifie_si_jour_travaille(i)) {
+                graphe.globalAlpha = 0.4;
+                if ((date_start_N_jour_semaine==0)&&(nombre_jour_travaille==7)) {
                     graphe.globalAlpha = 0.2;
-                }else{
-                    graphe.globalAlpha = 0.4;
+                }
+                if ((date_start_N_jour_semaine==6)&&(nombre_jour_travaille==6)) {
+                    graphe.globalAlpha = 0.2;
+                }
+                if ((date_start_N_jour_semaine==6)&&(nombre_jour_travaille==7)) {
+                    graphe.globalAlpha = 0.2;
                 }
                 graphe.fillRect(inter_space+decalage_axe_x_semaine-4, 30, space_column, height_schema);
             }else{
