@@ -127,6 +127,11 @@ let double_click=false; /* gestion click souris */
 let scroll_bloquer=false; /* bloquage de du scroll de la molette */
 let pos_scroll_y=0; /* position du scroll monte et baisse */
 let pos_scroll_x=0; /* position du scroll droite gauche */
+let affichage_weekend=false;
+let colorise_semaine=false;
+let couleur_weekend="gray";
+let couleur_fond_semaine="#dbb20d";
+let nombre_jour_travaille=7;
 
 /* liste des taches et variables associées */
 let first=true;                     /* init au demarrage a froid */
@@ -142,25 +147,27 @@ let principal_task = 1 ;            /* 6 tache principal ou pas */
 let upstream_task=0;                /* 7 tache amont */
 let default_task=0;                 /* 8 tache en defaut */
 let couleur_task="#4488EE";         /* 9 couleur de la tache */
+let dure_tache_principale=0         /*10 duree de la tache principale calculee pour affichage */
+let data_spare=0                    /*11 data en spare */
 /* --- */
 let number_datas_in_array=12;
 let number_tasks_max=50;
 let change_datas=false;
 let array_one_task1 = ["STUDIES/Engineering phase",0 ,1 ,0,0,0,1,0,0,"#4488EE",0,0];
-let array_one_task2 = ["mechanical studies"   ,0 ,10 ,0,0,3,0,0,0,"#4488EE",0,0];
-let array_one_task3 = ["electrical studies"   ,10,10 ,-3,0,4,0,0,0,"#4488EE",0,0];
-let array_one_task4 = ["automation studies"   ,17,6  , 0,0,5,0,0,0,"#4488EE",0,0];
-let array_one_task5 = ["informatique studies" ,23,15 ,-4,0,6,0,0,0,"#4488EE",0,0];
-let array_one_task6 = ["Studies acceptance"   ,34,1  , 0,1,7,0,0,0,"#4488EE",0,0];
-let array_one_task7 = ["part supply"          ,35,10 , 0,0,8,0,0,0,"#4488EE",0,0];
-let array_one_task8 = [ "ASSEMBLYING phase"   ,45,1  , 0,0,9 ,1,0,0,"#4488EE",0,0];
-let array_one_task9 = ["Assembly / wiring"    ,46,12 , 0,0,10,0,7,0,"#81daf3",0,0];
-let array_one_task10 = ["I/O tests & Dry Tests",58,4  , 0,0,11,0,0,0,"#81daf3",0,0];
-let array_one_task11 = ["FAT"                 ,62,3  , 0,0,12,0,0,0,"#81daf3",0,0];
-let array_one_task12 =["SAT"                  ,65,1  , 0,1,0,0,0,0,"#81daf3",0,0];
-let array_one_task13 =["QI"                   ,66,3  , 0,0,0,0,12,0,"#00ff00",0,0];
-let array_one_task14 =["QO"                   ,69,2  , 0,0,0,0,12,0,"#00ff00",0,0];
-let array_one_task15 =["QP"                   ,71,5  , 0,0,0,0,12,0,"#00ff00",0,0];
+let array_one_task2 = ["mechanical studies"   ,0 ,9 ,0,0,3,0,0,0,"#4488EE",0,0];
+let array_one_task3 = ["electrical studies"   ,13,10 ,-3,0,4,0,0,0,"#4488EE",0,0];
+let array_one_task4 = ["automation studies"   ,24,6  , 0,0,5,0,0,0,"#4488EE",0,0];
+let array_one_task5 = ["informatique studies" ,33,15 ,-4,0,6,0,0,0,"#4488EE",0,0];
+let array_one_task6 = ["Studies acceptance"   ,50,1  , 0,1,7,0,0,0,"#4488EE",0,0];
+let array_one_task7 = ["part supply"          ,53,10 , 0,0,8,0,0,0,"#4488EE",0,0];
+let array_one_task8 = [ "ASSEMBLYING phase"   ,68,0  , 0,0,9 ,1,0,0,"#4488EE",0,0];
+let array_one_task9 = ["Assembly / wiring"    ,68,12 , 0,0,10,0,7,0,"#81daf3",0,0];
+let array_one_task10 = ["I/O tests & Dry Tests",84,4  , 0,0,11,0,0,0,"#81daf3",0,0];
+let array_one_task11 = ["FAT"                 ,90,3  , 0,0,12,0,0,0,"#81daf3",0,0];
+let array_one_task12 =["SAT"                  ,95,1  , 0,1,0,0,0,0,"#81daf3",0,0];
+let array_one_task13 =["QI"                   ,96,3  , 0,0,0,0,12,0,"#00ff00",0,0];
+let array_one_task14 =["QO"                   ,96,2  , 0,0,0,0,12,0,"#00ff00",0,0];
+let array_one_task15 =["QP"                   ,96,5  , 0,0,0,0,12,0,"#00ff00",0,0];
 let array_task_vide = ["--------",0 ,1,0,0,0,0,0,0,"#4488EE",0,0];
 
 let array_parametre_environnement1=["","","","","","","","","","","",""];
@@ -197,8 +204,31 @@ function recopy_array_2D(){
         }
     }
 }
+function verifie_si_jour_travaille(index){
+    let jour_travaille=true;
+    if (nombre_jour_travaille<7){
+        let save_resultat_increment=index;
+        let nbr_m_second = 86400000 /* nbr de seconde en 1 journée */
+        variable1=document.getElementById("start_date_project");
+        let start_project= new Date(variable1.value);
+        if (start_project=="Invalid Date"){
+            start_project=new Date()
+        }
+        if (save_resultat_increment>0){
+            let start_int=start_project.getTime()
+            start_int+=(index*nbr_m_second);
+            start_project.setTime(start_int);
+        }
+        let date_start=start_project;
+        date_start_N_jour_semaine=date_start.getDay();
+        if (date_start_N_jour_semaine==0){jour_travaille=false}
+        if ((date_start_N_jour_semaine==6)&&(nombre_jour_travaille<6)){jour_travaille=false}
+    }
+    return jour_travaille;
+}
 
 function recopy_array_for_display(){
+    if (changement_affichage_en_cours_graph) {alert("chg")}
     if (!changement_affichage_en_cours_graph){
         if (memo_increment_left<0){memo_increment_left=0};
         if (memo_increment_left>number_day){memo_increment_left=number_day};
@@ -219,15 +249,21 @@ function recopy_array_for_display(){
                         if (array_tasks_display[index][j]<0) {array_tasks_display[index][j]=0}
                     }
                     for (let x = 0; x < int_increment; x++) {
-                        if (j==3) {
+                        if (j==2) {
                             if (array_tasks_display[index][1]>0){
                                array_tasks_display[index][1]-=1;
                             } else {
                                 array_tasks_display[index][1]=0;
-                                if (array_tasks_display[index][2]>0) {
-                                    array_tasks_display[index][2]-=1;
-                                }else {
-                                    array_tasks_display[index][2]=0;
+                                if (array_tasks_display_save[index][6]==1) {
+                                        if (array_tasks_display[index][2]>0) {
+                                            array_tasks_display[index][2]-=1;
+                                        }
+                                }else{
+                                    if (verifie_si_jour_travaille(x)){
+                                            if (array_tasks_display[index][2]>0) {
+                                                array_tasks_display[index][2]-=1;
+                                            }
+                                    }
                                 }
                             }
                         }
@@ -254,14 +290,17 @@ function check_datas_upstream(){
     for (let i = 0; i < (array_tasks.length); i++) {
         if (array_tasks_display_save[i][7]!=0){ /* vérifie si tache amont déclarée */
             /* vérifie si tache pas > au nombre de tache declaré */
-            let numero_tache_amont=Number(array_tasks_display_save[i][7]-1);
-             var fin_tache_en_cours=Number(array_tasks_display_save[numero_tache_amont][1])+Number(array_tasks_display_save[numero_tache_amont][2])+Number(array_tasks_display_save[numero_tache_amont][3]);
+             let numero_tache_amont=Number(array_tasks_display_save[i][7]-1);
+             let resultat_duree_tache=calcul_duree_tache(array_tasks_display_save[numero_tache_amont][1],array_tasks_display_save[numero_tache_amont][2],numero_tache_amont);
+             var fin_tache_en_cours=Number(array_tasks_display_save[numero_tache_amont][1])+Number(resultat_duree_tache)+Number(array_tasks_display_save[numero_tache_amont][3]);
              var debut_tache_suivante=Number(array_tasks_display_save[i][1]);
              var tache_jalon=Number(array_tasks_display_save[i][4]);
              if (tache_jalon!=1) {
                  if (debut_tache_suivante<fin_tache_en_cours){
-                    let delta_tache=fin_tache_en_cours-debut_tache_suivante;
-                    array_tasks_display_save[i][1]= array_tasks_display_save[i][1]+delta_tache;
+                    // let delta_tache=fin_tache_en_cours-debut_tache_suivante;
+                    let delta_tache=fin_tache_en_cours
+                    //array_tasks_display_save[i][1]= array_tasks_display_save[i][1]+delta_tache;
+                    array_tasks_display_save[i][1]= delta_tache;
                  }
              }
         }
@@ -269,7 +308,6 @@ function check_datas_upstream(){
 }
 function check_datas_downstream(){
     change_datas=false;
-    //recopy_array_2D();
     for (let i = 0; i < (array_tasks.length); i++) {
         if (array_tasks_display_save[i][5]>array_tasks_display_save.length) {
             array_tasks_display_save[i][5]=0;
@@ -278,7 +316,6 @@ function check_datas_downstream(){
         if (array_tasks_display_save[i][5]==i+1) {
             array_tasks_display_save[i][5]=0;
             array_tasks[i][5]=0;
-
         }
         /* verifie le parametre couleur */
         if (array_tasks_display_save[i][9]==0){
@@ -292,10 +329,14 @@ function check_datas_downstream(){
         if (array_tasks_display_save[i][5]!=0){ /* vérifie si tache aval déclarée */
             /* vérifie si tache pas > au nombre de tache declaré */
             let numero_tache_aval=Number(array_tasks_display_save[i][5]-1);
-             var fin_tache_en_cours=Number(array_tasks_display_save[i][1])+Number(array_tasks_display_save[i][2])+Number(array_tasks_display_save[i][3]);
+            let resultat_duree_tache=calcul_duree_tache(array_tasks_display_save[i][1],array_tasks_display_save[i][2],i);
+             var fin_tache_en_cours=Number(array_tasks_display_save[i][1])+Number(resultat_duree_tache)+Number(array_tasks_display_save[i][3]);
              var debut_tache_suivante=Number(array_tasks_display_save[numero_tache_aval][1]);
              var tache_jalon=Number(array_tasks_display_save[numero_tache_aval][4]);
              if (tache_jalon!=1) {
+                 if (!verifie_si_jour_travaille(debut_tache_suivante-1)){
+                     debut_tache_suivante+=1;
+                 }
                  if (debut_tache_suivante<fin_tache_en_cours){
                     let delta_tache=fin_tache_en_cours-debut_tache_suivante;
                     array_tasks_display_save[numero_tache_aval][1]= array_tasks_display_save[numero_tache_aval][1]+delta_tache;
@@ -309,17 +350,15 @@ function check_datas_downstream(){
         if (array_tasks_display_save[i][5]!=0){ /* vérifie si tache aval déclarée */
             let numero_tache_aval=Number(array_tasks_display_save[i][5]-1);
             let debut_tache_suivante=Number(array_tasks_display_save[numero_tache_aval][1]);
-            let fin_tache_en_cours=Number(array_tasks_display_save[i][1])+Number(array_tasks_display_save[i][2])+Number(array_tasks_display_save[i][3]);
+            let resultat_duree_tache=calcul_duree_tache(array_tasks_display_save[i][1],array_tasks_display_save[i][2],i);
+            let fin_tache_en_cours=Number(array_tasks_display_save[i][1])+Number(resultat_duree_tache)+Number(array_tasks_display_save[i][3]);
             let tache_jalon=Number(array_tasks_display_save[numero_tache_aval][4]);
             let tache_en_defaut=Number(array_tasks_display_save[numero_tache_aval][8]);
             if (debut_tache_suivante<fin_tache_en_cours){
                 if (tache_jalon==1){
                     array_tasks[i][8]=1; /* tache en defaut */
                     array_tasks_display_save[i][8]=1;
-                } /* else {
-                    array_tasks_display[array_tasks_display[i][5]-1][1]=Number(array_tasks_display[i][1])+Number(array_tasks_display[i][2])+Number(array_tasks_display[i][3]);
-                    array_tasks[array_tasks_display[i][5]-1][1]=array_tasks_display[array_tasks_display[i][5]-1][1];
-                } */
+                }
            } else {
                 array_tasks[i][8]=0         /* enleve les defauts */
                 array_tasks_display_save[i][8]=0;
@@ -333,7 +372,8 @@ function check_datas_downstream(){
             tache_en_defaut=array_tasks_display_save[numero_tache_aval][8];
             if (tache_en_defaut==1){
                 let debut_tache=Number(array_tasks_display_save[numero_tache_aval][1]);
-                let fin_tache_amont=Number(array_tasks_display_save[i][1])+Number(array_tasks_display_save[i][2])+Number(array_tasks_display_save[i][3]);
+                let resultat_duree_tache=calcul_duree_tache(array_tasks_display_save[i][1],array_tasks_display_save[i][2],i);
+                let fin_tache_amont=Number(array_tasks_display_save[i][1])+Number(resultat_duree_tache)+Number(array_tasks_display_save[i][3]);
                 if (fin_tache_amont>=debut_tache){
                     array_tasks[i][8]=1; /* tache en defaut */
                     array_tasks_display_save[i][8]=1;
@@ -349,14 +389,20 @@ function check_datas_downstream(){
             array_tasks_display_save[i][1]=Number(array_tasks_display_save[i][1])+Number(array_tasks_display_save[i][3]);
         }
     }
+}
+
+function calcul_tache_principale(){
     /* verifie si tache declarée comme "main task" */
-    var compteur_fin_tache=0;
-    var debut_tache_principale_precedent=0;
-    var fin_tache_principale_precedent=0;
-    for (let i = 0; i < (array_tasks_display_save.length); i++) {
-        var j=0;
-        fin_tache_principale_precedent=array_tasks_display_save[i][1];
-        /* verifie si tache principal (annule les liaions filles et additionne le delai total de chaque tache fille */
+    let compteur_fin_tache=0;
+    let debut_tache_principale_precedent=0;
+    let fin_tache_principale_precedent=0;
+    let compteur_duree=0;
+    let i=0;
+    let j=0;
+    let valeur_int=0;
+    while (i < (array_tasks_display_save.length)) {
+        j=0;
+        /* verifie si tache principal (annule les liaisons filles et additionne le delai total de chaque tache fille */
         if (array_tasks_display_save[i][6]==1){
             j=i+1;
             array_tasks_display_save[i][2]=0;
@@ -369,30 +415,48 @@ function check_datas_downstream(){
                 fin_tache_principale_precedent=array_tasks_display_save[i][1];
             }
             while (j < (array_tasks_display_save.length)){
-                if (array_tasks_display_save[j][6]==1){
-                    j=number_tasks_max+1;
-                    /* trouvé :  autre tache principale */
+                if (array_tasks_display_save[j][6]==1) {
+                    j=number_tasks_max+1; /* trouvé :  une autre tache principale */
+                    if (compteur_fin_tache!=0){
+                        array_tasks_display_save[i][2]=compteur_fin_tache-fin_tache_principale_precedent;
+                    }else {
+                        array_tasks_display_save[i][2]=0;
+                    }
+                    array_tasks_display_save[i][10]=compteur_duree;
+                    compteur_fin_tache=0;
+                    compteur_duree=0;
                 }
                 else {
-                    let valeur_int=Number(array_tasks_display_save[j][1])+Number(array_tasks_display_save[j][2])
+                    let incrementation=int_increment;
+                    if (incrementation<0){incrementation=0}
+                    let resultat_duree_tache=calcul_duree_tache(array_tasks_display_save[j][1],array_tasks_display_save[j][2],j);
+                    valeur_int=Number(array_tasks_display_save[j][1])+Number(resultat_duree_tache)
+                    compteur_duree+=array_tasks_display_save[j][2]
+
                     if (valeur_int>compteur_fin_tache) {
-                        compteur_fin_tache=valeur_int}
+                        compteur_fin_tache=valeur_int;
+                    }
                     j++;
                 }
             }
-            if (Number(array_tasks_display_save[i][2])==(compteur_fin_tache-fin_tache_principale_precedent))  {
-                change_datas=false;
-            } else {
+            if (j==array_tasks_display_save.length) { /* pas d'autre tache jalon */
+                //array_tasks_display_save[i][2]=compteur_fin_tache-fin_tache_principale_precedent;
                 array_tasks_display_save[i][2]=compteur_fin_tache-fin_tache_principale_precedent;
-                fin_tache_principale_precedent=compteur_fin_tache;
-                change_datas=true;
+                array_tasks_display_save[i][10]=compteur_duree;
+                compteur_fin_tache=0;
+                compteur_duree=0;
             }
         }
+        i++;
     }
+}
+
+function calcul_longueur_projet(){
     /* calcul durée total du projet pour parametre affichage (uniquement en fin de function CHECK pour prise en compte des modifications */
     number_day=0;
     for (let i = 0; i < (array_tasks_display_save.length); i++) {
-        let valeur_int=Number(array_tasks_display_save[i][1])+Number(array_tasks_display_save[i][2])+Number(array_tasks_display_save[i][3])
+        let resultat_duree_tache=calcul_duree_tache(array_tasks_display_save[i][1],array_tasks_display_save[i][2],i);
+        let valeur_int=Number(array_tasks_display_save[i][1])+Number(resultat_duree_tache)+Number(array_tasks_display_save[i][3])
         if (valeur_int>number_day) {
             number_day=valeur_int;
         }
@@ -420,7 +484,7 @@ function set_tasks(){
     }
 }
 function set_one_tasks(indice){
-    /* recalcul unqiement le depart de la tache demandée */
+    /* recalcul uniquement le depart de la tache demandée */
         array_tasks[indice][1]= array_tasks_display_save[indice][1]-array_tasks_display_save[indice][3];
         if (array_tasks_display_save[indice][6]==1){
             array_tasks[indice][2]=0;
@@ -444,13 +508,27 @@ function read_parameters(){
     let mois =start_project.getMonth()+1;
     let jour =start_project.getDate();
     texte_save_date = String(annee)+"-"+String(mois)+"-"+String(jour);
-    /* lecture donnees avec ou sans colonne ou ligne */
+    /* lecture parametres avec ou sans colonne ou ligne */
     with_rows=0;
     variable1 = document.querySelector('input[id="Choicerows"]:checked');
     if (variable1!=null) {with_rows=1};
     with_columns=0;
     variable1 = document.querySelector('input[id="Choicecol"]:checked');
     if (variable1!=null) {with_columns=1};
+    /* lecture parametres avec ou sans affichage semaine et weekend */
+    colorise_semaine=false;
+    variable1 = document.querySelector('input[id="tracesemaine"]:checked');
+    if (variable1!=null) {colorise_semaine=true};
+    affichage_weekend=false;
+    variable1 = document.querySelector('input[id="traceweekend"]:checked');
+    if (variable1!=null) {affichage_weekend=true};
+    let nbr_jour=document.getElementById("nbr_jour_w").value;
+    if (nbr_jour!=nombre_jour_travaille){
+        memo_increment_left=0; /* réinitialise l'affichage */
+        increment_left_canvas=0;
+        increment_top_canvas=0;
+        nombre_jour_travaille=nbr_jour;
+    }
 }
 
 /* apres lecture paramatre dans DB mise a jour des parametres affichés */
@@ -487,6 +565,31 @@ function write_parameters(){
             variable1.checked = true;
         } else {
             variable1.checked = false;
+        }
+        variable1 = document.getElementById("traceweekend");
+        variable1.checked = true;
+        if (array_parametre_environnement2[3]=="false") {
+            variable1.checked = false;
+        }
+        variable1 = document.getElementById("tracesemaine");
+        variable1.checked = true;
+        if (array_parametre_environnement2[4]=="false") {
+            variable1.checked = false;
+        }
+        variable1 = document.getElementById("colorweekend");
+        let string_color=String(array_parametre_environnement2[5]);
+        if (array_parametre_environnement2[5]!="para"){
+            variable1.value=string_color;
+        }
+        variable1 = document.getElementById("colorsemaine");
+        string_color=String(array_parametre_environnement2[6]);
+        if (array_parametre_environnement2[6]!="para"){
+            variable1.value=string_color;
+        }
+        if  ((array_parametre_environnement2[7]>4)&&(array_parametre_environnement2[7]<8)){
+            document.getElementById("nbr_jour_w").value=Number(array_parametre_environnement2[7]);
+        }else{
+            document.getElementById("nbr_jour_w").value=7;
         }
         ask_write_parameters=false;
     }
@@ -527,6 +630,11 @@ function valid_clear_project() {
     affiche_une_tache_specifique(numero_de_la_tache_a_afficher)
     //affiche_datas();
 }
+/* =============couleur des taches  ==================== */
+function lecture_bp_color_days(){
+    couleur_weekend =String(document.getElementById("colorweekend").value);
+    couleur_fond_semaine =String(document.getElementById("colorsemaine").value);
+}
 
 /* ======= debut prg principal =======================*/
 function principal(){
@@ -557,14 +665,13 @@ function principal(){
                 page2_width = iframe_page2.offsetWidth;
                 page2_height = iframe_page2.offsetHeight;
             }
-            //affichage_langue();
         }
         if (!demarrage_a_froid) {
             /* apres demarrage à froid */
             /* ======== affichage du diagram canvas =============== */
             if (transfert_datas_fini) {
                 writing_date_today(); /* en premier avant lecture parameters */
-                read_parameters(); /* lecture paramettre d affichage */
+                read_parameters(); /* lecture parametres d affichage */
                 write_parameters();
             }
             if (!onload_donnees_base) {
@@ -594,12 +701,14 @@ function principal(){
                 document.querySelector('button[id="display_datas"]').onclick=affiche_datas_iframe;
                 document.getElementById("drapeau_F").onclick=langue_Francaise;
                 document.getElementById("drapeau_A").onclick=langue_Anglaise;
-                /* provisoire rend les 2 BP invisibles */
+                /* provisoire rend les BP invisibles */
                 inhibe_identity();
                 document.getElementById("outputfile").onclick=ecriture_fichier_text;
                 document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").onclick=rajout_one_task;
                 document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").onclick=set_tasks;
+                lecture_bp_color_days()
                 /* lecture BP dans Iframe */
+                /* ---------------------- */
                 if (!affiche_une_seule_tache){
                     lecture_datas(0); /* lecture donnees dans l Iframe */
                     lecture_bp_insert(0);

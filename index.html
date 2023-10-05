@@ -8,7 +8,7 @@
       <title>Diagramm LLA</title>
       <link rel="stylesheet" media="screen" href="canevas.css" type="text/css">
       <script type="text/javascript" src="canevasV2.js"> </script>
-      <script type="text/javascript" src="diagram.js"> </script>
+      <script type="text/javascript" src="gestiondiagram.js"> </script>
       <script type="text/javascript" src="gestionIF.js"> </script>
       <script type="text/javascript" src="gestionDB.js"> </script>
       <script type="text/javascript" src="gestionDIV.js"> </script>
@@ -32,7 +32,7 @@
         <p>
             <button id="write_db"   >save datas</button>
             <button id="read_db"    >read datas</button>
-            <button id="display_datas">display datas on screen</button>
+            <button id="display_datas">display datas</button>
         </p>
         <p>
             <input type="checkbox" id="Choicerows" name="contact" value="" checked>
@@ -40,19 +40,32 @@
             <input type="checkbox" id="Choicecol" name="contact" value="" checked>
             <label id="text5" class="message" for="Choicecol">column display</label>
         </p>
+        <p>
+            <input type="checkbox" id="traceweekend" name="contact" value="" checked>
+            <label id="text16" class="message" for="traceweekend">displaying weekend</label>
+            <input type="checkbox" id="tracesemaine" name="contact" value="" >
+            <label id="text17" class="message" for="tracesemaine">displaying works days</label>
+        </p>
+        <p>
+            <input type="color" id="colorweekend" class="color_days" value="gray" >
+            <label id="text18" class="message" for="colorweekend">color weekend</label>
+            <input type="color" id="colorsemaine" class="color_days" value="#dbb20d" >
+            <label id="text19" class="message" for="colorsemaine">color works days</label>
+        </p>
         <p> <label id="text6" class="message"> width name task </label><input type="number" id="w_task" value="245" size="5"></p>
         <p> <label id="text7" class="message">letter size task </label><input type="number" id="l_size" value="14" size="5"></p>
         <p> <label id="text8" class="message">gap columns </label><input type="number" id="g_columns"  value="17"  size="5"></p>
         <p> <label id="text9" class="message">gap rows </label><input type="number" id="g_rows" value="27" size="5"></p>
-
+        <p> <label id="text20" >Days work/week </label><input type="number" id="nbr_jour_w" value="5" size="5" min="5" max="7" ></p>
         <!-- ========= barre de progression =========== -->
+
         <div id="pwidget">
-        <div id="progressbar">
-            <div id="indicator"></div>
-        </div>
-        <div id="progressnum">0</div>
-        <!--<div id="dialogoverlay"></div> -->
-        <div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>
+            <div id="progressbar">
+                <div id="indicator"></div>
+            </div>
+            <div id="progressnum">0</div>
+            <!--<div id="dialogoverlay"></div> -->
+            <div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>
         </div>
 
 

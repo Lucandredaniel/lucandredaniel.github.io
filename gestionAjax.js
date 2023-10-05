@@ -22,7 +22,6 @@ function myFunction(xml) {
 }
 
 function onread_datas_xml() {
-    message(onload_file_xml,etape_read_xml);
     if (onload_file_xml) {
          switch (etape_read_xml) {
             case 0 :

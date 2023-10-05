@@ -53,11 +53,11 @@ function creation_base_donnees_complete(){
    base_donnees_complete[pos_index][0] = ["parametre2"];
    base_donnees_complete[pos_index][1] = ["finlla"];
    base_donnees_complete[pos_index][2] = [langue];
-   base_donnees_complete[pos_index][3] = ["para"];
-   base_donnees_complete[pos_index][4] = ["para"];
-   base_donnees_complete[pos_index][5] = ["para"];
-   base_donnees_complete[pos_index][6] = ["para"];
-   base_donnees_complete[pos_index][7] = ["para"];
+   base_donnees_complete[pos_index][3] = [affichage_weekend];
+   base_donnees_complete[pos_index][4] = [colorise_semaine];
+   base_donnees_complete[pos_index][5] = [couleur_weekend];
+   base_donnees_complete[pos_index][6] = [couleur_fond_semaine];
+   base_donnees_complete[pos_index][7] = [nombre_jour_travaille];
    base_donnees_complete[pos_index][8] = ["para"];
    base_donnees_complete[pos_index][9] = ["para"];
    base_donnees_complete[pos_index][10] = ["para"];

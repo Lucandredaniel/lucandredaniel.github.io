@@ -3,8 +3,12 @@ body {font-family:"Times New Roman"; font-size:14px; font-weight:normal; backgro
 #entete_page1 { background-color: green; color: white; width: 1850px; height: 40px; line-height: 30px; position:absolute; top: 5px;	left: 5px; text-align: center;font-size:30px}
 .entete {}
 #entete_iframe { background-color: green; color: white; width: 1360px; height: 40px; line-height: 30px; position:absolute; top: 660px;	left: 300px; z-index: 1;text-align: center;font-size:30px;border-radius:5px}
-#entete_iframe:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: grab;filter: brightness(1.2);}
-#entete_iframe:active {filter: brightness(1.5); height: 100px;border-radius:50px;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);}
+#entete_iframe:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: grab;filter: brightness(1.1);}
+#entete_iframe:active {box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 1);filter: brightness(1.2); height: 80px;border-radius:50px;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);}
+
+#entete_iframe:before,
+
+
 #entete_page2 {}
 #page2  { pointer-events: auto; position : absolute; top : 850px; left: 300px;  width: 1350px;  height: 400px; background-color: white; border-width: 5px;}
 table { table-layout:auto;width:100%;}
@@ -21,8 +25,8 @@ p {	text-align:left; color:black; line-height:60%;}
 #height      { width: 100px;height: 20px; margin: 0px 0px 0px 60px;} /* hauteur canvas */
 #g_columns   { width: 20px; height: 20px; margin: 0px 0px 0px 19px;} /* hauteur ligne */
 #g_rows      { width: 20px; height: 20px; margin: 0px 0px 0px 27px;} /* hauteur ligne */
-#message1 {	width: 100px;  margin: 10px 0px 0px 27px; border: 2px solid #9C9898;}
-#message2 {	width: 100px;  margin: 0px 0px 0px 27px; border: 2px solid #9C9898;}
+#message1 {	width: 100px;  position:absolute; top : 700px; left : 50px; border: 2px solid #9C9898;}
+#message2 {	width: 100px;  position:absolute; top : 730px; left : 50px; border: 2px solid #9C9898;}
 #newproject {margin: 0px 0px 0px 100px; width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #newproject:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 #write_db {width: 85px; height: 40px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
@@ -35,23 +39,28 @@ p {	text-align:left; color:black; line-height:60%;}
 #essai_task:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 #Help {margin: 70px 0px 0px 0px;width: 65px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #Help:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#w_task {width: 45px; height: 20px;    position:absolute; top : 365px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
-#l_size {width: 45px; height: 20px;    position:absolute; top : 389px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
-#g_columns {width: 45px; height: 20px; position:absolute; top : 414px; left : 131px; border: 2px solid #9C9898; font-size:12px;}
-#g_rows {width: 45px; height: 20px;    position:absolute; top : 438px; left : 123px; border: 2px solid #9C9898; font-size:12px;}
-#inputfile { position:absolute; top : 650px; left : 0px; width: 72px; height: 22px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#w_task {width: 45px; height: 20px;    position:absolute; top : 435px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
+#l_size {width: 45px; height: 20px;    position:absolute; top : 465px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
+#g_columns {width: 45px; height: 20px; position:absolute; top : 495px; left : 131px; border: 2px solid #9C9898; font-size:12px;}
+#g_rows {width: 45px; height: 20px;    position:absolute; top : 525px; left : 123px; border: 2px solid #9C9898; font-size:12px;}
+#nbr_jour_w {width: 45px; height: 20px;position:absolute; top : 560px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
+#essai_file {position:absolute; top : 760px; left : 50px;}
+#inputfile { position:absolute; top : 790px; left : 50px; width: 72px; height: 22px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #inputfile:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#outputfile { position:absolute; top : 650px; left : 100px; width: 72px; height: 22px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
-#outputfile:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
+
 
 #text1 { width: 200px;  margin: 0px 0px 0px 0px;}
 #text2 { width: 200px;  margin: 0px 0px 0px 0px;}
 #text3 { width: 200px;  margin: 0px 0px 0px 0px;}
 #text4 { width: 200px;  margin: 0px 0px 0px 0px;}
 #text5 { width: 200px;  margin: 0px 0px 0px 0px;}
-#text6 { width: 200px;  margin: 0px 0px 0px 0px;}
-#text7 { width: 200px;  margin: 0px 0px 0px 0px;}
-#text8 { width: 200px;  margin: 0px 0px 0px 0px;}
+#text6 { width: 200px;  position:absolute; top : 445px; left : 10px;}
+#text7 { width: 200px;  position:absolute; top : 475px; left : 10px;}
+#text8 { width: 200px;  position:absolute; top : 505px; left : 10px;}
+#text9 { width: 200px;  position:absolute; top : 535px; left : 10px;}
+#text16 { width: 200px;  margin: 0px 0px 0px 0px;}
+#text17 { width: 200px;  margin: 0px 0px 0px 0px;}
+#text20 { width: 200px;  position:absolute; top : 570px; left : 10px;}
 .message { width: 200px;  margin: 0px 0px 0px 0px;}
 /* #message1 {width: 200px; height: 20px; margin: 0px 0px 0px 5px; border: 2px solid #9C9898; font-size:12px;} */
 /* #message2 {width: 200px; height: 20px; margin: 0px 0px 0px 5px; border: 2px solid #9C9898; font-size:12px;} */
@@ -69,8 +78,8 @@ p {	text-align:left; color:black; line-height:60%;}
                 border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));margin: 0px 0px 0px -10px;}
 .bouton_insert {width: 42px;height: 20px; background: rgb(21,105, 126); font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;
                 border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));margin: 0px 0px 0px 5px;}
-.color_task { width: 20px; height: 20px; margin: 0px 0px 0px 10px; border-width: 1px;
-                border-style: ridge ; border-radius: 50px; border-color:red ;}
+.color_task { width: 20px; height: 20px; margin: 0px 0px 0px 10px; border-width: 1px; border-style: ridge ; border-radius: 50px; border-color:red ;}
+.color_days { width: 20px; height: 20px; margin: 0px 0px 0px 0px; border-width: 1px;border-style: ridge ; border-radius: 50px; border-color:red ;}
 #T1{ width: 200px;  margin: 0px 0px 0px 105px;} /* definition Iframe */
 #T2{ width: 50px;  margin: 0px 0px 0px 145px;} /* start task Iframe*/
 #T3{ width: 50px; margin: 0px 0px 0px 15px;} /* delay Iframe*/
@@ -89,15 +98,14 @@ p {	text-align:left; color:black; line-height:60%;}
 input:enabled {color: black;}
 input:disabled {color: black;background-color: lightgray}
 
-#pwidget { margin: 20px 0px 0px 0px;background-color:lightgray; width:260px; padding:5px; border-radius:3px; border-radius:3px; text-align:left; border:1px solid gray;}
+#pwidget { position:absolute; top : 600px; left : 10px;background-color:lightgray; width:260px; padding:5px; border-radius:3px; border-radius:3px; text-align:left; border:1px solid gray;}
 #progressbar { width:255px; padding:1px; background-color:white; border:1px solid black; height:28px;}
 #indicator { width:0px; background-image:url("barre_progression.png"); height:28px; margin:0;}
 #progressnum { text-align:center; width:255px;}
 
 /*---------------#region Alert--------------- */
-#dialogoverlay{display: none;opacity: .8; position: fixed; top: 0px; left: 0px; background: #707070; width: 100%; z-index: 10;}
-#dialogbox{ display: none; position: absolute; background: rgb(0, 47, 43); border-radius:7px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.575); transition: 0.3s; width: 50%;
-  z-index: 10; top:0; left: 0; right: 0; margin: auto;}
+#dialogoverlay{display: none;opacity: .8; position: absolute; top:0px; left:0px; background: #707070; width: 100%; z-index: 10;}
+#dialogbox{ display: none; position: absolute; background: rgb(0, 47, 43); border-radius:7px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.575); transition: 0.3s; width: 50%; z-index: 10; }
 #dialogbox:hover {box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.911);}
 .pure-material-button-ok {
   position: relative;
@@ -186,8 +194,19 @@ input:disabled {color: black;background-color: lightgray}
 
 .pure-material-button-contained:disabled::after { opacity: 0;}
 
-#dialogbox > div{ background:#FFF; margin:8px;}
+#dialogbox > div{ background:#FFF; }
 #dialogbox > div > #dialogboxhead{ background: rgb(0, 77, 70); font-size:19px; padding:10px; color:rgb(255, 255, 255); font-family: Verdana, Geneva, Tahoma, sans-serif ;}
 #dialogbox > div > #dialogboxbody{ background:rgb(0, 47, 43); padding:20px; color:#FFF; font-family: Verdana, Geneva, Tahoma, sans-serif ;}
 #dialogbox > div > #dialogboxfoot{  background: rgb(0, 47, 43); padding:10px; text-align:right;}
 /*#endregion Alert*/
+
+/*  bouton spéciale */
+span{position: relative; display: inline-flex; width: 180px; height: 55px; margin: 0 15px; perspective: 1000px;}
+span a{ font-size: 19px; letter-spacing: 1px; transform-style: preserve-3d; transform: translateZ(-25px); transition: transform .25s; font-family: 'Montserrat', sans-serif;}
+span a:before,
+/* span a:after{ position: absolute; content: "BUTTON"; height: 55px; width: 180px; display: flex; align-items: center; justify-content: center; border: 5px solid black; box-sizing: border-box; border-radius: 5px;} */
+span a:after{ position: absolute; content: ""; height: 55px; width: 180px; display: flex; align-items: center; justify-content: center; border: 5px solid black; box-sizing: border-box; border-radius: 5px;}
+span a:before{ color: #fff; background: #000; transform: rotateY(0deg) translateZ(25px);}
+span a:after{ color: #000; transform: rotateX(90deg) translateZ(25px);}
+span a:hover{ transform: translateZ(-25px) rotateX(-90deg);}
+

@@ -72,8 +72,8 @@ function init_langue(){
     array_langue[7].push("read datas");
     array_langue[7].push("Charge donnees");
     array_langue.push([]); /* ================= */
-    array_langue[8].push("display datas ");
-    array_langue[8].push("hide datas");
+    array_langue[8].push("display_datas");
+    array_langue[8].push("hide all data");
     array_langue[8].push("cache les donnees");
     array_langue[8].push("display datas");
     array_langue[8].push("affiche les donnees");
@@ -102,9 +102,25 @@ function init_langue(){
     array_langue[14].push("gap between. rows.");
     array_langue[14].push("largeur des lignes");
     array_langue.push([]); /* ================= */
-    array_langue[15].push("Help");
-    array_langue[15].push("Help");
-    array_langue[15].push("aide");
+    array_langue[15].push("text16");
+    array_langue[15].push("displaying weekend");
+    array_langue[15].push("trace weekend");
+    array_langue.push([]); /* ================= */
+    array_langue[16].push("text17");
+    array_langue[16].push("displaying works days");
+    array_langue[16].push("Trace jours semaine");
+    array_langue.push([]); /* ================= */
+    array_langue[17].push("text18");
+    array_langue[17].push("color   weekend");
+    array_langue[17].push("couleur weekend");
+    array_langue.push([]); /* ================= */
+    array_langue[18].push("text19");
+    array_langue[18].push("color   works days");
+    array_langue[18].push("couleur jours semaine");
+    array_langue.push([]); /* ================= */
+    array_langue[19].push("text20");
+    array_langue[19].push("days work/week");
+    array_langue[19].push("jours travaillés/semaine");
     /*============================ texte dans Iframe ==================*/
     array_langue_iframe.push([]); /* ================= */
     array_langue_iframe[0].push("entete_iframe");
