@@ -79,7 +79,7 @@ function affiche_datas_iframe() { /* affiche les donnees dans l Iframe */
         element_a_modifier.innerHTML=array_langue[8][langue+2];
     }
     else {
-        if ((!deplace_iframe)||(deplace_iframe)){
+        if (!deplace_iframe){
             /* montre les elements */
             let iframe_page2=document.getElementById("entete_iframe");
             iframe_page2.removeAttribute("hidden");

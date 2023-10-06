@@ -2,12 +2,18 @@
 body {font-family:"Times New Roman"; font-size:14px; font-weight:normal; background-color:white;overflow:auto;}
 #entete_page1 { background-color: green; color: white; width: 1850px; height: 40px; line-height: 30px; position:absolute; top: 5px;	left: 5px; text-align: center;font-size:30px}
 .entete {}
-#entete_iframe { background-color: green; color: white; width: 1360px; height: 40px; line-height: 30px; position:absolute; top: 660px;	left: 300px; z-index: 1;text-align: center;font-size:30px;border-radius:5px}
+/*
+#entete_iframe { background-color: green; color: white; width: 1360px; height: 40px; line-height: 30px; position:absolute; top: 660px;	left: 300px; z-index: 1;text-align: center;font-size:30px;border-radius:5px;}
 #entete_iframe:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: grab;filter: brightness(1.1);}
 #entete_iframe:active {box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 1);filter: brightness(1.2); height: 80px;border-radius:50px;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);}
+*/
+#entete_iframe {background-color: green;color: white; width: 1360px; height: 50px; line-height: 40px; position:absolute; top: 550px;left: 300px; z-index: 1;
+        border-radius: 10px; border-style: none; box-shadow:black 0 -10px 10px inset; cursor: pointer;
+        font-family: -apple-system,sans-serif;  font-size: 1.2rem;  font-weight: 700;  letter-spacing: -.24px; outline: none;
+        text-align: center;  text-decoration: none;  user-select: none;  -webkit-user-select: none;  touch-action: manipulation;}
 
-#entete_iframe:before,
-
+#entete_iframe:hover { background-color: green; box-shadow: black 0 -5px 30px inset; }
+#entete_iframe:active {height: 60px;width: 1360px;box-shadow: #black 0 -15px 8px inset; }
 
 #entete_page2 {}
 #page2  { pointer-events: auto; position : absolute; top : 850px; left: 300px;  width: 1350px;  height: 400px; background-color: white; border-width: 5px;}
@@ -16,7 +22,7 @@ table { table-layout:auto;width:100%;}
 pre {line-height:120%;}
 p {	text-align:left; color:black; line-height:60%;}
 
-#schema {position:absolute;	top: 55px;	left: 300px; border: 2px ; solid #9C9898; backgroundColor=gray;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);}
+#schema {position:absolute;	top: 55px;	left: 300px; border: 2px ; solid #9C9898; backgroundColor=gray;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);border-radius: 5px}
 
 #date_jour          { width: 120px;height: 20px;text-align:center;font-size:14px;font-family: Verdana, Geneva, Tahoma, sans-serif ;margin: 0px 0px 0px 31px; border: 2px solid #9C9898;} /* date jour */
 #start_date_project { width: 120px;height: 20px;text-align:center;font-size:12px;font-family: Verdana, Geneva, Tahoma, sans-serif ;margin: 0px 0px 0px 30px; border: 2px solid #9C9898;} /* date projet */

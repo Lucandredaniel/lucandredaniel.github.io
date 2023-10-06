@@ -130,7 +130,7 @@ let pos_scroll_x=0; /* position du scroll droite gauche */
 let affichage_weekend=false;
 let colorise_semaine=false;
 let couleur_weekend="gray";
-let couleur_fond_semaine="#dbb20d";
+let couleur_fond_semaine="FAEAA9" //"#dbb20d";
 let nombre_jour_travaille=7;
 
 /* liste des taches et variables associées */

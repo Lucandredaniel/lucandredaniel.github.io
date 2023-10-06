@@ -119,16 +119,20 @@ function draw_task (graphe,drawing_area){
     let resultat_duree_tache=0;
     /* titre du projet */
     /* --------------- */
-    graphe.fillStyle = "darkgreen";
+    const grd = graphe.createLinearGradient(0, 0, 170, 0);
+    grd.addColorStop(0, "black");
+    grd.addColorStop(0.5, "green");
+    grd.addColorStop(1, "green");
+    graphe.fillStyle = grd;
     graphe.globalAlpha = 0.8;
-    graphe.fillRect(0, 0,start_column, 50)
+    graphe.fillRect(0, 0,start_column+2, 50 )
     name_db=document.getElementById("file_name_db").value;
     /* affiche le texte du graph (défini comme nom de la db) */
     if (name_db!="") {
         graphe.beginPath();
         graphe.globalAlpha = 1;
-        graphe.fillStyle = "orange";
-        size_font='bold '+String(letter_size+10)+'px serif'
+        graphe.fillStyle = "white";
+        size_font='bold '+String(letter_size+12)+'px serif'
         graphe.font = size_font;
         texte=name_db;
         graphe.fillText(texte,20, 30);
@@ -155,7 +159,7 @@ function draw_task (graphe,drawing_area){
         }
         end_column_task=deb_column_task+(resultat_duree_tache*space_column)-3
         graphe.beginPath();
-        graphe.lineCap='square';
+        graphe.lineCap='round';
         graphe.moveTo(deb_column_task, inc_line_task); /* point de depart */
         graphe.lineTo(end_column_task, inc_line_task); /* ligne point final*/
         if (array_tasks_display[i][6]==1) { /* verifie si "main task" */
@@ -570,6 +574,15 @@ function writing_times (graphe,drawing_area,type_time){
     let int=inter_space-130;
     graphe.fillRect(start_column, 30, int, 20); */
     largeur_graph=inter_space;
+    /* trace ligne de séparation en N° de jour et le graphe */
+    graphe.lineCap='round';
+    graphe.strokeStyle= 'brown';
+    graphe.beginPath();
+ 	graphe.globalAlpha = 0.6;
+ 	graphe.setLineDash([]); /* ligne discontinu */
+    graphe.moveTo(space_column,50); /* point de part */
+    graphe.lineTo(largeur_graph,50); /* ligne point final*/
+    graphe.stroke(); /* affiche la ligne */
 }
 /* axes qui suivent le curseur dans le canvas */
 function draw_axes(graphe,drawing_area){
