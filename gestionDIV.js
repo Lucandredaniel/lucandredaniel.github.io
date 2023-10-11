@@ -31,7 +31,7 @@ function CustomConfirm_1(message,title){
     let winH = window.innerHeight;
     //dialogoverlay.style.height = winH+"px";
     dialogbox.style.position="absolute";
-    dialogbox.style.top = "0px";
+    dialogbox.style.top = "120px";
     dialogbox.style.left = "500px";
     dialogbox.style.height="200px"
     dialogbox.style.width="1000px"
@@ -54,7 +54,7 @@ function CustomConfirm(message,title){
     let winH = window.innerHeight;
     //dialogoverlay.style.height = winH+"px";
     dialogbox.style.position="absolute";
-    dialogbox.style.top = "0px";
+    dialogbox.style.top = "120px";
     dialogbox.style.left = "500px";
     dialogbox.style.height="200px"
     dialogbox.style.width="1000px"
@@ -77,7 +77,7 @@ function CustomAlert(message,title){
     let winH = window.innerHeight;
     //dialogoverlay.style.height = winH+"px";
     dialogbox.style.position="absolute";
-    dialogbox.style.top = "0px";
+    dialogbox.style.top = "120px";
     dialogbox.style.left = "500px";
     dialogbox.style.height="200px"
     dialogbox.style.width="1000px"
@@ -100,7 +100,7 @@ function Helpmessage(tableau,title){
     let winH = window.innerHeight;
     //dialogoverlay.style.height = winH+"px";
     dialogbox.style.position="absolute";
-    dialogbox.style.top = "0px";
+    dialogbox.style.top = "120px";
     dialogbox.style.left = "500px";
     dialogbox.style.height="200px"
     dialogbox.style.width="1000px"

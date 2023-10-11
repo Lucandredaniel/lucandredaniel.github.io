@@ -146,13 +146,14 @@ function draw_task (graphe,drawing_area){
         size_font='bold '+String(letter_size)+'px serif'
         graphe.font = size_font;
         /* affiche le numero de la tache et le texte */
-        texte="T"+String(i+1)+": "
+
+        texte="T"+String(i+increment_top_canvas+1)+": "
         texte=texte+array_tasks_display[i][0];
         graphe.fillText(texte,start_column_task, inc_line_task);
         /* trace longueur de la tache */
-        deb_column_task = (array_tasks_display[i][1]*space_column)+start_column+2
         let incrementation=int_increment;
         if (incrementation<0){incrementation=0}
+        deb_column_task = (array_tasks_display[i][1]*space_column)+start_column+2
         resultat_duree_tache=calcul_duree_tache(array_tasks_display[i][1]+incrementation,array_tasks_display[i][2],i);
         if (array_tasks_display[i][6]==1){ /* si tache jalon, prendre la duree telle quelle */
             resultat_duree_tache=array_tasks_display[i][2];
@@ -620,7 +621,6 @@ function draw_axes(graphe,drawing_area){
 }
 
 function listen_mouse_on_canvas(graphe,drawing_area){
-
     if (deplace_canvas){
         drawing_area.style.cursor="grab";
     }
@@ -636,12 +636,10 @@ function listen_mouse_on_canvas(graphe,drawing_area){
             if (int_pos_mouse>0) {
                 if (int_pos_mouse>=space_between_line) {
                     increment_top_canvas+=1;
-                    //increment_top_canvas=0 /* pas de mouvement pour le moment PB de liaison */
                     memo_mouse_canvas_y=mouse_y };
             }else{
                 if (int_pos_mouse_n>=space_between_line) {
                     increment_top_canvas=increment_top_canvas-1;
-                    //increment_top_canvas=0 /* pas de mouvement pour le moment PB de liaison */
                     memo_mouse_canvas_y=mouse_y };
             }
             if (increment_top_canvas<0){increment_top_canvas=0};

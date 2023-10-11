@@ -68,8 +68,6 @@ p {	text-align:left; color:black; line-height:60%;}
 #text17 { width: 200px;  margin: 0px 0px 0px 0px;}
 #text20 { width: 200px;  position:absolute; top : 570px; left : 10px;}
 .message { width: 200px;  margin: 0px 0px 0px 0px;}
-/* #message1 {width: 200px; height: 20px; margin: 0px 0px 0px 5px; border: 2px solid #9C9898; font-size:12px;} */
-/* #message2 {width: 200px; height: 20px; margin: 0px 0px 0px 5px; border: 2px solid #9C9898; font-size:12px;} */
 
 .label_name_task{ width: 250px; height: 20px; margin: 0px 20px 0px 0px; padding: 0px 20px 0px 20px;}
 .name_task{ width: 200px; height: 20px; margin: 0px 10px 0px 0px;}
@@ -110,7 +108,7 @@ input:disabled {color: black;background-color: lightgray}
 #progressnum { text-align:center; width:255px;}
 
 /*---------------#region Alert--------------- */
-#dialogoverlay{display: none;opacity: .8; position: absolute; top:0px; left:0px; background: #707070; width: 100%; z-index: 10;}
+#dialogoverlay{display: none;opacity: .8; position: absolute; top:30px; left:20px; background: #707070; width: 100%; z-index: 10;}
 #dialogbox{ display: none; position: absolute; background: rgb(0, 47, 43); border-radius:7px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.575); transition: 0.3s; width: 50%; z-index: 10; }
 #dialogbox:hover {box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.911);}
 .pure-material-button-ok {
