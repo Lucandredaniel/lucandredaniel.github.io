@@ -1,7 +1,11 @@
 <CATALOG>
 <TACHE>
-    <FRANCAIS>Gestion de la souris souris</FRANCAIS>
-    <ANGLAIS>using mouse</ANGLAIS>
+    <FRANCAIS>Gestion de la souris sur le diagramme</FRANCAIS>
+    <ANGLAIS>using mouse over chart</ANGLAIS>
+</TACHE>
+<TACHE>
+    <FRANCAIS>--------------------------------------</FRANCAIS>
+    <ANGLAIS>------------------------</ANGLAIS>
 </TACHE>
 <TACHE>
     <FRANCAIS>  * Double click gauche sur le diagramme ==> affichage des parametres de la tache selectionnée</FRANCAIS>
@@ -12,7 +16,35 @@
     <ANGLAIS>   * mouse wheel rotation over chart ==> ZOOM</ANGLAIS>
 </TACHE>
 <TACHE>
-    <FRANCAIS>  *  </FRANCAIS>
-    <ANGLAIS>   *  </ANGLAIS>
+    <FRANCAIS>  * Click gauche maintenu : déplacement du diagramme</FRANCAIS>
+    <ANGLAIS>   * Left click and hold : moving the graph </ANGLAIS>
+</TACHE>
+<TACHE>
+    <FRANCAIS>  -</FRANCAIS>
+    <ANGLAIS>   -</ANGLAIS>
+</TACHE>
+<TACHE>
+    <FRANCAIS>  Utilisation des boutons</FRANCAIS>
+    <ANGLAIS>   Using buttons</ANGLAIS>
+</TACHE>
+<TACHE>
+    <FRANCAIS>  ------------------------</FRANCAIS>
+    <ANGLAIS>   ---------------</ANGLAIS>
+</TACHE>
+<TACHE>
+    <FRANCAIS>  * Sauvegarde donnees local :  BP sauvegarde donnees</FRANCAIS>
+    <ANGLAIS>   * Local datas save : BP save datas </ANGLAIS>
+</TACHE>
+<TACHE>
+    <FRANCAIS>  * lecture donnees local :  BP charge donnees</FRANCAIS>
+    <ANGLAIS>   * Local datas load : BP read datas </ANGLAIS>
+</TACHE>
+<TACHE>
+    <FRANCAIS>  * Sauvegarde donnees sur serveur (pour plusieurs utilisateurs) :  BP sauve/serveur</FRANCAIS>
+    <ANGLAIS>   * Server datas save : BP save/server </ANGLAIS>
+</TACHE>
+<TACHE>
+    <FRANCAIS>  * lecture donnees du serveur (pour plusieurs utilisateurs) :  BP charge/serveur</FRANCAIS>
+    <ANGLAIS>   * Server datas load : BP load/server </ANGLAIS>
 </TACHE>
 </CATALOG>
