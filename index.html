@@ -15,6 +15,8 @@
       <script type="text/javascript" src="gestionLangue.js"> </script>
       <script type="text/javascript" src="gestionFile.js"> </script>
       <script type="text/javascript" src="gestionAjax.js"> </script>
+      <script type="text/javascript" src="gestionAjax_rf.js"> </script>
+      <script type="text/javascript" src="gestionAjax_WF.js"> </script>
     </head>
     <body>
         <header id="entete_page1" class="entete"> Chart </header>
@@ -73,8 +75,10 @@
         <button id="essai_file" >lire fichier texte </button>
         <input type="file" name="inputfile" id="inputfile" accept=".txt, .csv" <br>
         <pre id="output"></pre>
-        <button id="outputfile" >Export</button>
         <pre id="output2"></pre>
+        <p> <button id="Sauvefichier" >Save / server</button> </p>
+        <p> <button id="lecturefichier">Load / server</button> </p>
+        <p> <button id="AbortFonctionAjax">Abort fct save/load </button> </p>
         <div id="entete_iframe" > Set tasks </div>
 
         <canvas class="diagramme" id = "schema" height = "500" width = "1500" style="border:1px solid">

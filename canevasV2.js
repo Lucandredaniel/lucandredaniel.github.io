@@ -10,6 +10,20 @@ let brouillon=0;
 /*=================== */
 let browserName="";    /* recherche du nom du browser utilisé */
 let page_chargee=false /* verification si page chargee avant analyse soft */
+/* variable global pour lecture / ecriture fichier avec PHP */
+let reponse_php="rien";
+let reponse_type="-";
+let reponse_status="-";
+let tableau_en_forme="";
+let ensemble_tableau="";
+let progression=0;
+let message_erreur="";
+/* variable global pour ecriture fichier avec PHP */
+let echange_datas_ecriture=false;
+let etape_write_php=0;
+/* variable global pour lecture fichier avec PHP */
+let echange_datas_lecture=false;
+let etape_read_php=0;
 /* variables pour DB */
 /* ----------------- */
 let base_donnees_complete=[];
@@ -43,7 +57,7 @@ let multiplicateur = 10; // pour affichage
 let onload_file_xml=false;
 let etape_read_xml=0;
 let nom_fichier_xml="fichier1.xml";
-let xhttp =""; /* objet pour lecture fichier xmk */
+let xhttp =""; /* objet pour appel fonction ajax */
 let tableau_donnees_xml=[]; /* pour sauvegarde des donnees */
 let fin_chargement_xml=false;
 
@@ -162,7 +176,7 @@ let array_one_task6 = ["Studies acceptance"   ,50,1  , 0,1,7,0,0,0,"#4488EE",0,0
 let array_one_task7 = ["part supply"          ,53,10 , 0,0,8,0,0,0,"#4488EE",0,0];
 let array_one_task8 = [ "ASSEMBLYING phase"   ,68,0  , 0,0,9 ,1,0,0,"#4488EE",0,0];
 let array_one_task9 = ["Assembly / wiring"    ,68,12 , 0,0,10,0,7,0,"#81daf3",0,0];
-let array_one_task10 = ["I/O tests & Dry Tests",84,4  , 0,0,11,0,0,0,"#81daf3",0,0];
+let array_one_task10 = ["I/O tests/Dry Tests",84,4  , 0,0,11,0,0,0,"#81daf3",0,0];
 let array_one_task11 = ["FAT"                 ,90,3  , 0,0,12,0,0,0,"#81daf3",0,0];
 let array_one_task12 =["SAT"                  ,95,1  , 0,1,0,0,0,0,"#81daf3",0,0];
 let array_one_task13 =["QI"                   ,96,3  , 0,0,0,0,12,0,"#00ff00",0,0];
@@ -196,7 +210,8 @@ let load_fichier_en_cours=false;
 let laod_fichier_txt_fini=false;
 
 function recopy_array_2D(){
-    array_tasks_display_save=[]
+    array_tasks_display_save=[];
+    //alert(array_tasks)
     for (let i = 0; i < array_tasks.length; i++) {
         array_tasks_display_save[i]=[]
         for (let j = 0; j < array_tasks[0].length; j++) {
@@ -691,6 +706,11 @@ function principal(){
             onwrite_datas();
             document.querySelector('button[id="read_db"]').onclick=read_datas_1;
             onread_datas();
+            /* ======== gestion lecture ecriture fichiers de sauvegarde=== */
+            document.getElementById("Sauvefichier").onclick=appel_ajax_ecriture_fichier;
+            document.getElementById("lecturefichier").onclick=appel_ajax_lecture_fichier;
+            echanges_datas_php_ecriture();
+            echanges_datas_php_lecture();
             /* ========================================================= */
             /* si pas de lecture ecriture sur DB alors affichage possible des datas sur Iframe ==== */
              if ((transfert_datas_fini ) && (!deplace_iframe)) {
@@ -703,7 +723,6 @@ function principal(){
                 document.getElementById("drapeau_A").onclick=langue_Anglaise;
                 /* provisoire rend les BP invisibles */
                 inhibe_identity();
-                document.getElementById("outputfile").onclick=ecriture_fichier_text;
                 document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").onclick=rajout_one_task;
                 document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").onclick=set_tasks;
                 lecture_bp_color_days()

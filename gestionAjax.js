@@ -52,9 +52,11 @@ function onread_datas_xml() {
             case 99 :
                 CustomAlert("error on xml step 99 : file not found","xml error");
                 etape_read_xml=0;
+                onload_file_xml=false;
                 break;
             case 100 :
                 etape_read_xml=0;
+                onload_file_xml=false;
                 break;
         }
     }

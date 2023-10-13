@@ -14,7 +14,6 @@ function detecte_browser(){
 
 function inhibe_identity(){
     document.getElementById('essai_file').style.display = "none";
-    document.getElementById('outputfile').style.display = "none";
     document.getElementById('inputfile').style.display = "none";
     document.getElementById('message1').style.display = "none";
     document.getElementById('message2').style.display = "none";

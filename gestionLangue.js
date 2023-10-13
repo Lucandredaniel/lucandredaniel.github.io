@@ -121,6 +121,18 @@ function init_langue(){
     array_langue[19].push("text20");
     array_langue[19].push("days work/week");
     array_langue[19].push("jours travaillés/semaine");
+    array_langue.push([]); /* ================= */
+    array_langue[20].push("Sauvefichier");
+    array_langue[20].push("Save / server");
+    array_langue[20].push("Sauve / serveur");
+    array_langue.push([]); /* ================= */
+    array_langue[21].push("lecturefichier");
+    array_langue[21].push("Load / server");
+    array_langue[21].push("Charge / serveur");
+    array_langue.push([]); /* ================= */
+    array_langue[22].push("AbortFonctionAjax");
+    array_langue[22].push("Abort save or load / server");
+    array_langue[22].push("Abandonne les échanges avec serveur");
     /*============================ texte dans Iframe ==================*/
     array_langue_iframe.push([]); /* ================= */
     array_langue_iframe[0].push("entete_iframe");

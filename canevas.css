@@ -53,7 +53,12 @@ p {	text-align:left; color:black; line-height:60%;}
 #essai_file {position:absolute; top : 760px; left : 50px;}
 #inputfile { position:absolute; top : 790px; left : 50px; width: 72px; height: 22px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #inputfile:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-
+#Sauvefichier {position:absolute; top : 680px; left : 10px; width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#Sauvefichier:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
+#lecturefichier {position:absolute; top : 680px; left : 140px; width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#lecturefichier:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
+#AbortFonctionAjax {position:absolute; top : 710px; left : 10px; width: 260px; height: 40px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 5%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#AbortFonctionAjax:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 
 #text1 { width: 200px;  margin: 0px 0px 0px 0px;}
 #text2 { width: 200px;  margin: 0px 0px 0px 0px;}
