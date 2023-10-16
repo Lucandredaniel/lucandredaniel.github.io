@@ -219,6 +219,7 @@ function recopy_array_2D(){
         }
     }
 }
+
 function verifie_si_jour_travaille(index){
     let jour_travaille=true;
     if (nombre_jour_travaille<7){
@@ -552,6 +553,7 @@ function write_parameters(){
         let int_langue=Number(array_parametre_environnement2[2]);
         if (int_langue!=1 && int_langue!=2){
             langue=1;
+            int_langue=0;
         }
         if (int_langue!=langue){
             langue=int_langue;
@@ -639,6 +641,7 @@ function valid_clear_project() {
     for (let i = 0; i < (number_datas_in_array); i++) {
         array_tasks[array_tasks.length-1].push(array_task_vide[i]) ;
     }
+    number_day=3; // nombre de jour
     affiche_une_seule_tache=true;
     numero_de_la_tache_a_afficher=1;
     recopy_array_2D();

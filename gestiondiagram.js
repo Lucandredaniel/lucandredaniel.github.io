@@ -663,19 +663,21 @@ function listen_mouse_on_canvas(graphe,drawing_area){
         }
       }, false);
     drawing_area.addEventListener("dblclick", function (e) {
-        if (double_click==false) {
-            let iframe_page2=document.getElementById("entete_iframe");
-            iframe_page2.removeAttribute("hidden");
-            page2_left = iframe_page2.offsetLeft;
-            page2_top  = iframe_page2.offsetTop;
-            iframe_hidden = document.getElementById("page2");
-            iframe_hidden.removeAttribute("hidden");
-            iframe_hidden=false;
-            let element_a_modifier=document.getElementById("display_datas");
-            element_a_modifier.innerHTML=array_langue[8][langue];
-            numero_de_la_tache_a_afficher=(calcul_numero_de_la_tache_a_afficher+increment_top_canvas)
-            affiche_une_tache_specifique(numero_de_la_tache_a_afficher);
-            double_click=true;
+        if (array_tasks.length>1) { // sinon il n y a qu'une tache
+            if (double_click==false) {
+                let iframe_page2=document.getElementById("entete_iframe");
+                iframe_page2.removeAttribute("hidden");
+                page2_left = iframe_page2.offsetLeft;
+                page2_top  = iframe_page2.offsetTop;
+                iframe_hidden = document.getElementById("page2");
+                iframe_hidden.removeAttribute("hidden");
+                iframe_hidden=false;
+                let element_a_modifier=document.getElementById("display_datas");
+                element_a_modifier.innerHTML=array_langue[8][langue];
+                numero_de_la_tache_a_afficher=(calcul_numero_de_la_tache_a_afficher+increment_top_canvas)
+                affiche_une_tache_specifique(numero_de_la_tache_a_afficher);
+                double_click=true;
+            }
         }
     }, false);
     drawing_area.addEventListener("mouseup", function(e){

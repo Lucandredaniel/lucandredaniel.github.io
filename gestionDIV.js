@@ -23,6 +23,7 @@ function affiche_texte_mineure(texte_message){
     prompt(texte_message);
 }
 
+// confirmation pour lecture donnees via DB
 function CustomConfirm_1(message,title){
     // document.body.innerHTML = document.body.innerHTML + '<div id="dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>';
     //let dialogoverlay = document.getElementById('dialogoverlay');
@@ -44,6 +45,29 @@ function CustomConfirm_1(message,title){
     }
     document.getElementById('dialogboxbody').innerHTML = message;
     document.getElementById('dialogboxfoot').innerHTML = '<button class="pure-material-button-ok active" onclick="read_datas()">OK</button> <button class="pure-material-button-Nok active" onclick="Bpok()">NOK</button>';
+}
+// confirmation pour lecture donnees via PHP et fichier TXT
+function CustomConfirm_2(message,title){
+    // document.body.innerHTML = document.body.innerHTML + '<div id="dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>';
+    //let dialogoverlay = document.getElementById('dialogoverlay');
+    let dialogbox = document.getElementById('dialogbox');
+    let winH = window.innerHeight;
+    //dialogoverlay.style.height = winH+"px";
+    dialogbox.style.position="absolute";
+    dialogbox.style.top = "120px";
+    dialogbox.style.left = "500px";
+    dialogbox.style.height="200px"
+    dialogbox.style.width="1000px"
+    //dialogoverlay.style.display = "block";
+    dialogbox.style.display = "block";
+    document.getElementById('dialogboxhead').style.display = 'block';
+    if(typeof title === 'undefined') {
+      document.getElementById('dialogboxhead').style.display = 'none';
+    } else {
+      document.getElementById('dialogboxhead').innerHTML = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i> '+ title;
+    }
+    document.getElementById('dialogboxbody').innerHTML = message;
+    document.getElementById('dialogboxfoot').innerHTML = '<button class="pure-material-button-ok active" onclick="ajax_lecture_fihier_txt()">OK</button> <button class="pure-material-button-Nok active" onclick="Bpok()">NOK</button>';
 }
 
 function CustomConfirm(message,title){

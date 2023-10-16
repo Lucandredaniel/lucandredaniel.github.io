@@ -1,5 +1,7 @@
 <?php
 
+    // sauvegarde donnees dans fichier TXT via PHP
+
     // initialisation des variables
     // ============================
     $tableau=[];
@@ -8,7 +10,7 @@
     $post_file=".txt";
     // lecture du nom de fichier transmis par l'URl via $_get
     $nom_fichier=$_GET["name"];
-    $nom_fichier.=$post_file;
+    //$nom_fichier.=$post_file;
     // lecture de toutes les donnees transmises via $_post
     // ===================================================
     for ($i = 0; $i < 60; $i++) {
