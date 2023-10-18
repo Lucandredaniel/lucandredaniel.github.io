@@ -130,7 +130,6 @@ function myFunction_lecture(php_datas) {
 }
 
 function php_lecture() {
-    const abort_button=document.getElementById("AbortFonctionAjax")
     if (echange_datas_lecture) {
          switch (etape_read_php) {
             case 0 :
@@ -142,6 +141,7 @@ function php_lecture() {
                     }else{
                         etape_read_php=1;
                         fin_chargement_xml=false;
+                        abort_php=false;
                     }
                 }
             break;
@@ -170,11 +170,10 @@ function php_lecture() {
                         actualprogress+=1; /* pour visu barre graph */
                         affiche_progression();
                         if (progression>1){progression=0}
-                        abort_button.addEventListener("click",function(){
+                        if (abort_php){
                             xhttp.abort();
-                            etape_read_php=0;
-                            echange_datas_lecture=false;
-                        },{once:true},);
+                            abort_php=false;
+                        }
                     }else {
                         etape_read_php=3;
                     }
@@ -224,16 +223,16 @@ function php_lecture() {
                                     recopy_array_2D();
                                     ask_write_parameters=true;
                                     message_erreur="";
-                                    // xhttp.abort();
                                     etape_read_php=4;
                                 }
                             break;
                         }
                     }else{
-                            abort_button.addEventListener("click",function(){
+                            if (abort_php){
                                 xhttp.abort();
-                            },{once:true},)
-                         }
+                                abort_php=false;
+                            }
+                        }
             break;
             case 4 :
                     etape_read_php=100;
@@ -243,6 +242,7 @@ function php_lecture() {
                     onload_donnees_base=false;
                     actualprogress=0;
                     affiche_progression();
+                    abort_php=false;
             break;
             case 99 :
                 CustomAlert("error on load file step 99 : ",message_erreur);
@@ -254,6 +254,7 @@ function php_lecture() {
                 etape_read_php=0;
                 echange_datas_lecture=false;
                 transfert_datas_fini=true;
+                abort_php=false;
             break;
         }
     }

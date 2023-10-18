@@ -33,8 +33,6 @@ function open_ecriture_php() {
   xhttp.onload = function() {myFunction_ecriture(this);}
   xhttp.open("POST", parametres, true);
   xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  // let body=JSON.stringify("var1=tableau de texte pour essai&var2=essai encore"); // avec conversion de la variable
-  //xhttp.send("var1=tableaudetextepouressai");
   xhttp.send(ensemble_tableau);
   xhttp.onreadystatechange =  function() {
         reponse_type=xhttp.readyState
@@ -54,7 +52,6 @@ function myFunction_ecriture(php_datas) {
 }
 
 function php_ecriture() {
-    const abort_button=document.getElementById("AbortFonctionAjax")
     if (echange_datas_ecriture) {
          switch (etape_write_php) {
             case 0 :
@@ -66,6 +63,7 @@ function php_ecriture() {
                     }else{
                         etape_write_php=1;
                         fin_chargement_xml=false;
+                        abort_php=false;
                     }
                 }
             break;
@@ -88,20 +86,16 @@ function php_ecriture() {
                         actualprogress+=1; /* pour visu barre graph */
                         affiche_progression();
                         if (progression>1){progression=0}
-                        /*
-                        abort_button.addEventListener("click",function(){
+                        if (abort_php){
                             xhttp.abort();
-                            etape_write_php=0;
-                            echange_datas_ecriture=false;
-                        },{once:true},);
-                        */
+                            abort_php=false;
+                        }
                     }else {
                         etape_write_php=3;
                     }
             break;
             case 3 :
                     // si status =3 ==> demande en cours
-                    alert("pass "+reponse_type+"   "+reponse_status)
                     if (reponse_type==4){
                          switch (reponse_status) {
                             case 0 :
@@ -143,12 +137,15 @@ function php_ecriture() {
                                 Helpmessage_1(message_erreur,titre)
                                 // xhttp.abort();
                                 etape_write_php=100;
+                                abort_php=false;
                             break;
                         }
                     }else{
-                            abort_button.addEventListener("click",function(){xhttp.abort();
-                            },{once:true},)
-                         }
+                            if (abort_php){
+                                xhttp.abort();
+                                abort_php=false;
+                            }
+                        }
             break;
             case 99 :
                 CustomAlert("error on save file step 99 : "+message_erreur);
@@ -158,6 +155,7 @@ function php_ecriture() {
             case 100 :
                 etape_write_php=0;
                 echange_datas_ecriture=false;
+                abort_php=false;
             break;
         }
     }

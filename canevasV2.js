@@ -24,6 +24,7 @@ let etape_write_php=0;
 /* variable global pour lecture fichier avec PHP */
 let echange_datas_lecture=false;
 let etape_read_php=0;
+
 /* variables pour DB */
 /* ----------------- */
 let base_donnees_complete=[];
@@ -198,6 +199,7 @@ let langue=1; /* choix de la langue de départ */
 let reponse_boite=false; /* retour de la boite de dialogue oui ou non */
 
 /* variables pour lecture fichier Txt ou CSV */
+/* ======================================== */
 let brouillon_file=[];
     brouillon_file.push([]);
 let brouillon_file1=[];
@@ -208,6 +210,7 @@ let reader  = new FileReader();
 let file_name_csv=[];
 let load_fichier_en_cours=false;
 let laod_fichier_txt_fini=false;
+let abort_php=false;
 
 function recopy_array_2D(){
     array_tasks_display_save=[];
@@ -653,6 +656,10 @@ function lecture_bp_color_days(){
     couleur_weekend =String(document.getElementById("colorweekend").value);
     couleur_fond_semaine =String(document.getElementById("colorsemaine").value);
 }
+/* aborte les fonctions PHP si demande */
+function AAAbort() {
+    abort_php=true;
+}
 
 /* ======= debut prg principal =======================*/
 function principal(){
@@ -712,6 +719,7 @@ function principal(){
             //document.getElementById("lecturefichier").onclick=appel_ajax_lecture_fichier;
             document.getElementById("text31").addEventListener("click",AAEfichier);
             document.getElementById("text32").addEventListener("click",AALfichier);
+            document.getElementById("text33").addEventListener("click",AAAbort);
             php_ecriture();
             php_lecture();
             /* ========================================================= */
