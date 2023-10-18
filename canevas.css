@@ -2,18 +2,6 @@
 body {font-family:"Times New Roman"; font-size:14px; font-weight:normal; background-color:white;overflow:auto;}
 #entete_page1 { background-color: green; color: white; width: 1850px; height: 40px; line-height: 30px; position:absolute; top: 5px;	left: 5px; text-align: center;font-size:30px}
 .entete {}
-/*
-#entete_iframe { background-color: green; color: white; width: 1360px; height: 40px; line-height: 30px; position:absolute; top: 660px;	left: 300px; z-index: 1;text-align: center;font-size:30px;border-radius:5px;}
-#entete_iframe:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: grab;filter: brightness(1.1);}
-#entete_iframe:active {box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 1);filter: brightness(1.2); height: 80px;border-radius:50px;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);}
-*/
-#entete_iframe {background-color: green;color: white; width: 1360px; height: 50px; line-height: 40px; position:absolute; top: 550px;left: 300px; z-index: 1;
-        border-radius: 10px; border-style: none; box-shadow:black 0 -10px 10px inset; cursor: pointer;
-        font-family: -apple-system,sans-serif;  font-size: 1.2rem;  font-weight: 700;  letter-spacing: -.24px; outline: none;
-        text-align: center;  text-decoration: none;  user-select: none;  -webkit-user-select: none;  touch-action: manipulation;}
-
-#entete_iframe:hover { background-color: green; box-shadow: black 0 -5px 30px inset; }
-#entete_iframe:active {height: 60px;width: 1360px;box-shadow: #black 0 -15px 8px inset; }
 
 #entete_page2 {}
 #page2  { pointer-events: auto; position : absolute; top : 850px; left: 300px;  width: 1350px;  height: 400px; background-color: white; border-width: 5px;}
@@ -24,31 +12,34 @@ p {	text-align:left; color:black; line-height:60%;}
 
 #schema {position:absolute;	top: 55px;	left: 300px; border: 2px ; solid #9C9898; backgroundColor=gray;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);border-radius: 5px}
 
-#date_jour          { width: 120px;height: 20px;text-align:center;font-size:14px;font-family: Verdana, Geneva, Tahoma, sans-serif ;margin: 0px 0px 0px 31px; border: 2px solid #9C9898;} /* date jour */
-#start_date_project { width: 120px;height: 20px;text-align:center;font-size:12px;font-family: Verdana, Geneva, Tahoma, sans-serif ;margin: 0px 0px 0px 30px; border: 2px solid #9C9898;} /* date projet */
-#file_name_db{ width: 120px; height: 20px; font-family: Verdana, Geneva, Tahoma, sans-serif ;margin: 0px 0px 0px 23px; border: 2px solid #9C9898;} /* file name */
-#width       { width: 100px;height: 20px;margin: 0px 0px 0px 60px;} /* largeur canvas */
-#height      { width: 100px;height: 20px; margin: 0px 0px 0px 60px;} /* hauteur canvas */
-#g_columns   { width: 20px; height: 20px; margin: 0px 0px 0px 19px;} /* hauteur ligne */
-#g_rows      { width: 20px; height: 20px; margin: 0px 0px 0px 27px;} /* hauteur ligne */
-#message1 {	width: 100px;  position:absolute; top : 760px; left : 160px; border: 2px solid #9C9898;}
-#message2 {	width: 100px;  position:absolute; top : 790px; left : 160px; border: 2px solid #9C9898;}
-#newproject {margin: 0px 0px 0px 100px; width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#text1 { width: 200px;  position : absolute; top : 120px; left: 10px;} /* date du jour */
+#date_jour { width: 120px;height: 20px;text-align:center;font-size:14px;font-family: Verdana, Geneva, Tahoma, sans-serif ;position : absolute; top : 110px; left: 100px; border: 2px solid #9C9898;} /* date jour */
+#text2 { width: 200px;  position:absolute; top : 150px; left : 10px;} /* start project */
+#start_date_project { width: 120px;height: 20px;text-align:center;font-size:12px;font-family: Verdana, Geneva, Tahoma, sans-serif ;position : absolute; top : 140px; left: 100px; border: 2px solid #9C9898;} /* date projet */
+#text3 { width: 200px;  position:absolute; top : 180px; left : 10px;} /* file name */
+#file_name_db{ width: 120px; height: 20px; font-family: Verdana, Geneva, Tahoma, sans-serif ;position:absolute; top : 170px; left : 100px; border: 2px solid #9C9898;
+            background: lightgray;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);} /* file name */
+
+/* BP */
+/* === */
+#newproject {position:absolute; top : 205px; left : 110px; width: 100px; height: 40px;background: rgb(21,105, 126); font-size:12px;text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #newproject:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#write_db {width: 85px; height: 40px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
-#write_db:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#read_db {width: 85px; height: 40px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
-#read_db:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#display_datas {width: 100px; height: 40px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#display_datas {position:absolute; top : 205px; left : 10px; width: 100px; height: 40px;background: rgb(21,105, 126); font-size:12px;text-align: center;
+                font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #display_datas:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#essai_task {margin: 70px 0px 0px 100px;width: 65px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
-#essai_task:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#Help {margin: 70px 0px 0px 0px;width: 65px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
-#Help:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
+
+/* choix parametres pour canvas */
+/* ============================ */
+#text6 { width: 200px;  position:absolute; top : 445px; left : 10px;} /* width name task */
 #w_task {width: 45px; height: 20px;    position:absolute; top : 435px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
+#text7 { width: 200px;  position:absolute; top : 475px; left : 10px;}
 #l_size {width: 45px; height: 20px;    position:absolute; top : 465px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
-#g_columns {width: 45px; height: 20px; position:absolute; top : 495px; left : 131px; border: 2px solid #9C9898; font-size:12px;}
-#g_rows {width: 45px; height: 20px;    position:absolute; top : 525px; left : 123px; border: 2px solid #9C9898; font-size:12px;}
+#text8 { width: 200px;  position:absolute; top : 505px; left : 10px;}
+#g_columns {width: 45px; height: 20px; position:absolute; top : 495px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
+#text9 { width: 200px;  position:absolute; top : 535px; left : 10px;}
+#g_rows {width: 45px; height: 20px;    position:absolute; top : 525px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
+#text20 { width: 200px;  position:absolute; top : 570px; left : 10px;}  /* choix nbr jour/semaine */
 #nbr_jour_w {width: 45px; height: 20px;position:absolute; top : 560px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
 #essai_file {position:absolute; top : 760px; left : 50px;}
 #inputfile { position:absolute; top : 790px; left : 50px; width: 72px; height: 22px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
@@ -60,20 +51,29 @@ p {	text-align:left; color:black; line-height:60%;}
 #AbortFonctionAjax {position:absolute; top : 710px; left : 10px; width: 260px; height: 40px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 5%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
 #AbortFonctionAjax:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 
-#text1 { width: 200px;  margin: 0px 0px 0px 0px;}
-#text2 { width: 200px;  margin: 0px 0px 0px 0px;}
-#text3 { width: 200px;  margin: 0px 0px 0px 0px;}
-#text4 { width: 200px;  margin: 0px 0px 0px 0px;}
-#text5 { width: 200px;  margin: 0px 0px 0px 0px;}
-#text6 { width: 200px;  position:absolute; top : 445px; left : 10px;}
-#text7 { width: 200px;  position:absolute; top : 475px; left : 10px;}
-#text8 { width: 200px;  position:absolute; top : 505px; left : 10px;}
-#text9 { width: 200px;  position:absolute; top : 535px; left : 10px;}
-#text16 { width: 200px;  margin: 0px 0px 0px 0px;}
-#text17 { width: 200px;  margin: 0px 0px 0px 0px;}
-#text20 { width: 200px;  position:absolute; top : 570px; left : 10px;}
-.message { width: 200px;  margin: 0px 0px 0px 0px;}
+#text4 { width: 200px;  position:absolute; top : 255px; left : 10px;}  /* line display */
+#Choicerows {position:absolute; top : 250px; left : 145px;}
+#text5 { width: 200px;  position:absolute; top : 285px; left : 10px;} /* columnn display */
+#Choicecol {position:absolute; top : 280px; left : 145px;}
+#text16 { width: 200px;  position:absolute; top : 315px; left : 10px;} /* trace weekend */
+#traceweekend {position:absolute; top : 310px; left : 145px;}
+#text17 { width: 200px;  position:absolute; top : 345px; left : 10px;} /* trace semaine */
+#tracesemaine {position:absolute; top : 340px; left : 145px;}
+#text18 { width: 200px;  position:absolute; top : 375px; left : 10px;} /* text color day */
+.color_days { width: 20px; height: 20px; position:absolute; top : 370px; left : 145px; border-width: 1px;border-style: ridge ; border-radius: 50px; border-color:red ;}
+#text19 { width: 200px;  position:absolute; top : 405px; left : 10px;} /* text color week */
+.color_week { width: 20px; height: 20px; position:absolute; top : 400px; left : 145px; border-width: 1px;border-style: ridge ; border-radius: 50px; border-color:red ;}
+/* .message { width: 200px;  margin: 0px 0px 0px 0px;} */
 
+/* choix parametres pour IFRAME */
+/* ============================ */
+#entete_iframe {background-color: green;color: white; width: 1360px; height: 50px; line-height: 40px; position:absolute; top: 550px;left: 300px; z-index: 1;
+        border-radius: 10px; border-style: none; box-shadow:black 0 -10px 10px inset; cursor: pointer;
+        font-family: -apple-system,sans-serif;  font-size: 1.2rem;  font-weight: 700;  letter-spacing: -.24px; outline: none;
+        text-align: center;  text-decoration: none;  user-select: none;  -webkit-user-select: none;  touch-action: manipulation;}
+
+#entete_iframe:hover { background-color: green; box-shadow: black 0 -5px 30px inset; }
+#entete_iframe:active {height: 60px;width: 1360px;box-shadow: #black 0 -30px 20px inset; }
 .label_name_task{ width: 250px; height: 20px; margin: 0px 20px 0px 0px; padding: 0px 20px 0px 20px;}
 .name_task{ width: 200px; height: 20px; margin: 0px 10px 0px 0px;}
 .start_task{ width: 50px; height: 20px;margin: 0px 10px 0px 0px;}
@@ -88,7 +88,6 @@ p {	text-align:left; color:black; line-height:60%;}
 .bouton_insert {width: 42px;height: 20px; background: rgb(21,105, 126); font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;
                 border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));margin: 0px 0px 0px 5px;}
 .color_task { width: 20px; height: 20px; margin: 0px 0px 0px 10px; border-width: 1px; border-style: ridge ; border-radius: 50px; border-color:red ;}
-.color_days { width: 20px; height: 20px; margin: 0px 0px 0px 0px; border-width: 1px;border-style: ridge ; border-radius: 50px; border-color:red ;}
 #T1{ width: 200px;  margin: 0px 0px 0px 105px;} /* definition Iframe */
 #T2{ width: 50px;  margin: 0px 0px 0px 145px;} /* start task Iframe*/
 #T3{ width: 50px; margin: 0px 0px 0px 15px;} /* delay Iframe*/
@@ -96,23 +95,51 @@ p {	text-align:left; color:black; line-height:60%;}
 #T5{ width: 50px; margin: 0px 0px 0px 100px;} /* milestone Iframe*/
 #T6{ width: 50px; margin: 0px 0px 0px 100px;} /* downstream task Iframe*/
 #T7{ width: 50px; margin: 0px 0px 0px 100px;} /* main task Iframe*/
-#bouton_Iframe{ width: 100px; height: 20px; margin: 0px 0px 0px 0px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5)}
-#SET_start_tasks{ width: 150px; height: 20px; margin: 0px 0px 0px 950px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5)}
+#bouton_Iframe{ width: 100px; height: 25px; margin: 0px 0px 0px 0px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5)}
+#SET_start_tasks{ width: 150px; height: 25px; margin: 0px 0px 0px 950px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5)}
+
+/* donnees diverses */
+/* ================ */
+#message1 {	width: 100px;  position:absolute; top : 760px; left : 160px; border: 2px solid #9C9898;}
+#message2 {	width: 100px;  position:absolute; top : 790px; left : 160px; border: 2px solid #9C9898;}
 .dessin_lla img {display: block; margin: 0 auto; height : 50px; width : 50px; position : absolute; top : 60px; left : 20px;}
-#drapeau_F {height:15px; width:20px;position : absolute; top : 50px; left : 150px;}
+#drapeau_F {height:20px; width:30px;position : absolute; top : 15px; left : 20px;}
 #drapeau_F:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#drapeau_A {height:15px; width:20px;position : absolute; top : 50px; left :180px;}
+#drapeau_A {height:20px; width:30px;position : absolute; top : 15px; left :60px;}
 #drapeau_A:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 
 input:enabled {color: black;}
 input:disabled {color: black;background-color: lightgray}
-
+/* ------------ barre de progression------------- */
+/* ============================================== */
 #pwidget { position:absolute; top : 600px; left : 10px;background-color:lightgray; width:260px; padding:5px; border-radius:3px; border-radius:3px; text-align:left; border:1px solid gray;}
 #progressbar { width:255px; padding:1px; background-color:white; border:1px solid black; height:28px;}
 #indicator { width:0px; background-image:url("barre_progression.png"); height:28px; margin:0;}
 #progressnum { text-align:center; width:255px;}
 
+/* ------------ pour menu deroulant ------------- */
+/* ============================================== */
+.dessin_disquette img {display: block; margin: 0 auto; height :30px; width :30px; position : absolute; top : 5px; left : 20px;z-index: 9;}
+.dropbtn { background-color:green; color: white; border: none; font-size:15px;border-radius:10px;box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5) }
+.dropdown {position : absolute; top : 12px; left : 220px; display: inline-block}
+.dropdown-content {display: none; position: relative; width: 300px; background-color: #f1f1f1; min-width: 160px; z-index: 1;font-size:15px;
+                   border-radius:10px;box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.5) }
+.dropdown-content a {color: black; padding: 12px 16px; text-decoration: none; display: block;}
+.dropdown-content a:hover {background-color:green;color:white; border-radius:10px;box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.5);font-size:20px}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+.helpbtn { background-color:green; color: white; border: none; font-size:15px;border-radius:10px;box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5)}
+.help {position : absolute; top : 12px; left : 120px; display: inline-block}
+.help-content2 {display: none; position: relative; width: 80px;background-color: #f1f1f1;  z-index: 1;font-size:15px;
+                   border-radius:10px;box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.5) }
+.help-content2 a {color: black; padding: 12px 16px; text-decoration: none; display: block;}
+.help-content2 a:hover {background-color:green;color:white; border-radius:10px;box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.5);font-size:20px}
+.help:hover .help-content2 {display: block;}
+.help:hover .helpbtn {background-color: #3e8e41;}
+
 /*---------------#region Alert--------------- */
+/* ========================================== */
 #dialogoverlay{display: none;opacity: .8; position: absolute; top:30px; left:20px; background: #707070; width: 100%; z-index: 10;}
 #dialogbox{ display: none; position: absolute; background: rgb(0, 47, 43); border-radius:7px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.575); transition: 0.3s; width: 50%; z-index: 10; }
 #dialogbox:hover {box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.911);}

@@ -70,6 +70,7 @@ function CustomConfirm_2(message,title){
     document.getElementById('dialogboxfoot').innerHTML = '<button class="pure-material-button-ok active" onclick="ajax_lecture_fihier_txt()">OK</button> <button class="pure-material-button-Nok active" onclick="Bpok()">NOK</button>';
 }
 
+/* utiliser pour clear le projet en cours */
 function CustomConfirm(message,title){
     // document.body.innerHTML = document.body.innerHTML + '<div id="dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>';
     let dialogoverlay = document.getElementById('dialogoverlay');
@@ -116,6 +117,8 @@ function CustomAlert(message,title){
     document.getElementById('dialogboxfoot').innerHTML = '<button class="pure-material-button-contained active" onclick="Bpok()">OK</button>';
 }
 
+/* affichage texte pour l'aide (Help) */
+/* affiche un tableau de données */
 function Helpmessage(tableau,title){
     // document.body.innerHTML = document.body.innerHTML + '<div id="dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>';
     let dialogoverlay = document.getElementById('dialogoverlay');
@@ -140,6 +143,30 @@ function Helpmessage(tableau,title){
             texte_provisoire += '<DIV>'+tableau[j][langue-1]+'</DIV>';
     }
     document.getElementById('dialogboxbody').innerHTML = texte_provisoire;
+    document.getElementById('dialogboxfoot').innerHTML = '<button class="pure-material-button-contained active" onclick="Bpok()">OK</button>';
+}
+
+/* affiche un simple message */
+function Helpmessage_1(message,title){
+    // document.body.innerHTML = document.body.innerHTML + '<div id="dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>';
+    let dialogoverlay = document.getElementById('dialogoverlay');
+    let dialogbox = document.getElementById('dialogbox');
+    let winH = window.innerHeight;
+    //dialogoverlay.style.height = winH+"px";
+    dialogbox.style.position="absolute";
+    dialogbox.style.top = "120px";
+    dialogbox.style.left = "500px";
+    dialogbox.style.height="200px"
+    dialogbox.style.width="1000px"
+    //dialogoverlay.style.display = "block";
+    dialogbox.style.display = "block";
+    //document.getElementById('dialogboxhead').style.display = 'block';
+    if(typeof title === 'undefined') {
+      document.getElementById('dialogboxhead').style.display = 'none';
+    } else {
+      document.getElementById('dialogboxhead').innerHTML = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i> '+ title;
+    }
+    document.getElementById('dialogboxbody').innerHTML = message;
     document.getElementById('dialogboxfoot').innerHTML = '<button class="pure-material-button-contained active" onclick="Bpok()">OK</button>';
 }
 

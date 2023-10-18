@@ -44,7 +44,7 @@ function init_langue(){
     array_langue[0].push("Chart");
     array_langue[0].push("Diagramme");
     array_langue.push([]); /* ================= */
-    array_langue[1].push("essai_task");
+    array_langue[1].push("");
     array_langue[1].push("About");
     array_langue[1].push("Contact");
     array_langue.push([]); /* ================= */
@@ -64,11 +64,11 @@ function init_langue(){
     array_langue[5].push("Name. project.");
     array_langue[5].push("Nom du projet");
     array_langue.push([]); /* ================= */
-    array_langue[6].push("write_db");
+    array_langue[6].push("");
     array_langue[6].push("save datas");
     array_langue[6].push("sauvegarde donnees");
     array_langue.push([]); /* ================= */
-    array_langue[7].push("read_db");
+    array_langue[7].push("");
     array_langue[7].push("read datas");
     array_langue[7].push("Charge donnees");
     array_langue.push([]); /* ================= */
@@ -122,17 +122,49 @@ function init_langue(){
     array_langue[19].push("days work/week");
     array_langue[19].push("jours travaillés/semaine");
     array_langue.push([]); /* ================= */
-    array_langue[20].push("Sauvefichier");
+    array_langue[20].push("");
     array_langue[20].push("Save / server");
     array_langue[20].push("Sauve / serveur");
     array_langue.push([]); /* ================= */
-    array_langue[21].push("lecturefichier");
+    array_langue[21].push("");
     array_langue[21].push("Load / server");
     array_langue[21].push("Charge / serveur");
+    array_langue.push([]); /* =================  MENU DEROULANT 1 */
+    array_langue[22].push("text30");
+    array_langue[22].push("Backup");
+    array_langue[22].push("sauvegarde");
     array_langue.push([]); /* ================= */
-    array_langue[22].push("AbortFonctionAjax");
-    array_langue[22].push("Abort save or load / server");
-    array_langue[22].push("Abandonne les échanges avec serveur");
+    array_langue[23].push("text31");
+    array_langue[23].push("Backup project to server");
+    array_langue[23].push("sauvegarde projet transportable");
+    array_langue.push([]); /* ================= */
+    array_langue[24].push("text32");
+    array_langue[24].push("load project to server");
+    array_langue[24].push("charge projet transportable");
+    array_langue.push([]); /* ================= */
+    array_langue[25].push("text33");
+    array_langue[25].push("Abort transaction with server");
+    array_langue[25].push("annule échange avec le serveur");
+    array_langue.push([]); /* ================= */
+    array_langue[26].push("text34");
+    array_langue[26].push("Save project to local PC");
+    array_langue[26].push("sauvegarde projet sur PC local");
+    array_langue.push([]); /* ================= */
+    array_langue[27].push("text35");
+    array_langue[27].push("Load project to local PC");
+    array_langue[27].push("charge projet du PC local");
+    array_langue.push([]); /* ================= MENU DEROULANT 2 */
+    array_langue[28].push("text40");
+    array_langue[28].push("Information");
+    array_langue[28].push("Information");
+    array_langue.push([]); /* ================= */
+    array_langue[29].push("text41");
+    array_langue[29].push("help");
+    array_langue[29].push("aide");
+     array_langue.push([]); /* ================= */
+    array_langue[30].push("text42");
+    array_langue[30].push("developer");
+    array_langue[30].push("développeur");
     /*============================ texte dans Iframe ==================*/
     array_langue_iframe.push([]); /* ================= */
     array_langue_iframe[0].push("entete_iframe");
@@ -183,9 +215,11 @@ function init_langue(){
 function affichage_langue(){
     for (let i = 0; i < (array_langue.length); i++){
         try {
-            if (i!=8){
-                let identificateur1=array_langue[i][0];
-                document.getElementById(identificateur1).innerHTML=array_langue[i][langue];
+            if (array_langue[i][0]!=""){
+                if (i!=8){
+                    let identificateur1=array_langue[i][0];
+                    document.getElementById(identificateur1).innerHTML=array_langue[i][langue];
+                }
             }
         }
         catch (err){

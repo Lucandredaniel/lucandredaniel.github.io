@@ -654,10 +654,12 @@ function lecture_bp_color_days(){
     couleur_fond_semaine =String(document.getElementById("colorsemaine").value);
 }
 
+function menu_deroulant1(){
+
+}
+
 /* ======= debut prg principal =======================*/
 function principal(){
-    /* verifie si toutes les pages ont ete chargées */
-    //window.onload = function(e){
     /* init tableau a enlever pas la suite */
     /*=====================================*/
     /* pour demarrage a froid */
@@ -705,21 +707,23 @@ function principal(){
                 axe_du_jour(graphe,drawing_area);
             }
             /* ======== gestion des DB read and write =================== */
-            document.querySelector('button[id="write_db"]').onclick=write_datas;
+            document.getElementById("text34").addEventListener("click",write_datas);
             onwrite_datas();
-            document.querySelector('button[id="read_db"]').onclick=read_datas_1;
+            document.getElementById("text35").addEventListener("click",read_datas_1);
             onread_datas();
             /* ======== gestion lecture ecriture fichiers de sauvegarde=== */
-            document.getElementById("Sauvefichier").onclick=appel_ajax_ecriture_fichier;
-            document.getElementById("lecturefichier").onclick=appel_ajax_lecture_fichier;
+            //document.getElementById("Sauvefichier").onclick=appel_ajax_ecriture_fichier;
+            //document.getElementById("lecturefichier").onclick=appel_ajax_lecture_fichier;
+            document.getElementById("text31").addEventListener("click",appel_ajax_ecriture_fichier);
+            document.getElementById("text32").addEventListener("click",appel_ajax_lecture_fichier);
             echanges_datas_php_ecriture();
             echanges_datas_php_lecture();
             /* ========================================================= */
             /* si pas de lecture ecriture sur DB alors affichage possible des datas sur Iframe ==== */
              if ((transfert_datas_fini ) && (!deplace_iframe)) {
                 /* lecture des BP */
-                document.querySelector('button[id="essai_task"]').onclick=affiche_donnes_diverses;
-                document.querySelector('button[id="Help"]').onclick=read_xml;
+                document.getElementById("text41").addEventListener("click",read_xml);
+                document.getElementById("text42").addEventListener("click",affiche_donnes_diverses);
                 document.querySelector('button[id="newproject"]').onclick=clear_project;
                 document.querySelector('button[id="display_datas"]').onclick=affiche_datas_iframe;
                 document.getElementById("drapeau_F").onclick=langue_Francaise;
@@ -748,7 +752,6 @@ function principal(){
                 }
                 /* lecture souris */
                 listen_mouse_on_canvas(graphe,drawing_area);
-                //listen_mouse_on_page2();
                 listen_mouse_on_page1();
                 lecture_fichier_text();
                 onread_datas_xml();

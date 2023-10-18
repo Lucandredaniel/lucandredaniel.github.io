@@ -20,22 +20,40 @@
     </head>
     <body>
         <header id="entete_page1" class="entete"> Chart </header>
+        <!-- =========== menu deroulant =========== -->
+        <div class="dropdown">
+          <button id="text30"  class="dropbtn"> Backup</button>
+          <div class="dropdown-content">
+            <a id="text31" href="#">Save project to server</a>
+            <a id="text32" href="#">Load project to server</a>
+            <a id="text33" href="#">abort link to server</a>
+            <a id="text34" href="#">save project to local PC</a>
+            <a id="text35" href="#">Load project to local PC</a>
+          </div>
+        </div>
+        <div class="help">
+          <button id="text40" class="helpbtn">Information</button>
+          <div class="help-content2">
+            <a id="text41" href="#">Help</a>
+            <a id="text42" href="#">About</a>
+          </div>
+        </div>
+        <!-- =========== donnees a gauche de l'ecran ============= -->
         <div class="drapeaux_lla"> <img id="drapeau_F" src="D_francais.png" alt="Francais" ></div>
         <div class="drapeaux_lla"> <img id="drapeau_A" src="D_anglais.png" alt="Anglais" ></div>
-        <button id="essai_task" >About </button>
-        <button id="Help" >help </button>
+        <div> </div>
+        <div>  </div>
         <div class="dessin_lla">
             <img id="image_L1" src="image_lla_V1.PNG" alt="dessin LLA" >
         </div>
         <p> <label id="text1" class="message">today's date </label> <input type="text" id="date_jour" value="" size="14"> </p>
         <p> <label id="text2" class="message">Project start</label> <input type="date" id="start_date_project" name="trip-start" value="2023-06-29" min="01-01-2023" max="31-12-2043" > </p>
-        <p> <button id="newproject" >new project</button> </p>
+
         <p> <label id="text3"  class="message">Name project  </label><input type="text" id="file_name_db" value="Example" size="14"> </p>
-        <p>
-            <button id="write_db"   >save datas</button>
-            <button id="read_db"    >read datas</button>
-            <button id="display_datas">display datas</button>
-        </p>
+
+        <p> <button id="display_datas">display datas</button> </p>
+        <p> <button id="newproject" >new project</button> </p>
+
         <p>
             <input type="checkbox" id="Choicerows" name="contact" value="" checked>
             <label id="text4" class="message" for="Choicerows">row display</label>
@@ -49,7 +67,7 @@
             <label id="text17" class="message" for="tracesemaine">displaying works days</label>
         </p>
         <p>
-            <input type="color" id="colorweekend" class="color_days" value="gray" >
+            <input type="color" id="colorweekend" class="color_week" value="gray" >
             <label id="text18" class="message" for="colorweekend">color weekend</label>
             <input type="color" id="colorsemaine" class="color_days" value="#dbb20d" >
             <label id="text19" class="message" for="colorsemaine">color works days</label>
@@ -69,22 +87,18 @@
         </div>
         <!--<div id="dialogoverlay"></div> -->
         <div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>
-
         <label> <input type="text" id="message1" value="" size="100"> </label></p>
         <label> <input type="text" id="message2" value="" size="100"> </label></p>
         <button id="essai_file" >lire fichier texte </button>
         <input type="file" name="inputfile" id="inputfile" accept=".txt, .csv" <br>
         <pre id="output"></pre>
         <pre id="output2"></pre>
-        <p> <button id="Sauvefichier" >Save / server</button> </p>
-        <p> <button id="lecturefichier">Load / server</button> </p>
-        <p> <button id="AbortFonctionAjax">Abort fct save/load </button> </p>
         <div id="entete_iframe" > Set tasks </div>
-
+        <!-- ==== ouverture du canvas pour graphique ========== -->
         <canvas class="diagramme" id = "schema" height = "500" width = "1500" style="border:1px solid">
             <p>Votre navigateur ne supporte pas la balise canvas</p>
         </canvas>
-        <!-- ========= creation page datas =========== -->
+        <!-- =========== ouverture de l'Iframe pour affichage des données du graphique =========== -->
           <iframe title="myFrame1" id="page2" src="canevas2.html" name="iframe_datas" hidden="hidden"></iframe>
      </body>
 </html>

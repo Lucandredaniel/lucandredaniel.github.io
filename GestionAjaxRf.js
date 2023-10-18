@@ -184,7 +184,6 @@ function echanges_datas_php_lecture() {
                     if (reponse_type==4){
                          switch (reponse_status) {
                             case 0 :
-                                message_erreur="time_out serveur non disponible"
                                 if (langue==2) {
                                     message_erreur="time_out serveur non disponible";
                                 }else {

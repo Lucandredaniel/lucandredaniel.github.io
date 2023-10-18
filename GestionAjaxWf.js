@@ -101,22 +101,42 @@ function echanges_datas_php_ecriture() {
                     if (reponse_type==4){
                          switch (reponse_status) {
                             case 0 :
-                                message_erreur="time_out server non disponible"
+                                if (langue==2) {
+                                    message_erreur="time_out serveur non disponible";
+                                }else {
+                                    message_erreur="time_out server not available";
+                                }
                                 xhttp.abort();
                                 etape_write_php=99;
                             break;
                             case 403 :
-                                message_erreur="Requete interdite (ecriture)";
+                                if (langue==2) {
+                                    message_erreur="lecture interdite";
+                                }else {
+                                    message_erreur="reading prohibited";
+                                }
                                 xhttp.abort();
                                 etape_write_php=99;
                             break;
                             case 404 :
-                                message_erreur="Page non trouvée - serveur non disponible";
+                                if (langue==2) {
+                                    message_erreur="projet non trouvé - serveur non disponible";
+                                }else {
+                                    message_erreur="project not found - server not available";
+                                }
                                 xhttp.abort();
                                 etape_write_php=99;
                             break;
                             case 200 :
                                 message_erreur="";
+                                if (langue==2) {
+                                    titre="fichier "+name_db+" : ";
+                                    message_erreur="sauvegarde effectuée";
+                                }else {
+                                    titre="file "+name_db+" : ";
+                                    message_erreur="file saved done";
+                                }
+                                Helpmessage_1(message_erreur,titre)
                                 // xhttp.abort();
                                 etape_write_php=100;
                             break;
