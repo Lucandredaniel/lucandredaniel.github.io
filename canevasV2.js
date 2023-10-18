@@ -654,13 +654,6 @@ function lecture_bp_color_days(){
     couleur_fond_semaine =String(document.getElementById("colorsemaine").value);
 }
 
-function AAEfichier(){
-
-}
-function AALfichier(){
-
-}
-
 /* ======= debut prg principal =======================*/
 function principal(){
     /* init tableau a enlever pas la suite */
@@ -719,8 +712,8 @@ function principal(){
             //document.getElementById("lecturefichier").onclick=appel_ajax_lecture_fichier;
             document.getElementById("text31").addEventListener("click",AAEfichier);
             document.getElementById("text32").addEventListener("click",AALfichier);
-            //echanges_datas_php_ecriture();
-            //echanges_datas_php_lecture();
+            php_ecriture();
+            php_lecture();
             /* ========================================================= */
             /* si pas de lecture ecriture sur DB alors affichage possible des datas sur Iframe ==== */
              if ((transfert_datas_fini ) && (!deplace_iframe)) {

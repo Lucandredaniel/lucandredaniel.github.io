@@ -81,8 +81,8 @@ function conversion_tableau(reponse_php_int){
     }
 }
 
-function appel_ajax_lecture_fichier(){
-        if (!onload_donnees_base){ /* verifie si chargemnt non en cours */
+function AALfichier(){
+        if (!onload_donnees_base){ /* verifie si chargement non en cours */
             if (langue==1){
                 titre="READ Project";
                 message_avert="Action witch reset all datas";
@@ -94,7 +94,7 @@ function appel_ajax_lecture_fichier(){
         }
     }
 
-function ajax_lecture_fihier_txt(){
+function ALfichier_txt(){
     document.getElementById('dialogbox').style.display = "none";
     ensemble_tableau=""
     let tableau_int=""
@@ -102,8 +102,8 @@ function ajax_lecture_fihier_txt(){
     etape_read_php=0;
 }
 
-function open_datas_lecture_php() {
-  let parametres="Gestion_lecture_fichier.php/?name="+name_db+".txt";
+function open_lecture_php() {
+  let parametres="GestionLfichier.php/?name="+name_db+".txt";
   xhttp = new XMLHttpRequest();
   xhttp.timeout = 15000; // 5 seconds
   xhttp.onload = function() {myFunction_lecture(this);}
@@ -129,7 +129,7 @@ function myFunction_lecture(php_datas) {
   reponse_php = php_datas.responseText;
 }
 
-function echanges_datas_php_lecture() {
+function php_lecture() {
     const abort_button=document.getElementById("AbortFonctionAjax")
     if (echange_datas_lecture) {
          switch (etape_read_php) {
@@ -147,7 +147,7 @@ function echanges_datas_php_lecture() {
             break;
             case 1 :
                 try {
-                    open_datas_lecture_php();
+                    open_lecture_php();
                     etape_read_php=2;
                     actualprogress=0;
                     multiplicateur=10;

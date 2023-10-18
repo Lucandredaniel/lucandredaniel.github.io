@@ -67,7 +67,7 @@ function CustomConfirm_2(message,title){
       document.getElementById('dialogboxhead').innerHTML = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i> '+ title;
     }
     document.getElementById('dialogboxbody').innerHTML = message;
-    document.getElementById('dialogboxfoot').innerHTML = '<button class="pure-material-button-ok active" onclick="ajax_lecture_fihier_txt()">OK</button> <button class="pure-material-button-Nok active" onclick="Bpok()">NOK</button>';
+    document.getElementById('dialogboxfoot').innerHTML = '<button class="pure-material-button-ok active" onclick="ALfichier_txt()">OK</button> <button class="pure-material-button-Nok active" onclick="Bpok()">NOK</button>';
 }
 
 /* utiliser pour clear le projet en cours */
