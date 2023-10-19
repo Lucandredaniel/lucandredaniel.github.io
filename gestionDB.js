@@ -206,6 +206,11 @@ function lecture_datas_db() {
         CustomAlert(texte,"db error");
         etape_read=99;
     };
+    getarray.onblocked  = function() {
+        let texte="error requete bloquée : "+String(titre_tache);
+        CustomAlert(texte,"db error");
+        etape_read=99;
+    }
 }
 
 function save_datas() { /* etape 6 */

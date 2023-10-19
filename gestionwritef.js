@@ -29,7 +29,7 @@ function AAEfichier(){
 function open_ecriture_php() {
   let parametres="GestionSfichier.php/?name="+name_db+".txt";
   xhttp = new XMLHttpRequest();
-  xhttp.timeout = 15000; // 5 seconds
+  xhttp.timeout = 15000; // 15 secondes
   xhttp.onload = function() {myFunction_ecriture(this);}
   xhttp.open("POST", parametres, true);
   xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
