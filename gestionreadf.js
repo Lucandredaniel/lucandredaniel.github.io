@@ -259,4 +259,3 @@ function php_lecture() {
         }
     }
 }
-
