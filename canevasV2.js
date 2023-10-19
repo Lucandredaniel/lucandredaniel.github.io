@@ -710,21 +710,19 @@ function principal(){
                 axe_du_jour(graphe,drawing_area);
             }
             /* ======== gestion des DB read and write =================== */
-            document.getElementById("text34").addEventListener("click",write_datas);
-            onwrite_datas();
-            document.getElementById("text35").addEventListener("click",read_datas_1);
-            onread_datas();
             /* ======== gestion lecture ecriture fichiers de sauvegarde=== */
             //document.getElementById("Sauvefichier").onclick=appel_ajax_ecriture_fichier;
             //document.getElementById("lecturefichier").onclick=appel_ajax_lecture_fichier;
-            /* en attente de solution
-            =======================================
+
             document.getElementById("text31").addEventListener("click",AAEfichier);
             document.getElementById("text32").addEventListener("click",AALfichier);
             document.getElementById("text33").addEventListener("click",AAAbort);
             php_ecriture();
             php_lecture();
-            ===================================== */
+            document.getElementById("text34").addEventListener("click",write_datas);
+            onwrite_datas();
+            document.getElementById("text35").addEventListener("click",read_datas_1);
+            onread_datas();
             /* ========================================================= */
             /* si pas de lecture ecriture sur DB alors affichage possible des datas sur Iframe ==== */
              if ((transfert_datas_fini ) && (!deplace_iframe)) {
