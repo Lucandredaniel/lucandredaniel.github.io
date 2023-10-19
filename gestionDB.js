@@ -1,6 +1,21 @@
 /* ============= gestion DB =======================*/
 /*=================================================*/
 
+
+/* fonction non utilisee car elle ne fonctionne pas avec Mozilla
+   fonctionne avec Chrome et autre
+   elle permet la lecture du nom des DB stockés en local*/
+function lecture_donnees_DB(){
+    const promise =  indexedDB.databases();
+    alert(promise)
+    promise.then(function(databases){
+        alert(databases.length);
+        for (let i = 0; i < databases.length; i++) {
+        alert(databases[i].name);
+        }
+    });
+}
+
 function reset_array_tasks(){
     array_tasks=[];
     array_tasks_display_save=[];
@@ -103,7 +118,8 @@ function open_db_save_db(){
         }
 }
 
-function open_db(){
+function open_db(){ /* etape 2 */
+
         openrequest = window.indexedDB.open(name_db, 2);
         openrequest.onupgradeneeded = function() {
             db = openrequest.result;
@@ -114,13 +130,11 @@ function open_db(){
             }
         }
         openrequest.onerror   = function() {
-            let texte="error open DB  :  "+String(name_db)
-            CustomAlert(texte,"db error");
-            etape_write=99; /* si erreur, la DB n existe pas (vu que l'on delete avant) */
+            etape_read=99;
         }
         openrequest.onsuccess = function() {
             db = openrequest.result;
-            etape_write=3;
+            etape_read=3;
         }
 }
 
@@ -163,38 +177,38 @@ function lecture_datas_db() {
                     }
                 }
               }
-              etape_write=4;
+              etape_read=4;
             } else {
                 if (word[0]=="parametre1"){
                   array_parametre_environnement1=[];
                   for (let j = 0; j < word.length; j++) {
                         array_parametre_environnement1[j]=word[j];
                   }
-                  etape_write=4;
+                  etape_read=4;
                 }else if (word[0]=="parametre2"){
                           array_parametre_environnement2=[];
                           for (let j = 0; j < word.length; j++) {
                                 array_parametre_environnement2[j]=word[j];
                           }
-                          etape_write=4;
+                          etape_read=4;
                       }
                 else{
-                    etape_write=6; /* fin de transfert */
+                    etape_read=6; /* fin de transfert */
                 }
             }
         } catch (e) {
             CustomAlert(e.name + " : " + e.message,"db error");
-            etape_write=100;
+            etape_read=100;
         }
     };
     getarray.onerror   = function() {
         let texte="error lecture donnees tache : "+String(titre_tache);
         CustomAlert(texte,"db error");
-        etape_write=99;
+        etape_read=99;
     };
 }
 
-function save_datas() { /* etape 5 */
+function save_datas() { /* etape 6 */
         const tx = db.transaction("diagramme", 'readwrite');
         const store = tx.objectStore("diagramme");
         titre_tache="titre"+ String(index_db);
@@ -209,7 +223,7 @@ function save_datas() { /* etape 5 */
             etape_write=99;
         };
 }
-function attente_fin_transaction() {
+function attente_fin_transaction() { /* etape 7 */
         const tx = db.transaction("diagramme", 'readwrite');
         tx.oncomplete = function() {
             etape_write=5;
@@ -232,11 +246,26 @@ function fermeture_db() {
 }
 
 function write_datas() {
-    if(!onload_donnees_base){
-        if (!save_donnees_base){ /* attente si sauvegarde deja en cours */
-            save_donnees_base=true;
-            etape_write=0;
+    if (!save_donnees_base){ /* attente si sauvegarde deja en cours */
+        let titre="";
+        let message_avert="";
+        if (langue==1){
+            titre="name project : "+name_db;
+            message_avert="Local backup: Be careful, if you clear your browser history, you will lose the backup";
+        } else {
+            titre="nom du project : "+name_db;
+            message_avert="Sauvegarde locale : Attention, si vous effacez l'historique de votre navigateur, vous perdrez les données.";
         }
+        Helpmessage_2(message_avert,titre);
+    }
+}
+function valid_save_donnees_db(){
+    document.getElementById('dialogbox').style.display = "none";
+    if (!save_donnees_base){
+        save_donnees_base=true;
+        onload_donnees_base=false;
+        etape_write=0;
+        etape_read=0;
     }
 }
 
@@ -295,6 +324,7 @@ function onwrite_datas() {
                 actualprogress=0;
                 affiche_progression();
                 save_donnees_base=false;
+                etape_write=0;
                 break;
             case 99 :
                 CustomAlert("error on DB step 99","db error");
@@ -306,43 +336,43 @@ function onwrite_datas() {
 }
 
 function read_datas_1() {
-    if(!save_donnees_base){
-        if (!onload_donnees_base){ /* verifie si chargemnt non en cours */
-            if (langue==1){
-                titre="New Project";
-                message_avert="Action witch reset all datas";
-            } else {
-                titre="Nouveau Projet";
-                message_avert="Action qui réinitialise toutes les données";
-            }
-            CustomConfirm_1(message_avert,titre)
+    if (!onload_donnees_base){ /* verifie si chargemnt non en cours */
+        let titre=""
+        if (langue==1){
+            titre="Name new Project : "+name_db;
+            message_avert="Action witch reset all datas";
+        } else {
+            titre="Nom du nouveau Projet : "+name_db;
+            message_avert="Action qui réinitialise toutes les données";
         }
+        CustomConfirm_1(message_avert,titre)
     }
 }
 
 function read_datas() {
     document.getElementById('dialogbox').style.display = "none";
-    if(!save_donnees_base){
-        if (!onload_donnees_base){ /* verifie si chargemnt non en cours */
+    if(!onload_donnees_base){
             onload_donnees_base= true;
+            etape_read=0;
+            save_donnees_base=false;
             etape_write=0;
-        }
     }
 }
 
 function onread_datas() {
+    message(String(onload_donnees_base)+" "+etape_read,String(save_donnees_base)+" "+etape_write)
     if (onload_donnees_base) {
-         switch (etape_write) {
+         switch (etape_read) {
             case 0 :
                    name_db=document.getElementById("file_name_db").value;
                     if (name_db.length<4) {
                         CustomAlert("DB name > 4 characters","db error");
                         name_db="";
-                        etape_write=0;
+                        etape_read=0;
                         onload_donnees_base= false;
                     }
                     if (name_db!="") {
-                        etape_write=1;
+                        etape_read=1;
                     }
                 break;
             case 1 :
@@ -355,7 +385,7 @@ function onread_datas() {
                     array_tasks=[];
                     array_tasks[0]=[];
                     transfert_datas_fini=false;
-                    etape_write=2;
+                    etape_read=2;
                 break;
             case 2 :
                     if (!window.indexedDB) {
@@ -365,36 +395,38 @@ function onread_datas() {
                         open_db();
                     } catch (e) {
                         CustomAlert(e.name + " : " + e.message,"db error");
-                        etape_write=100;
+                        etape_read=100;
+                        fermeture_db();
                     }
                 break;
             case 3 :
-                    etape_write=4;
+                    etape_read=4;
                     index_db=-1;
                 break;
             case 4 :
                     actualprogress+=1; /* pour visu barre graph */
                     affiche_progression();
                     index_db+=1;
-                    etape_write=5;
+                    etape_read=5;
                 break;
             case 5 :
                     try {
                         lecture_datas_db();
                     } catch (e) {
                         CustomAlert(e.name + " : " + e.message,"db error");
-                        etape_write=100;
+                        etape_read=100;
+                        fermeture_db();
                     }
                 break;
             case 6 :
                     fermeture_db();
                     recopy_array_2D();
                     ask_write_parameters=true;
-                    etape_write=7;
+                    etape_read=7;
                     actualprogress=maxprogress;
                 break;
             case 7 :
-                    etape_write=7;
+                    etape_read=7;
                     transfert_datas_fini=true;
                     iframe_hidden=true;
                     affiche_datas_iframe();
@@ -403,11 +435,12 @@ function onread_datas() {
                     affiche_progression();
                 break;
             case 99 :
-                CustomAlert("error on DB step 99 : Project not found","db error");
-                etape_write=7;
+                let texte="error open DB  : Project not found "+String(name_db)
+                CustomAlert(texte,"db error");
+                etape_read=7;
                 break;
             case 100 :
-                etape_write=7;
+                etape_read=0;
                 transfert_datas_fini=true;
                 onload_donnees_base= false;
                 reset_array_tasks();

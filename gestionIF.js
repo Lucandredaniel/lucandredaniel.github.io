@@ -138,7 +138,10 @@ function lecture_datas(numero_tache){ /* lecture de toutes les donnees tant que 
 function read_one_task(int_indice){ /* lecture donnees dans l iframe */
     idvar="name_task"+String(int_indice);
     variable1 = document.getElementById("page2").contentWindow.document.getElementById(idvar);
-    array_tasks[int_indice-1][0]=String(variable1.value);
+    let instring=variable1.value;
+    let outString = instring.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+    variable1.value=outString;
+    array_tasks[int_indice-1][0]=String(outString);
     idvar="start_task"+String(int_indice);
     variable1 = document.getElementById("page2").contentWindow.document.getElementById(idvar);
     array_tasks[int_indice-1][1]=Number(variable1.value);

@@ -41,15 +41,7 @@ p {	text-align:left; color:black; line-height:60%;}
 #g_rows {width: 45px; height: 20px;    position:absolute; top : 525px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
 #text20 { width: 200px;  position:absolute; top : 570px; left : 10px;}  /* choix nbr jour/semaine */
 #nbr_jour_w {width: 45px; height: 20px;position:absolute; top : 560px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
-#essai_file {position:absolute; top : 760px; left : 50px;}
-#inputfile { position:absolute; top : 790px; left : 50px; width: 72px; height: 22px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
-#inputfile:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#Sauvefichier {position:absolute; top : 680px; left : 10px; width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
-#Sauvefichier:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#lecturefichier {position:absolute; top : 680px; left : 140px; width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
-#lecturefichier:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
-#AbortFonctionAjax {position:absolute; top : 710px; left : 10px; width: 260px; height: 40px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 5%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
-#AbortFonctionAjax:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
+
 
 #text4 { width: 200px;  position:absolute; top : 255px; left : 10px;}  /* line display */
 #Choicerows {position:absolute; top : 250px; left : 145px;}
@@ -108,8 +100,24 @@ p {	text-align:left; color:black; line-height:60%;}
 #drapeau_A {height:20px; width:30px;position : absolute; top : 15px; left :60px;}
 #drapeau_A:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
 
+/* ==== BP normalement inutile ===*/
+/*================================*/
+#essai_file {position:absolute; top : 760px; left : 50px;}
+#test_divers {position:absolute; top : 730px; left : 50px;}
+#inputfile { position:absolute; top : 790px; left : 50px; width: 72px; height: 22px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#inputfile:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
+#Sauvefichier {position:absolute; top : 680px; left : 10px; width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#Sauvefichier:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
+#lecturefichier {position:absolute; top : 680px; left : 140px; width: 130px; height: 30px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#lecturefichier:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
+#AbortFonctionAjax {position:absolute; top : 710px; left : 10px; width: 260px; height: 40px;background: rgb(21,105, 126); font-size:12px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;border-radius: 5%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));}
+#AbortFonctionAjax:hover {box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);cursor: pointer;}
+
+/* init pour tous les input */
+/* ======================== */
 input:enabled {color: black;}
 input:disabled {color: black;background-color: lightgray}
+
 /* ------------ barre de progression------------- */
 /* ============================================== */
 #pwidget { position:absolute; top : 600px; left : 10px;background-color:lightgray; width:260px; padding:5px; border-radius:3px; border-radius:3px; text-align:left; border:1px solid gray;}
@@ -119,22 +127,21 @@ input:disabled {color: black;background-color: lightgray}
 
 /* ------------ pour menu deroulant ------------- */
 /* ============================================== */
-.dessin_disquette img {display: block; margin: 0 auto; height :30px; width :30px; position : absolute; top : 5px; left : 20px;z-index: 9;}
 .dropbtn { background-color:green; color: white; border: none; font-size:15px;border-radius:10px;box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5) }
 .dropdown {position : absolute; top : 12px; left : 220px; display: inline-block}
-.dropdown-content {display: none; position: relative; width: 300px; background-color: #f1f1f1; min-width: 160px; z-index: 1;font-size:15px;
+.dropdown-content {display: none; position:relative; width: 200px; background-color: #f1f1f1; min-width: 160px; z-index: 1;font-size:15px;
                    border-radius:10px;box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.5) }
 .dropdown-content a {color: black; padding: 12px 16px; text-decoration: none; display: block;}
-.dropdown-content a:hover {background-color:green;color:white; border-radius:10px;box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.5);font-size:20px}
+.dropdown-content a:hover {background-color:green;color:white; border-radius:10px;box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.5);font-size:15px}
 .dropdown:hover .dropdown-content {display: block;}
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
 .helpbtn { background-color:green; color: white; border: none; font-size:15px;border-radius:10px;box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5)}
 .help {position : absolute; top : 12px; left : 120px; display: inline-block}
-.help-content2 {display: none; position: relative; width: 80px;background-color: #f1f1f1;  z-index: 1;font-size:15px;
+.help-content2 {display: none; position: relative; width: 100px;background-color: #f1f1f1;  z-index: 1;font-size:15px;
                    border-radius:10px;box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.5) }
 .help-content2 a {color: black; padding: 12px 16px; text-decoration: none; display: block;}
-.help-content2 a:hover {background-color:green;color:white; border-radius:10px;box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.5);font-size:20px}
+.help-content2 a:hover {background-color:green;color:white; border-radius:10px;box-shadow: 0 15px 15px 0 rgba(0, 0, 0, 0.5);font-size:15px}
 .help:hover .help-content2 {display: block;}
 .help:hover .helpbtn {background-color: #3e8e41;}
 

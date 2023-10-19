@@ -136,23 +136,23 @@ function init_langue(){
     array_langue.push([]); /* ================= */
     array_langue[23].push("text31");
     array_langue[23].push("Backup project to server");
-    array_langue[23].push("sauvegarde projet transportable");
+    array_langue[23].push("sauve projet sur serveur");
     array_langue.push([]); /* ================= */
     array_langue[24].push("text32");
     array_langue[24].push("load project to server");
-    array_langue[24].push("charge projet transportable");
+    array_langue[24].push("charge projet du serveur");
     array_langue.push([]); /* ================= */
     array_langue[25].push("text33");
     array_langue[25].push("Abort transaction with server");
-    array_langue[25].push("annule échange avec le serveur");
+    array_langue[25].push("annule échange avec serveur");
     array_langue.push([]); /* ================= */
     array_langue[26].push("text34");
     array_langue[26].push("Save project to local PC");
-    array_langue[26].push("sauvegarde projet sur PC local");
+    array_langue[26].push("sauve projet en local");
     array_langue.push([]); /* ================= */
     array_langue[27].push("text35");
     array_langue[27].push("Load project to local PC");
-    array_langue[27].push("charge projet du PC local");
+    array_langue[27].push("charge projet en local");
     array_langue.push([]); /* ================= MENU DEROULANT 2 */
     array_langue[28].push("text40");
     array_langue[28].push("Information");
@@ -164,7 +164,7 @@ function init_langue(){
      array_langue.push([]); /* ================= */
     array_langue[30].push("text42");
     array_langue[30].push("developer");
-    array_langue[30].push("développeur");
+    array_langue[30].push("Editeur");
     /*============================ texte dans Iframe ==================*/
     array_langue_iframe.push([]); /* ================= */
     array_langue_iframe[0].push("entete_iframe");

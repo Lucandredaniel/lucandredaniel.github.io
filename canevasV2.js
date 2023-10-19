@@ -39,6 +39,7 @@ let request=0;
 let reqdelete=0;
 let index_db=0;
 let etape_write=0;
+let etape_read=0;
 let compt_pass=0;
 let compteur_ligne_db=0;
 let compteur_colonne_db=0;
@@ -733,11 +734,13 @@ function principal(){
                 document.querySelector('button[id="display_datas"]').onclick=affiche_datas_iframe;
                 document.getElementById("drapeau_F").onclick=langue_Francaise;
                 document.getElementById("drapeau_A").onclick=langue_Anglaise;
+                document.getElementById("test_divers").onclick=lecture_donnees_DB;
                 /* provisoire rend les BP invisibles */
                 inhibe_identity();
                 document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").onclick=rajout_one_task;
                 document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").onclick=set_tasks;
                 lecture_bp_color_days()
+
                 /* lecture BP dans Iframe */
                 /* ---------------------- */
                 if (!affiche_une_seule_tache){
