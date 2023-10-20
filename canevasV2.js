@@ -183,7 +183,7 @@ let array_one_task11 = ["FAT"                 ,90,3  , 0,0,12,0,0,0,"#81daf3",0,
 let array_one_task12 =["SAT"                  ,95,1  , 0,1,0,0,0,0,"#81daf3",0,0];
 let array_one_task13 =["QI"                   ,96,3  , 0,0,0,0,12,0,"#00ff00",0,0];
 let array_one_task14 =["QO"                   ,96,2  , 0,0,0,0,12,0,"#00ff00",0,0];
-let array_one_task15 =["QP"                   ,96,5  , 0,0,0,0,12,0,"#00ff00",0,0];
+let array_one_task15 =["QP_1"                 ,96,5  , 0,0,0,0,12,0,"#00ff00",0,0];
 let array_task_vide = ["--------",0 ,1,0,0,0,0,0,0,"#4488EE",0,0];
 
 let array_parametre_environnement1=["","","","","","","","","","","",""];

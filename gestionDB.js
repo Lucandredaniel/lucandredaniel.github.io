@@ -242,7 +242,6 @@ function attente_fin_transaction() { /* etape 7 */
         let texte="Transaction not opened due to error ";
         CustomAlert(texte,"db error");
         etape_write=99;
-        db.close()
     };
 }
 
@@ -303,10 +302,21 @@ function onwrite_datas() {
                 open_db_save_db();
                 break;
             case 4 :
-                transaction = db.transaction("diagramme", 'readwrite');
-                objectStore = transaction.objectStore("diagramme");
-                index_db=-1;
-                etape_write=5;
+                try {
+                    //transaction = db.transaction("diagramme", 'readwrite');
+                    //objectStore = transaction.objectStore("diagramme");
+                    index_db=-1;
+                    etape_write=5;
+                } catch (e) {
+                    if (langue==1){
+                        titre="Name Project : "+name_db;
+                        message_avert="Unsaved project : choose another name and try again";
+                    } else {
+                        titre="Nom Projet : "+name_db;
+                        message_avert="Projet non sauvegardé : choisir un autre nom et reessayé";
+                    }
+                    etape_write=9;
+                }
                 break;
             case 5 :
                 index_db+=1;
@@ -322,10 +332,10 @@ function onwrite_datas() {
                 break;
             case 8 :
                 index_db=0
-                fermeture_db();
                 etape_write=9;
                 break;
             case 9 :
+                fermeture_db();
                 actualprogress=0;
                 affiche_progression();
                 save_donnees_base=false;
