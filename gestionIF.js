@@ -203,51 +203,59 @@ function lecture_bp_insert(numero_tache){
     }
 }
 function insert_task(){
-    /* recherche index dans l'ID */
-    let compteur_index=0;
-    let int_array_tasks=[];
-    index_task=(this.id.match(/\d+/g).join(''));
-    let var_int=index_task-1;
-    /* recherche les taches aval et amont pour savoir si elles sont indexée (upstream/downstream) avec la tache en cours */
-    for (let i = 0; i < (array_tasks.length); i++) {
-        if (array_tasks[i][7]>var_int) {
-            array_tasks[i][7]+=1;
-        }
-        if (array_tasks[i][5]>var_int){
-            array_tasks[i][5]+=1;
-        }
-    }
-    for (let i = 0; i < array_tasks.length; i++) {
-        int_array_tasks[compteur_index]=[];
-        if (i!=var_int) {
-            for  (let j = 0; j < array_tasks[0].length ; j++) {
-                int_array_tasks[compteur_index][j]=array_tasks[i][j];
+    if (array_tasks.length <number_tasks_max) {
+        /* recherche index dans l'ID */
+        let compteur_index=0;
+        let int_array_tasks=[];
+        index_task=(this.id.match(/\d+/g).join(''));
+        let var_int=index_task-1;
+        /* recherche les taches aval et amont pour savoir si elles sont indexée (upstream/downstream) avec la tache en cours */
+        for (let i = 0; i < (array_tasks.length); i++) {
+            if (array_tasks[i][7]>var_int) {
+                array_tasks[i][7]+=1;
             }
-            compteur_index+=1;
-        } else {
-            for  (let j = 0; j < array_tasks[0].length ; j++) {
-                int_array_tasks[compteur_index][j]=array_task_vide[j];
+            if (array_tasks[i][5]>var_int){
+                array_tasks[i][5]+=1;
             }
-            compteur_index+=1;
+        }
+        for (let i = 0; i < array_tasks.length; i++) {
             int_array_tasks[compteur_index]=[];
-            for  (let j = 0; j < array_tasks[0].length ; j++) {
-                int_array_tasks[compteur_index][j]=array_tasks[i][j];
+            if (i!=var_int) {
+                for  (let j = 0; j < array_tasks[0].length ; j++) {
+                    int_array_tasks[compteur_index][j]=array_tasks[i][j];
+                }
+                compteur_index+=1;
+            } else {
+                for  (let j = 0; j < array_tasks[0].length ; j++) {
+                    int_array_tasks[compteur_index][j]=array_task_vide[j];
+                }
+                compteur_index+=1;
+                int_array_tasks[compteur_index]=[];
+                for  (let j = 0; j < array_tasks[0].length ; j++) {
+                    int_array_tasks[compteur_index][j]=array_tasks[i][j];
+                }
+                compteur_index+=1;
             }
-            compteur_index+=1;
+        };
+        /* recopie du tableau intermediaire */
+        array_tasks=[];
+        for (let i = 0; i < int_array_tasks.length; i++) {
+            array_tasks[i]=[]
+            for (let j = 0; j < int_array_tasks[0].length; j++) {
+                array_tasks[i][j]=int_array_tasks[i][j];
+            }
         }
-    };
-    /* recopie du tableau intermediaire */
-    array_tasks=[];
-    for (let i = 0; i < int_array_tasks.length; i++) {
-        array_tasks[i]=[]
-        for (let j = 0; j < int_array_tasks[0].length; j++) {
-            array_tasks[i][j]=int_array_tasks[i][j];
+        if (!affiche_une_seule_tache){
+            affiche_datas(0);
+        }else{
+            affiche_une_tache_specifique(index_task);
         }
-    }
-    if (!affiche_une_seule_tache){
-        affiche_datas(0);
-    }else{
-        affiche_une_tache_specifique(index_task);
+    }else {
+        if (langue==1) {
+            CustomAlert("too many task","Definition of tasks")
+        }else {
+            CustomAlert("trop de tache déclarée >49","Definition des taches")
+        }
     }
 }
 
@@ -267,7 +275,7 @@ function lecture_bp_delete(numero_tache){
 }
 function delete_task(){
     /* recherche index dans l'ID */
-    if (array_tasks.length>0){
+    if (array_tasks.length>1){
         affichage_donnees_effectue=true;
         remove_datas_iframe();
         index_task=(this.id.match(/\d+/g).join(''));
@@ -477,8 +485,8 @@ function rajout_one_task() {
         recopy_array_2D();
 
     } else {
-        if (langue=1) {
-            CustomAlert("too much task","Definition of tasks")
+        if (langue==1) {
+            CustomAlert("too many task","Definition of tasks")
         }else {
             CustomAlert("trop de tache déclarée >49","Definition des taches")
         }

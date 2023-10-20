@@ -119,7 +119,6 @@ function open_db_save_db(){
 }
 
 function open_db(){ /* etape 2 */
-
         openrequest = window.indexedDB.open(name_db, 2);
         openrequest.onupgradeneeded = function() {
             db = openrequest.result;
@@ -130,7 +129,7 @@ function open_db(){ /* etape 2 */
             }
         }
         openrequest.onerror   = function() {
-            text_error_read_db="erreur lecture donnees : inexsitant ?";
+            text_error_read_db="erreur lecture donnees : inexistant ? "+name_db;
             etape_read=98;
         }
         openrequest.onsuccess = function() {
@@ -430,11 +429,10 @@ function onread_datas() {
                     }
                 break;
             case 6 :
-                    fermeture_db();
                     recopy_array_2D();
                     ask_write_parameters=true;
                     etape_read=7;
-                    actualprogress=maxprogress;
+                    fermeture_db();
                 break;
             case 7 :
                     etape_read=7;
