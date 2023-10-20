@@ -91,7 +91,7 @@ function delete_datas_base(){
             etape_write=3;
         };
         reqdelete.onblocked = function () {
-            CustomAlert("Couldn't delete database due to the operation being blocked","db error");
+            text_error_write_db="Couldn't delete database due to the operation being blocked"
             etape_write=99;
         };
 }
@@ -108,9 +108,9 @@ function open_db_save_db(){
             }
         }
         openrequest.onerror   = function() {
-            CustomAlert("error open DB","db error");
+            text_error_write_db="error open DB on backup";
             etape_write=99;
-            db = openrequest.result;
+            //db = openrequest.result;
         }
         openrequest.onsuccess = function() {
             db = openrequest.result;
@@ -130,7 +130,8 @@ function open_db(){ /* etape 2 */
             }
         }
         openrequest.onerror   = function() {
-            etape_read=99;
+            text_error_read_db="erreur lecture donnees : inexsitant ?";
+            etape_read=98;
         }
         openrequest.onsuccess = function() {
             db = openrequest.result;
@@ -197,19 +198,17 @@ function lecture_datas_db() {
                 }
             }
         } catch (e) {
-            CustomAlert(e.name + " : " + e.message,"db error");
-            etape_read=100;
+           text_error_read_db=" - : "+e.name + " : " + e.message;
+           etape_read=98;
         }
     };
     getarray.onerror   = function() {
-        let texte="error lecture donnees tache : "+String(titre_tache);
-        CustomAlert(texte,"db error");
-        etape_read=99;
+        text_error_read_db="error lecture donnees tache : "+String(titre_tache);
+        etape_read=98;
     };
     getarray.onblocked  = function() {
-        let texte="error requete bloquée : "+String(titre_tache);
-        CustomAlert(texte,"db error");
-        etape_read=99;
+        text_error_read_db==="error requete blocked : "+String(titre_tache);
+        etape_read=98;
     }
 }
 
@@ -223,24 +222,22 @@ function save_datas() { /* etape 6 */
             etape_write=7;
         };
         request.onerror   = function() {
-            let texte="error save datas : "+String(titre_tache);
-            CustomAlert(texte,"db error");
+            text_error_write_db="error save datas : "+String(titre_tache);
             etape_write=99;
         };
 }
 function attente_fin_transaction() { /* etape 7 */
-        const tx = db.transaction("diagramme", 'readwrite');
-        tx.oncomplete = function() {
-            etape_write=5;
-            if (index_db == (base_donnees_complete.length) ) {
-                etape_write=8; /* fin du transfert total */
+    const tx = db.transaction("diagramme", 'readwrite');
+    tx.oncomplete = function() {
+        etape_write=5;
+        if (index_db == (base_donnees_complete.length) ) {
+            etape_write=8; /* fin du transfert total */
         }
     };
-    transaction.onerror = function() {
+    tx.onerror = function() {
         error_write_db=true;
         index_db=0;
-        let texte="Transaction not opened due to error ";
-        CustomAlert(texte,"db error");
+        text_error_write_db="Transaction not opened due to error ";
         etape_write=99;
     };
 }
@@ -303,8 +300,6 @@ function onwrite_datas() {
                 break;
             case 4 :
                 try {
-                    //transaction = db.transaction("diagramme", 'readwrite');
-                    //objectStore = transaction.objectStore("diagramme");
                     index_db=-1;
                     etape_write=5;
                 } catch (e) {
@@ -335,16 +330,17 @@ function onwrite_datas() {
                 etape_write=9;
                 break;
             case 9 :
-                fermeture_db();
                 actualprogress=0;
                 affiche_progression();
                 save_donnees_base=false;
                 etape_write=0;
+                fermeture_db();
                 break;
             case 99 :
-                CustomAlert("error on DB step 99","db error");
+                CustomAlert(text_error_write_db,"db error");
                 etape_write=7;
                 save_donnees_base= false;
+                fermeture_db();
                 break;
         }
     }
@@ -450,14 +446,26 @@ function onread_datas() {
                     affiche_progression();
                 break;
             case 99 :
-                let texte="error open DB  : Project not found "+String(name_db)
+                let texte=""
+                if (langue==1){
+                    texte="error open DB  : Project not found "+String(name_db)
+                } else {
+                    texte="erreur sur ouverture fichier  : Projet inexistant ==> "+String(name_db)
+                }
                 CustomAlert(texte,"db error");
                 etape_read=7;
+                break;
+            case 98 :
+                CustomAlert(text_error_read_db,"db error");
+                etape_read=7;
+                fermeture_db();
                 break;
             case 100 :
                 etape_read=0;
                 transfert_datas_fini=true;
                 onload_donnees_base= false;
+                actualprogress=0;
+                affiche_progression();
                 reset_array_tasks();
                 break;
         }

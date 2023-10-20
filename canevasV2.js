@@ -53,6 +53,8 @@ let time_milliseconds=100000; /* temps d attente avant exécution fonction */
 let maxprogress = 250;   // total à atteindre pour barre graph
 let actualprogress = 0;  // valeur courante pour barre graph
 let multiplicateur = 10; // pour affichage
+let text_error_write_db="";
+let text_error_read_db="";
 
 /* variable pour lecture fichier XML */
 /* --------------------------------- */
