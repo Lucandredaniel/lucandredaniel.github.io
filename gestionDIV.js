@@ -1,6 +1,7 @@
 /* fonctions diverses */
 /*====================*/
 
+
 function detecte_browser(){
  let userAgent = navigator.userAgent;
 
@@ -18,6 +19,31 @@ function inhibe_identity(){
     document.getElementById('message1').style.display = "none";
     document.getElementById('message2').style.display = "none";
     document.getElementById('test_divers').style.display = "none";
+}
+
+/* impression du canvas */
+/* ==================== */
+function printCanvas()  {
+    let dataUrl = document.getElementById('schema').toDataURL(); //attempt to save base64 string to server using this var
+    let windowContent = '<!DOCTYPE html>';
+    windowContent += '<html>'
+    windowContent += '<head><title>Print canvas</title></head>';
+    windowContent += '<body>'
+    windowContent += '<img src="' + dataUrl + '">';
+    windowContent += '</body>';
+    windowContent += '</html>';
+    //let printWin = window.open('','','width=340,height=260');
+    const printWin = window.open("", "", "width=" + screen.availWidth + ",height=" + screen.availHeight);
+    printWin.document.open();
+    printWin.document.write(windowContent);
+    printWin.document.addEventListener("load",function(){
+        printWin.focus();
+        printWin.print();
+        setTimeout(function(){
+            printWin.document.close();
+            printWin.close();
+        },901);
+    },true);
 }
 
 function affiche_texte_mineure(texte_message){

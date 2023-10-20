@@ -77,7 +77,8 @@ function lecture_fichier_text() {
         }
     }
 }
-
+/* fonction qui ne sert pas actuellement */
+/* ==================================== */
 function ecriture_fichier_text() { /* uniquement coté serveur et non coté client */
     if (!charge_fichier_en_cours && !load_fichier_en_cours) {
         file_name_csv=[];
@@ -93,4 +94,14 @@ function ecriture_fichier_text() { /* uniquement coté serveur et non coté clie
         if (err) throw err
         })
     }
+}
+
+/* fonction save données */
+/* ===================== */
+function save_csv() {
+    //var param1=document.getElementById("param1").value,
+    //    param2=document.getElementById("param2").value,
+    creation_base_donnees_complete();
+    data=JSON.stringify({p1:base_donnees_complete});
+    document.location="data:text/csv;base64,"+btoa(data);
 }

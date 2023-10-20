@@ -731,11 +731,14 @@ function principal(){
                 /* lecture des BP */
                 document.getElementById("text41").addEventListener("click",read_xml);
                 document.getElementById("text42").addEventListener("click",affiche_donnes_diverses);
+                document.getElementById("text43").addEventListener("click",printCanvas);
                 document.querySelector('button[id="newproject"]').onclick=clear_project;
                 document.querySelector('button[id="display_datas"]').onclick=affiche_datas_iframe;
                 document.getElementById("drapeau_F").onclick=langue_Francaise;
                 document.getElementById("drapeau_A").onclick=langue_Anglaise;
-                document.getElementById("test_divers").onclick=lecture_donnees_DB;
+                document.getElementById("test_divers").onclick=lecture_donnees_DB; /* pour lecture des projet dans DB mais fonctionne uniquement hors broswer Mozilla */
+                //document.getElementById("test_divers").onclick=printCanvas ;
+                document.getElementById("test_divers").onclick=save_csv;
                 /* provisoire rend les BP invisibles */
                 inhibe_identity();
                 document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").onclick=rajout_one_task;

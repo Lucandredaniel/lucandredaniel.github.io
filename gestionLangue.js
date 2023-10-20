@@ -155,9 +155,9 @@ function init_langue(){
     array_langue[27].push("charge projet en local");
     array_langue.push([]); /* ================= MENU DEROULANT 2 */
     array_langue[28].push("text40");
-    array_langue[28].push("Information");
-    array_langue[28].push("Information");
-    array_langue.push([]); /* ================= */
+    array_langue[28].push("Tools");
+    array_langue[28].push("Outils");
+     array_langue.push([]); /* ================= */
     array_langue[29].push("text41");
     array_langue[29].push("help");
     array_langue[29].push("aide");
@@ -165,6 +165,10 @@ function init_langue(){
     array_langue[30].push("text42");
     array_langue[30].push("developer");
     array_langue[30].push("Editeur");
+    array_langue.push([]); /* ================= */
+    array_langue[31].push("text43");
+    array_langue[31].push("Print");
+    array_langue[31].push("Imprime");
     /*============================ texte dans Iframe ==================*/
     array_langue_iframe.push([]); /* ================= */
     array_langue_iframe[0].push("entete_iframe");
