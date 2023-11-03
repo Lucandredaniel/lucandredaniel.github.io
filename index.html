@@ -8,6 +8,7 @@
       <title>Diagramm LLA</title>
       <link rel="stylesheet" media="screen" href="canevas.css" type="text/css">
       <script type="text/javascript" src="canevasV2.js"> </script>
+      <script type="text/javascript" src="gestionDatas.js"> </script>
       <script type="text/javascript" src="gestionreadf.js"> </script>
       <script type="text/javascript" src="gestionwritef.js"> </script>
       <script type="text/javascript" src="gestiondiagram.js"> </script>
@@ -48,8 +49,7 @@
             <img id="image_L1" src="image_lla_V1.PNG" alt="dessin LLA" >
         </div>
         <p> <label id="text1" class="message">today's date </label> <input type="text" id="date_jour" value="" size="14"> </p>
-        <p> <label id="text2" class="message">Project start</label> <input type="date" id="start_date_project" name="trip-start" value="2023-06-29" min="01-01-2023" max="31-12-2043" > </p>
-
+        <p> <label id="text2" class="message">Project start</label> <input type="date" id="start_date_project" name="trip-start" value="2023-10-29" min="01-01-2023" max="31-12-2043" > </p>
         <p> <label id="text3"  class="message">Name project  </label><input type="text" id="file_name_db" value="Example" size="14"> </p>
 
         <p> <button id="display_datas">display datas</button> </p>
@@ -75,11 +75,21 @@
         </p>
         <p> <label id="text6" class="message"> width name task </label><input type="number" id="w_task" value="245" size="5"></p>
         <p> <label id="text7" class="message">letter size task </label><input type="number" id="l_size" value="14" size="5"></p>
-        <p> <label id="text8" class="message">gap columns </label><input type="number" id="g_columns"  value="11"  size="5"></p>
-        <p> <label id="text9" class="message">gap rows </label><input type="number" id="g_rows" value="27" size="5"></p>
-        <p> <label id="text20" >Days work/week </label><input type="number" id="nbr_jour_w" value="5" size="5" min="5" max="7" ></p>
+        <p> <label id="text8" class="message">gap between columns </label><input type="number" id="g_columns"  value="11"  size="5" min="0.1" max="50"></p>
+        <p> <label id="text9" class="message">gap between rows </label><input type="number" id="g_rows" value="27" size="5" min="10" max="50"></p>
+        <p> <label id="text20" >days work/week </label><input type="number" id="nbr_jour_w" value="5" size="5" min="5" max="7" ></p>
+        <!-- ========= choix expression de la durée des taches en jours en semaines ou en mois =========== -->
+        <div id="boite_choix_delay"> </div>
+        <p id="text21"> Expression of stain duration </p>
+        <p>
+           <input type="checkbox" id="Choix_jours" name="contact" value="" checked>
+           <label id="text22" class="message" for="Choix_jours">days</label>
+           <input type="checkbox" id="Choix_semaines" name="contact" value="" >
+           <label id="text23" class="message" for="Choix_semaines">weeks</label>
+           <input type="checkbox" id="Choix_mois" name="contact" value="" >
+           <label id="text24" class="message" for="Choix_mois">months</label>
+        </p>
         <!-- ========= barre de progression =========== -->
-
         <div id="pwidget">
             <div id="progressbar">
                 <div id="indicator"></div>
@@ -87,7 +97,14 @@
             <div id="progressnum">0</div>
         </div>
         <!--<div id="dialogoverlay"></div> -->
-        <div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>
+        <div id="dialogbox" class="slit-in-vertical">
+            <div>
+                <div id="dialogboxhead"></div>
+                <div id="dialogboxbody"></div>
+                <div id="dialogboxfoot"></div>
+            </div>
+        </div>
+        <!-- suite utilisée uniquement pour essai et mise au point -->
         <label> <input type="text" id="message1" value="" size="100"> </label></p>
         <label> <input type="text" id="message2" value="" size="100"> </label></p>
         <button id="essai_file" >lire fichier texte </button>
@@ -95,6 +112,7 @@
         <input type="file" name="inputfile" id="inputfile" accept=".txt, .csv" <br>
         <pre id="output"></pre>
         <pre id="output2"></pre>
+        <!-- Entête de l'IFRAME utilisé pour déplacement de l'Iframe uniquement -->
         <div id="entete_iframe" > Set tasks </div>
         <!-- ==== ouverture du canvas pour graphique ========== -->
         <canvas class="diagramme" id = "schema" height = "500" width = "1500" style="border:1px solid">

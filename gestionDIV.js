@@ -21,6 +21,23 @@ function inhibe_identity(){
     document.getElementById('test_divers').style.display = "none";
 }
 
+/* test des touches clavier */
+/* ======================== */
+function listen_keypress () {
+    document.onkeydown = function(evt) {
+        evt = evt || window.event;
+            var isEscape = false;
+            if ("key" in evt) {
+                isEscape = (evt.key === "Escape" || evt.key === "Esc");
+            } else {
+                isEscape = (evt.keyCode === 27);
+            }
+            if (isEscape) {
+                affiche_datas_iframe();
+            }
+    }
+}
+
 /* impression du canvas */
 /* ==================== */
 function printCanvas()  {
@@ -206,7 +223,6 @@ function Helpmessage_2(message,title){
     dialogbox.style.left = "500px";
     dialogbox.style.height="200px"
     dialogbox.style.width="1000px"
-    //dialogoverlay.style.display = "block";
     dialogbox.style.display = "block";
     //document.getElementById('dialogboxhead').style.display = 'block';
     if(typeof title === 'undefined') {
@@ -238,7 +254,13 @@ function affiche_progression(){
   let progressnum = document.getElementById("progressnum");
   let indicator = document.getElementById("indicator");
   let visu= actualprogress*multiplicateur;
-  if (visu>maxprogress) {actualprogress=0 };
+  let pwidget=document.getElementById("pwidget");
+  if (((etape_read!=0)||(etape_write!=0))&&(actualprogress>0)){
+    pwidget.style.display = "block";
+  }else{
+    pwidget.style.display = "none";
+  }
+  if (visu>maxprogress) {actualprogress=1 };
   indicator.style.width=visu + "px";
   progressnum.innerHTML = actualprogress;
   if(actualprogress == maxprogress) { clearInterval(itv)};

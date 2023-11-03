@@ -66,8 +66,10 @@ function remove_one_task(int_indice){
         }
     } else {alert("demarrage à froid ");}
 }
-function affiche_datas_iframe() { /* affiche les donnees dans l Iframe */
-    if (!iframe_hidden) {
+/* gestion affichage de l'IFRAME */
+/* ============================= */
+
+function cache_Iframe(){
         /* cache les elements */
         let iframe_page2=document.getElementById("entete_iframe");
         iframe_page2.setAttribute("hidden","hidden");
@@ -75,10 +77,12 @@ function affiche_datas_iframe() { /* affiche les donnees dans l Iframe */
         iframe_hidden_element.setAttribute("hidden","hidden");
         iframe_hidden=true;
         affiche_datas_effectue=false;
+        text_hidden=1;
         let element_a_modifier=window.parent.document.getElementById("display_datas");
-        element_a_modifier.innerHTML=array_langue[8][langue+2];
-    }
-    else {
+        element_a_modifier.innerHTML=array_langue[8][langue+(text_hidden*2)];
+        element_a_modifier.style.backgroundColor="orange";
+}
+function affiche_Iframe(){
         if (!deplace_iframe){
             /* montre les elements */
             let iframe_page2=document.getElementById("entete_iframe");
@@ -92,14 +96,27 @@ function affiche_datas_iframe() { /* affiche les donnees dans l Iframe */
             element_a_bouger.style.height=String(400) + "px";
             let iframe_hidden_element = document.getElementById("page2");
             iframe_hidden_element.removeAttribute("hidden");
+            text_hidden=0;
             changement_langue_iframe();
             /* initialisation donnees du canvas */
             init_donnees_affichage_canvas();
             affiche_une_seule_tache=false; /* affichage de toutes les taches */
+            let element_a_modifier=window.parent.document.getElementById("display_datas");
+            element_a_modifier.style.backgroundColor="rgb(21,105, 126)";
         }
         iframe_hidden=false;
         affiche_datas();
         affichage_donnees_effectue=true;
+}
+function affiche_datas_iframe() {
+    if (!iframe_hidden) {
+        cache_Iframe()
+        if (affiche_une_seule_tache){
+            affiche_Iframe();
+        }
+    }
+    else {
+        affiche_Iframe();
     }
 }
 function affiche_datas(){ /* affiche donneees des taches dans l'Iframe */
@@ -129,8 +146,9 @@ function lecture_datas(numero_tache){ /* lecture de toutes les donnees tant que 
         recopy_array_2D();
         check_datas_upstream();
         check_datas_downstream();
-        check_datas_upstream(); /* 2eme obligatoire, pour recalculer en fct des modifications effectuées par Check_datas_downstream */
-        check_datas_downstream();
+        //check_datas_upstream(); /* 2eme obligatoire, pour recalculer en fct des modifications effectuées par Check_datas_downstream */
+        //check_datas_downstream();
+        check_datas_red();
         calcul_tache_principale();
         calcul_longueur_projet();
     }
@@ -139,7 +157,8 @@ function read_one_task(int_indice){ /* lecture donnees dans l iframe */
     idvar="name_task"+String(int_indice);
     variable1 = document.getElementById("page2").contentWindow.document.getElementById(idvar);
     let instring=variable1.value;
-    let outString = instring.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+    // let outString = instring.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+    let outString = instring.replace(/[`~!@#$%^&*()_|+=?;:'",.<>\{\}\[\]\\]/gi, '');
     variable1.value=outString;
     array_tasks[int_indice-1][0]=String(outString);
     idvar="start_task"+String(int_indice);
@@ -365,6 +384,7 @@ function set_milstone_radio(){
     if ( array_tasks[var_int][4]==0) {
         array_tasks[var_int][4]=1;
         array_tasks[var_int][6]=0;  /* devalide la tache principale */
+        //let int1=array_tasks[var_int][1]
         set_one_tasks(var_int) /* recalcul start de la tache */
         reafecte_one_donnees(var_int);
     }
@@ -410,6 +430,7 @@ function reafecte_one_donnees(indice){
 function affect_donnees_display(inc) {
     idvar="name_task"+String(inc);
     variable1 = document.getElementById("page2").contentWindow.document.getElementById(idvar)
+
     variable1.value = array_tasks[inc-1][0];
     idvar="start_task"+String(inc);
     variable1 = document.getElementById("page2").contentWindow.document.getElementById(idvar)
@@ -423,7 +444,7 @@ function affect_donnees_display(inc) {
     variable1.value = array_tasks[inc-1][1];
     idvar="delay_task"+String(inc);
     variable1 = document.getElementById("page2").contentWindow.document.getElementById(idvar)
-    if (array_tasks[inc-1][4]==1){ /* verification si jalon, on bloque l'input */
+    if ((array_tasks[inc-1][4]==1) || (array_tasks[inc-1][6]==1)) { /* verification si jalon ou tache principale, on bloque l'input */
         /* variable1.setAttribute("disabled","disabled"); */
         variable1.disabled = true;
     } else {
@@ -510,6 +531,7 @@ function display_one_task(int_indice) {
     variable1.setAttribute("id",idvar);
     variable1.setAttribute("class","label_name_task");
     variable1.setAttribute("text-align","right");
+    variable1.setAttribute("style","color:green; font-weight: bold");
     texte_int=String(indice)
     if (indice<10){
         texte_int="0"+String(indice)
@@ -665,48 +687,7 @@ function getMousePos_iframe(elmnt, e) {
         y: e.clientY-rect.top,
     };
 }
-/*
-function listen_mouse_on_page2(){
-     element_a_ecouter  = window.parent.document.getElementById("page2");
-     elmnt =element_a_ecouter.contentWindow.document.getElementById("entete_page2");
-     elmnt.addEventListener("mousemove", function(e){
-        elmnt.style.cursor="grab";
-        page2_left_x=element_a_ecouter.getBoundingClientRect().left;
-        page2_top_y=element_a_ecouter.getBoundingClientRect().top;
-        if (deplace_iframe){
-            let mousePos=getMousePos_iframe(elmnt,e);
-            let deltax=Number(mousePos.x)-Number(memo_mouse_x);
-            let deltay=Number(mousePos.y)-Number(memo_mouse_y);
-            if ((page2_left_x==page2_left) && (page2_top_y==page2_top)) {
-                if (browserName == "Mozilla"){
-                    page2_left=page2_left+deltax;
-                    page2_top=page2_top+deltay;
-                    element_a_ecouter.style.position="absolute";
-                    element_a_ecouter.style.left=String(parseInt(page2_left))+"px";
-                    element_a_ecouter.style.top=String(parseInt(page2_top))+"px";
-                }
-            }
-        }else {inc=0}
-     }, false);
-    elmnt.addEventListener("mouseup", function(a){
-        if (deplace_iframe){
-            deplace_iframe=false;
-        }
-        deplace_iframe=false;
-     }, false);
-     elmnt.addEventListener("mouseleave", function(b){
-        deplace_iframe=false;
-     }, false);
-    elmnt.addEventListener("mousedown", function(c){
-        if (!deplace_iframe){
-            let mousePos=getMousePos_iframe(elmnt,c);
-            memo_mouse_x=mousePos.x
-            memo_mouse_y=mousePos.y
-            deplace_iframe=true;
-        }
-      }, false);
-}
-*/
+
 function affichage_de_iframe(){
     if (!iframe_hidden){
         let iframe_hidden_element = document.getElementById("page2");

@@ -24,6 +24,7 @@ let etape_write_php=0;
 /* variable global pour lecture fichier avec PHP */
 let echange_datas_lecture=false;
 let etape_read_php=0;
+let text_hidden=0;
 
 /* variables pour DB */
 /* ----------------- */
@@ -55,6 +56,8 @@ let actualprogress = 0;  // valeur courante pour barre graph
 let multiplicateur = 10; // pour affichage
 let text_error_write_db="";
 let text_error_read_db="";
+let tempo_finie=false;
+let myTimeout="";
 
 /* variable pour lecture fichier XML */
 /* --------------------------------- */
@@ -201,6 +204,12 @@ let etape_a_froid=0;
 let langue=1; /* choix de la langue de départ */
 let reponse_boite=false; /* retour de la boite de dialogue oui ou non */
 
+/* variables pour choix du planning (jours, semaines, mois )
+/* ========================================================= */
+let choix_planning="J" /* J=jours S=Semaine M=mois */
+let duree_semaine=7;
+let duree_mois=30;
+
 /* variables pour lecture fichier Txt ou CSV */
 /* ======================================== */
 let brouillon_file=[];
@@ -215,278 +224,14 @@ let load_fichier_en_cours=false;
 let laod_fichier_txt_fini=false;
 let abort_php=false;
 
-function recopy_array_2D(){
-    array_tasks_display_save=[];
-    //alert(array_tasks)
-    for (let i = 0; i < array_tasks.length; i++) {
-        array_tasks_display_save[i]=[]
-        for (let j = 0; j < array_tasks[0].length; j++) {
-            array_tasks_display_save[i][j]=array_tasks[i][j];
-        }
-    }
-}
 
-function verifie_si_jour_travaille(index){
-    let jour_travaille=true;
-    if (nombre_jour_travaille<7){
-        let save_resultat_increment=index;
-        let nbr_m_second = 86400000 /* nbr de seconde en 1 journée */
-        variable1=document.getElementById("start_date_project");
-        let start_project= new Date(variable1.value);
-        if (start_project=="Invalid Date"){
-            start_project=new Date()
-        }
-        if (save_resultat_increment>0){
-            let start_int=start_project.getTime()
-            start_int+=(index*nbr_m_second);
-            start_project.setTime(start_int);
-        }
-        let date_start=start_project;
-        date_start_N_jour_semaine=date_start.getDay();
-        if (date_start_N_jour_semaine==0){jour_travaille=false}
-        if ((date_start_N_jour_semaine==6)&&(nombre_jour_travaille<6)){jour_travaille=false}
-    }
-    return jour_travaille;
-}
-
-function recopy_array_for_display(){
-    if (changement_affichage_en_cours_graph) {alert("chg")}
-    if (!changement_affichage_en_cours_graph){
-        if (memo_increment_left<0){memo_increment_left=0};
-        if (memo_increment_left>number_day){memo_increment_left=number_day};
-        array_tasks_display=[];
-        let index=0;
-        for (let i = 0; i < array_tasks_display_save.length; i++) {
-            if (i>=increment_top_canvas){
-                array_tasks_display[index]=[]
-                for (let j = 0; j < array_tasks_display_save[0].length; j++) {
-                    array_tasks_display[index][j]=array_tasks_display_save[i][j];
-                    int_increment=increment_left_canvas+memo_increment_left;
-                    if (j==5){ /* gestion des taches avals */
-                        array_tasks_display[index][j]=array_tasks_display[index][j]-increment_top_canvas;
-                        if (array_tasks_display[index][j]<0) {array_tasks_display[index][j]=0}
-                    }
-                    if (j==7){ /* gestion des tache amonts */
-                        array_tasks_display[index][j]=array_tasks_display[index][j]-increment_top_canvas;
-                        if (array_tasks_display[index][j]<0) {array_tasks_display[index][j]=0}
-                    }
-                    for (let x = 0; x < int_increment; x++) {
-                        if (j==2) {
-                            if (array_tasks_display[index][1]>0){
-                               array_tasks_display[index][1]-=1;
-                            } else {
-                                array_tasks_display[index][1]=0;
-                                if (array_tasks_display_save[index][6]==1) {
-                                        if (array_tasks_display[index][2]>0) {
-                                            array_tasks_display[index][2]-=1;
-                                        }
-                                }else{
-                                    if (verifie_si_jour_travaille(x)){
-                                            if (array_tasks_display[index][2]>0) {
-                                                array_tasks_display[index][2]-=1;
-                                            }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                index+=1;
-            }
-        }
-    }
-}
-
-function check_datas_upstream(){
-    for (let i = 0; i < (array_tasks.length); i++) {
-        if (array_tasks_display_save[i][7]>array_tasks_display_save.length) {
-            array_tasks_display_save[i][7]=0;
-            array_tasks[i][7]=0;
-        }
-        if (array_tasks_display_save[i][7]==i+1) {
-            array_tasks_display_save[i][7]=0;
-            array_tasks[i][7]=0;
-        }
-    }
-    /* déplacer les taches liées */
-    for (let i = 0; i < (array_tasks.length); i++) {
-        if (array_tasks_display_save[i][7]!=0){ /* vérifie si tache amont déclarée */
-            /* vérifie si tache pas > au nombre de tache declaré */
-             let numero_tache_amont=Number(array_tasks_display_save[i][7]-1);
-             let resultat_duree_tache=calcul_duree_tache(array_tasks_display_save[numero_tache_amont][1],array_tasks_display_save[numero_tache_amont][2],numero_tache_amont);
-             var fin_tache_en_cours=Number(array_tasks_display_save[numero_tache_amont][1])+Number(resultat_duree_tache)+Number(array_tasks_display_save[numero_tache_amont][3]);
-             var debut_tache_suivante=Number(array_tasks_display_save[i][1]);
-             var tache_jalon=Number(array_tasks_display_save[i][4]);
-             if (tache_jalon!=1) {
-                 if (debut_tache_suivante<fin_tache_en_cours){
-                    // let delta_tache=fin_tache_en_cours-debut_tache_suivante;
-                    let delta_tache=fin_tache_en_cours
-                    //array_tasks_display_save[i][1]= array_tasks_display_save[i][1]+delta_tache;
-                    array_tasks_display_save[i][1]= delta_tache;
-                 }
-             }
-        }
-    }
-}
-function check_datas_downstream(){
-    change_datas=false;
-    for (let i = 0; i < (array_tasks.length); i++) {
-        if (array_tasks_display_save[i][5]>array_tasks_display_save.length) {
-            array_tasks_display_save[i][5]=0;
-            array_tasks[i][5]=0;
-        }
-        if (array_tasks_display_save[i][5]==i+1) {
-            array_tasks_display_save[i][5]=0;
-            array_tasks[i][5]=0;
-        }
-        /* verifie le parametre couleur */
-        if (array_tasks_display_save[i][9]==0){
-            array_tasks_display_save[i][9]="#4488EE"; // nuance de bleu
-        }
-    }
-    /* contrôle des parametres et les incidences entre eux */
-    /* sur donnees principale "array_tasks" et sur donnees d affichage "array_tasks_display" */
-    /* déplacer les taches liées */
-    for (let i = 0; i < (array_tasks.length); i++) {
-        if (array_tasks_display_save[i][5]!=0){ /* vérifie si tache aval déclarée */
-            /* vérifie si tache pas > au nombre de tache declaré */
-            let numero_tache_aval=Number(array_tasks_display_save[i][5]-1);
-            let resultat_duree_tache=calcul_duree_tache(array_tasks_display_save[i][1],array_tasks_display_save[i][2],i);
-             var fin_tache_en_cours=Number(array_tasks_display_save[i][1])+Number(resultat_duree_tache)+Number(array_tasks_display_save[i][3]);
-             var debut_tache_suivante=Number(array_tasks_display_save[numero_tache_aval][1]);
-             var tache_jalon=Number(array_tasks_display_save[numero_tache_aval][4]);
-             if (tache_jalon!=1) {
-                 if (!verifie_si_jour_travaille(debut_tache_suivante-1)){
-                     debut_tache_suivante+=1;
-                 }
-                 if (debut_tache_suivante<fin_tache_en_cours){
-                    let delta_tache=fin_tache_en_cours-debut_tache_suivante;
-                    array_tasks_display_save[numero_tache_aval][1]= array_tasks_display_save[numero_tache_aval][1]+delta_tache;
-                 }
-             }
-        }
-    }
-    /* mise en erreur des taches si dépassement dune tache par rapport a la tache suivant si elles sont liées */
-    /* et que la tache suivante est un jalon */
-     for (let i = 0; i < (array_tasks.length); i++) {
-        if (array_tasks_display_save[i][5]!=0){ /* vérifie si tache aval déclarée */
-            let numero_tache_aval=Number(array_tasks_display_save[i][5]-1);
-            let debut_tache_suivante=Number(array_tasks_display_save[numero_tache_aval][1]);
-            let resultat_duree_tache=calcul_duree_tache(array_tasks_display_save[i][1],array_tasks_display_save[i][2],i);
-            let fin_tache_en_cours=Number(array_tasks_display_save[i][1])+Number(resultat_duree_tache)+Number(array_tasks_display_save[i][3]);
-            let tache_jalon=Number(array_tasks_display_save[numero_tache_aval][4]);
-            let tache_en_defaut=Number(array_tasks_display_save[numero_tache_aval][8]);
-            if (debut_tache_suivante<fin_tache_en_cours){
-                if (tache_jalon==1){
-                    array_tasks[i][8]=1; /* tache en defaut */
-                    array_tasks_display_save[i][8]=1;
-                }
-           } else {
-                array_tasks[i][8]=0         /* enleve les defauts */
-                array_tasks_display_save[i][8]=0;
-           }
-        }
-    }
-    /* contrôle les suites de taches en défaut */
-    for (let i = (array_tasks.length-1); i > 0; i--) {
-        if (array_tasks_display_save[i][5]>0){
-            numero_tache_aval=Number(array_tasks_display_save[i][5]-1);
-            tache_en_defaut=array_tasks_display_save[numero_tache_aval][8];
-            if (tache_en_defaut==1){
-                let debut_tache=Number(array_tasks_display_save[numero_tache_aval][1]);
-                let resultat_duree_tache=calcul_duree_tache(array_tasks_display_save[i][1],array_tasks_display_save[i][2],i);
-                let fin_tache_amont=Number(array_tasks_display_save[i][1])+Number(resultat_duree_tache)+Number(array_tasks_display_save[i][3]);
-                if (fin_tache_amont>=debut_tache){
-                    array_tasks[i][8]=1; /* tache en defaut */
-                    array_tasks_display_save[i][8]=1;
-                }
-            }
-        }else {
-            array_tasks[i][8]=0; /* tache non en defaut */
-        }
-    }
-    /* verifie le gap et prise en compte */
-    for (let i = 0; i < (array_tasks_display_save.length); i++) {
-        if (array_tasks_display_save[i][3]!=0){
-            array_tasks_display_save[i][1]=Number(array_tasks_display_save[i][1])+Number(array_tasks_display_save[i][3]);
-        }
-    }
-}
-
-function calcul_tache_principale(){
-    /* verifie si tache declarée comme "main task" */
-    let compteur_fin_tache=0;
-    let debut_tache_principale_precedent=0;
-    let fin_tache_principale_precedent=0;
-    let compteur_duree=0;
-    let i=0;
-    let j=0;
-    let valeur_int=0;
-    while (i < (array_tasks_display_save.length)) {
-        j=0;
-        /* verifie si tache principal (annule les liaisons filles et additionne le delai total de chaque tache fille */
-        if (array_tasks_display_save[i][6]==1){
-            j=i+1;
-            array_tasks_display_save[i][2]=0;
-            array_tasks_display_save[i][3]=0;
-            array_tasks_display_save[i][4]=0;
-            array_tasks_display_save[i][5]=0;
-            /* le debut de la tache devient le debut de la tache suivante (1ere tache de la tache principale) */
-            if (i<array_tasks_display_save.length-1) {
-                array_tasks_display_save[i][1]=array_tasks_display_save[i+1][1];
-                fin_tache_principale_precedent=array_tasks_display_save[i][1];
-            }
-            while (j < (array_tasks_display_save.length)){
-                if (array_tasks_display_save[j][6]==1) {
-                    j=number_tasks_max+1; /* trouvé :  une autre tache principale */
-                    if (compteur_fin_tache!=0){
-                        array_tasks_display_save[i][2]=compteur_fin_tache-fin_tache_principale_precedent;
-                    }else {
-                        array_tasks_display_save[i][2]=0;
-                    }
-                    array_tasks_display_save[i][10]=compteur_duree;
-                    compteur_fin_tache=0;
-                    compteur_duree=0;
-                }
-                else {
-                    let incrementation=int_increment;
-                    if (incrementation<0){incrementation=0}
-                    let resultat_duree_tache=calcul_duree_tache(array_tasks_display_save[j][1],array_tasks_display_save[j][2],j);
-                    valeur_int=Number(array_tasks_display_save[j][1])+Number(resultat_duree_tache)
-                    compteur_duree+=array_tasks_display_save[j][2]
-
-                    if (valeur_int>compteur_fin_tache) {
-                        compteur_fin_tache=valeur_int;
-                    }
-                    j++;
-                }
-            }
-            if (j==array_tasks_display_save.length) { /* pas d'autre tache jalon */
-                //array_tasks_display_save[i][2]=compteur_fin_tache-fin_tache_principale_precedent;
-                array_tasks_display_save[i][2]=compteur_fin_tache-fin_tache_principale_precedent;
-                array_tasks_display_save[i][10]=compteur_duree;
-                compteur_fin_tache=0;
-                compteur_duree=0;
-            }
-        }
-        i++;
-    }
-}
-
-function calcul_longueur_projet(){
-    /* calcul durée total du projet pour parametre affichage (uniquement en fin de function CHECK pour prise en compte des modifications */
-    number_day=0;
-    for (let i = 0; i < (array_tasks_display_save.length); i++) {
-        let resultat_duree_tache=calcul_duree_tache(array_tasks_display_save[i][1],array_tasks_display_save[i][2],i);
-        let valeur_int=Number(array_tasks_display_save[i][1])+Number(resultat_duree_tache)+Number(array_tasks_display_save[i][3])
-        if (valeur_int>number_day) {
-            number_day=valeur_int;
-        }
-    }
-}
-
+/* bouton sur IFRAME */
+/* ================= */
 function set_tasks(){
     if (!affiche_une_seule_tache){
+        let diviseur=1;
+        if (choix_planning=="S"){ diviseur=duree_semaine}
+        if (choix_planning=="M"){ diviseur=duree_mois}
         /* demande affichage parametre au complet */
         iframe_hidden=true;
         affiche_datas_iframe();
@@ -495,8 +240,9 @@ function set_tasks(){
             recopy_array_2D()
         }
         for (let i = 0; i < (array_tasks.length); i++) {
-            array_tasks[i][1]= array_tasks_display_save[i][1]-array_tasks_display_save[i][3];
-            if (array_tasks_display_save[i][6]==1){
+            let int=array_tasks_display_save[i][1]-array_tasks_display_save[i][3];
+            array_tasks[i][1]=Math.round((int/diviseur)*10)/10
+            if (array_tasks_display_save[i][6]==1){ // si tache principale
                 array_tasks[i][2]=0;
             }
         }
@@ -507,14 +253,36 @@ function set_tasks(){
 }
 function set_one_tasks(indice){
     /* recalcul uniquement le depart de la tache demandée */
-        array_tasks[indice][1]= array_tasks_display_save[indice][1]-array_tasks_display_save[indice][3];
+        let diviseur=1;
+        if (choix_planning=="S"){ diviseur=duree_semaine}
+        if (choix_planning=="M"){ diviseur=duree_mois}
+        let int=array_tasks_display_save[indice][1]-array_tasks_display_save[indice][3];
+        array_tasks[indice][1]=Math.round((int/diviseur)*10)/10
+        //array_tasks[indice][1]=array_tasks_display[indice][1]
         if (array_tasks_display_save[indice][6]==1){
             array_tasks[indice][2]=0;
         }
     reafecte_one_donnees(indice);
 }
+function optimisation_tasks(){
+    if (!affiche_une_seule_tache){
+        for (let i = 0; i < (array_tasks.length); i++) {
+            if (array_tasks[i][4]==0){ // verifie si pas un jalon
+                array_tasks[i][1]=0;
+            }
+        }
+        reafecte_donnees();
+    } else{
+        if (array_tasks[numero_de_la_tache_a_afficher-1][4]==0){ // verifie si pas un jalon
+            array_tasks[numero_de_la_tache_a_afficher-1][1]=0;
+            reafecte_one_donnees(numero_de_la_tache_a_afficher-1)
+        }
+    }
+
+}
 
 /* lecture des parametres affichés */
+/* =============================== */
 function read_parameters(){
 	space_column=Number(document.getElementById("g_columns").value);
     start_column=Number(document.getElementById("w_task").value);
@@ -537,6 +305,41 @@ function read_parameters(){
     with_columns=0;
     variable1 = document.querySelector('input[id="Choicecol"]:checked');
     if (variable1!=null) {with_columns=1};
+    /* lecture parametres "expression durée des taches jours, semaines ou mois" */
+    //choix_planning="J"; // choix jours
+    variable1 = document.querySelector('input[id="Choix_jours"]:checked');
+    if (variable1!=null) {
+        if (choix_planning!="J") { // analyse front montant chg de choix
+            variable1 = document.getElementById("Choix_semaines");
+            variable1.checked = false;
+            variable1 = document.getElementById("Choix_mois");
+            variable1.checked = false;
+            choix_planning="J";
+            demande_reecriture_texte();
+        }
+    }
+    variable1 = document.querySelector('input[id="Choix_semaines"]:checked');
+    if (variable1!=null) {
+        if (choix_planning!="S") { // analyse front montant chg de choix
+            variable1 = document.getElementById("Choix_jours");
+            variable1.checked = false;
+            variable1 = document.getElementById("Choix_mois");
+            variable1.checked = false;
+            choix_planning="S";
+            demande_reecriture_texte();
+        }
+    }
+    variable1 = document.querySelector('input[id="Choix_mois"]:checked');
+    if (variable1!=null) {
+        if (choix_planning!="M") { // analyse front montant chg de choix
+            variable1 = document.getElementById("Choix_jours");
+            variable1.checked = false;
+            variable1 = document.getElementById("Choix_semaines");
+            variable1.checked = false;
+            choix_planning="M";
+            demande_reecriture_texte();
+        }
+    };
     /* lecture parametres avec ou sans affichage semaine et weekend */
     colorise_semaine=false;
     variable1 = document.querySelector('input[id="tracesemaine"]:checked');
@@ -553,7 +356,8 @@ function read_parameters(){
     }
 }
 
-/* apres lecture paramatre dans DB mise a jour des parametres affichés */
+/* apres lecture paramatres dans DB mise a jour des parametres affichés */
+/* ====== ecriture des parametres ==================================== */
 function write_parameters(){
     if (ask_write_parameters){
         let int_langue=Number(array_parametre_environnement2[2]);
@@ -613,6 +417,31 @@ function write_parameters(){
             document.getElementById("nbr_jour_w").value=Number(array_parametre_environnement2[7]);
         }else{
             document.getElementById("nbr_jour_w").value=7;
+        }
+        choix_planning="J";
+        variable1 = document.getElementById("Choix_jours");
+        variable1.checked = true;
+        variable1 = document.getElementById("Choix_semaines");
+        variable1.checked = false;
+        variable1 = document.getElementById("Choix_mois");
+        variable1.checked = false;
+        if (array_parametre_environnement2[8]=="S") {
+            variable1 = document.getElementById("Choix_jours");
+            variable1.checked = false;
+            variable1 = document.getElementById("Choix_semaines");
+            variable1.checked = true;
+            variable1 = document.getElementById("Choix_mois");
+            variable1.checked = false;
+            choix_planning="S";
+        }
+        if (array_parametre_environnement2[8]=="M") {
+            variable1 = document.getElementById("Choix_jours");
+            variable1.checked = false;
+            variable1 = document.getElementById("Choix_semaines");
+            variable1.checked = false;
+            variable1 = document.getElementById("Choix_mois");
+            variable1.checked = true;
+            choix_planning="M";
         }
         ask_write_parameters=false;
     }
@@ -697,15 +526,19 @@ function principal(){
             /* ======== affichage du diagram canvas =============== */
             if (transfert_datas_fini) {
                 writing_date_today(); /* en premier avant lecture parameters */
-                read_parameters(); /* lecture parametres d affichage */
-                write_parameters();
+                read_parameters();    /* lecture parametres d affichage */
+                write_parameters();   /* ecriture des paramétres après lecture DB ou autre sauvegarde */
             }
             if (!onload_donnees_base) {
                 recopy_array_for_display();
                 dimension_schema(graphe,drawing_area);
                 if (with_rows==1) {horizontal_lines(graphe,drawing_area);}
                 if (with_columns==1) {vertical_lines(graphe,drawing_area);}
-                writing_times (graphe,drawing_area,"d");
+                if (choix_planning=="J"){
+                    writing_times_JMA (graphe,drawing_area,"d"); // affiche uniquement semaines-mois-annees
+                }else {
+                    writing_times_MA (graphe,drawing_area,"d"); // affiche uniquement semaines-mois-annees
+                }
                 draw_task (graphe,drawing_area);
                 draw_liaison_task_down(graphe,drawing_area);
                 draw_liaison_task_up(graphe,drawing_area);
@@ -736,13 +569,14 @@ function principal(){
                 document.querySelector('button[id="display_datas"]').onclick=affiche_datas_iframe;
                 document.getElementById("drapeau_F").onclick=langue_Francaise;
                 document.getElementById("drapeau_A").onclick=langue_Anglaise;
-                document.getElementById("test_divers").onclick=lecture_donnees_DB; /* pour lecture des projet dans DB mais fonctionne uniquement hors broswer Mozilla */
+                document.getElementById("test_divers").onclick=lecture_donnees_DB; /* pour lecture des projets dans DB */
                 //document.getElementById("test_divers").onclick=printCanvas ;
                 document.getElementById("test_divers").onclick=save_csv;
                 /* provisoire rend les BP invisibles */
                 inhibe_identity();
                 document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").onclick=rajout_one_task;
                 document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").onclick=set_tasks;
+                document.getElementById("page2").contentWindow.document.getElementById("Optimisation").onclick=optimisation_tasks;
                 lecture_bp_color_days()
 
                 /* lecture BP dans Iframe */
@@ -765,6 +599,7 @@ function principal(){
                 /* lecture souris */
                 listen_mouse_on_canvas(graphe,drawing_area);
                 listen_mouse_on_page1();
+                listen_keypress ();
                 lecture_fichier_text();
                 onread_datas_xml();
             }

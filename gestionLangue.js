@@ -7,12 +7,28 @@ function changement_langue_iframe(){
     document.getElementById("page2").contentWindow.document.getElementById(array_langue_iframe[5][0]).innerHTML=array_langue_iframe[5][langue];
     document.getElementById("page2").contentWindow.document.getElementById(array_langue_iframe[6][0]).innerHTML=array_langue_iframe[6][langue];
     document.getElementById(array_langue_iframe[0][0]).innerHTML=array_langue_iframe[0][langue];
-    document.getElementById("page2").contentWindow.document.getElementById("T1").innerHTML=array_langue_iframe[7][langue];
+    document.getElementById("page2").contentWindow.document.getElementById("T1").innerHTML=array_langue_iframe[11][langue];
     document.getElementById("page2").contentWindow.document.getElementById("T2").innerHTML=array_langue_iframe[8][langue];
     document.getElementById("page2").contentWindow.document.getElementById("T3").innerHTML=array_langue_iframe[9][langue];
     document.getElementById("page2").contentWindow.document.getElementById("T4").innerHTML=array_langue_iframe[10][langue];
+    document.getElementById("page2").contentWindow.document.getElementById("T3-0").innerHTML=array_langue_iframe[11][langue];
+    document.getElementById("page2").contentWindow.document.getElementById("T2-0").innerHTML=array_langue_iframe[13][langue];
+    document.getElementById("page2").contentWindow.document.getElementById("Optimisation").innerHTML=array_langue_iframe[12][langue];
     let element_a_modifier=window.parent.document.getElementById("display_datas");
-    element_a_modifier.innerHTML=array_langue[8][langue];
+    element_a_modifier.innerHTML=array_langue[8][langue+(text_hidden*2)];
+}
+
+function demande_reecriture_texte(){
+    array_langue=[];
+    array_langue_iframe=[];
+    init_langue();
+    if (!affiche_une_seule_tache){
+        affiche_datas(0);
+    }else{
+        affiche_une_tache_specifique(numero_de_la_tache_a_afficher);
+    }
+    affichage_langue()
+    changement_langue_iframe();
 }
 
 function langue_Anglaise(){
@@ -95,11 +111,11 @@ function init_langue(){
     array_langue[12].push("Zoom nom taches.");
     array_langue.push([]); /* ================= */
     array_langue[13].push("text8");
-    array_langue[13].push("gap between columns.");
+    array_langue[13].push("gap between columns");
     array_langue[13].push("largeur des colonnes");
     array_langue.push([]); /* ================= */
     array_langue[14].push("text9");
-    array_langue[14].push("gap between. rows.");
+    array_langue[14].push("gap between rows");
     array_langue[14].push("largeur des lignes");
     array_langue.push([]); /* ================= */
     array_langue[15].push("text16");
@@ -169,6 +185,22 @@ function init_langue(){
     array_langue[31].push("text43");
     array_langue[31].push("Print");
     array_langue[31].push("Imprime");
+    array_langue.push([]); /* ================= */
+    array_langue[32].push("text21");
+    array_langue[32].push("Expression of stain duration");
+    array_langue[32].push("Expression de la durée des taches");
+    array_langue.push([]); /* ================= */
+    array_langue[33].push("text22");
+    array_langue[33].push("days");
+    array_langue[33].push("jours");
+    array_langue.push([]); /* ================= */
+    array_langue[34].push("text23");
+    array_langue[34].push("weeks");
+    array_langue[34].push("semaines");
+    array_langue.push([]); /* ================= */
+    array_langue[35].push("text24");
+    array_langue[35].push("months");
+    array_langue[35].push("mois");
     /*============================ texte dans Iframe ==================*/
     array_langue_iframe.push([]); /* ================= */
     array_langue_iframe[0].push("entete_iframe");
@@ -203,17 +235,53 @@ function init_langue(){
     array_langue_iframe[7].push("definition");
     array_langue_iframe[7].push("definition");
     array_langue_iframe.push([]); /* ================= */
-    array_langue_iframe[8].push("T2");
+    array_langue_iframe[8].push("T2-0");
     array_langue_iframe[8].push("start task.");
     array_langue_iframe[8].push("début tache");
     array_langue_iframe.push([]); /* ================= */
-    array_langue_iframe[9].push("T3");
-    array_langue_iframe[9].push("delay");
-    array_langue_iframe[9].push("durée");
+    if (choix_planning=="J"){
+        array_langue_iframe[9].push("T3");
+        array_langue_iframe[9].push("days");
+        array_langue_iframe[9].push("jours");
+    }
+    if (choix_planning=="S"){
+        array_langue_iframe[9].push("T3");
+        array_langue_iframe[9].push("week");
+        array_langue_iframe[9].push("semaines");
+    }
+    if (choix_planning=="M"){
+        array_langue_iframe[9].push("T3");
+        array_langue_iframe[9].push("months");
+        array_langue_iframe[9].push("mois");
+    }
     array_langue_iframe.push([]); /* ================= */
     array_langue_iframe[10].push("T4");
     array_langue_iframe[10].push("Gap");
     array_langue_iframe[10].push("Ecart");
+    array_langue_iframe.push([]); /* ================= */
+    array_langue_iframe[11].push("T3-0");
+    array_langue_iframe[11].push("Delay/");
+    array_langue_iframe[11].push("Durée/");
+    array_langue_iframe.push([]); /* ================= */
+    array_langue_iframe[12].push("Optimisation");
+    array_langue_iframe[12].push("Optimization");
+    array_langue_iframe[12].push("Optimisation");
+    array_langue_iframe.push([]); /* ================= */
+    if (choix_planning=="J"){
+        array_langue_iframe[13].push("T2");
+        array_langue_iframe[13].push("days");
+        array_langue_iframe[13].push("jours");
+    }
+    if (choix_planning=="S"){
+        array_langue_iframe[13].push("T2");
+        array_langue_iframe[13].push("week");
+        array_langue_iframe[13].push("semaines");
+    }
+    if (choix_planning=="M"){
+        array_langue_iframe[13].push("T2");
+        array_langue_iframe[13].push("months");
+        array_langue_iframe[13].push("mois");
+    }
 }
 
 function affichage_langue(){

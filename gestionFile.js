@@ -101,7 +101,14 @@ function ecriture_fichier_text() { /* uniquement coté serveur et non coté clie
 function save_csv() {
     //var param1=document.getElementById("param1").value,
     //    param2=document.getElementById("param2").value,
+    let data1=[];
     creation_base_donnees_complete();
-    data=JSON.stringify({p1:base_donnees_complete});
-    document.location="data:text/csv;base64,"+btoa(data);
+    /*
+    for (let i = 0; i < base_donnees_complete.length; i++) {
+        data1[i]="";
+        data1[i]=JSON.stringify({base_donnees_complete[i]});
+    }
+    */
+    data=JSON.stringify(base_donnees_complete);
+    document.location="data:text/csv;base64,"+btoa(base_donnees_complete);
 }

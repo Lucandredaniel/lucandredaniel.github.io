@@ -42,7 +42,6 @@ p {	text-align:left; color:black; line-height:60%;}
 #text20 { width: 200px;  position:absolute; top : 570px; left : 10px;}  /* choix nbr jour/semaine */
 #nbr_jour_w {width: 45px; height: 20px;position:absolute; top : 560px; left : 150px; border: 2px solid #9C9898; font-size:12px;}
 
-
 #text4 { width: 200px;  position:absolute; top : 255px; left : 10px;}  /* line display */
 #Choicerows {position:absolute; top : 250px; left : 145px;}
 #text5 { width: 200px;  position:absolute; top : 285px; left : 10px;} /* columnn display */
@@ -52,9 +51,9 @@ p {	text-align:left; color:black; line-height:60%;}
 #text17 { width: 200px;  position:absolute; top : 345px; left : 10px;} /* trace semaine */
 #tracesemaine {position:absolute; top : 340px; left : 145px;}
 #text18 { width: 200px;  position:absolute; top : 375px; left : 10px;} /* text color day */
-.color_days { width: 20px; height: 20px; position:absolute; top : 370px; left : 145px; border-width: 1px;border-style: ridge ; border-radius: 50px; border-color:red ;}
+.color_week { width: 20px; height: 20px; position:absolute; top : 370px; left : 145px; border-width: 1px;border-style: ridge ; border-radius: 50px; border-color:red ;}
 #text19 { width: 200px;  position:absolute; top : 405px; left : 10px;} /* text color week */
-.color_week { width: 20px; height: 20px; position:absolute; top : 400px; left : 145px; border-width: 1px;border-style: ridge ; border-radius: 50px; border-color:red ;}
+.color_days { width: 20px; height: 20px; position:absolute; top : 400px; left : 145px; border-width: 1px;border-style: ridge ; border-radius: 50px; border-color:red ;}
 /* .message { width: 200px;  margin: 0px 0px 0px 0px;} */
 
 /* choix parametres pour IFRAME */
@@ -81,17 +80,32 @@ p {	text-align:left; color:black; line-height:60%;}
                 border-radius: 10%;color: rgb(var(--pure-material-onprimary-rgb, 255, 255, 255));margin: 0px 0px 0px 5px;}
 .color_task { width: 20px; height: 20px; margin: 0px 0px 0px 10px; border-width: 1px; border-style: ridge ; border-radius: 50px; border-color:red ;}
 #T1{ width: 200px;  margin: 0px 0px 0px 105px;} /* definition Iframe */
-#T2{ width: 50px;  margin: 0px 0px 0px 145px;} /* start task Iframe*/
-#T3{ width: 50px; margin: 0px 0px 0px 15px;} /* delay Iframe*/
-#T4{ width: 50px; margin: 0px 0px 0px 25px;} /* Gap Iframe*/
+#T2{position:absolute; top : 20px; left : 320px; }
+#T2-0{ position:absolute; top : 32px; left : 320px;} /* start task Iframe*/
+#T3{ position:absolute; top : 32px; left : 398px;} /* delay Iframe*/
+#T3-0{position:absolute; top : 20px; left : 398px; }
+#T4{ position:absolute; top : 32px; left : 470px;} /* Gap Iframe*/
 #T5{ width: 50px; margin: 0px 0px 0px 100px;} /* milestone Iframe*/
 #T6{ width: 50px; margin: 0px 0px 0px 100px;} /* downstream task Iframe*/
 #T7{ width: 50px; margin: 0px 0px 0px 100px;} /* main task Iframe*/
 #bouton_Iframe{ width: 100px; height: 25px; margin: 0px 0px 0px 0px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5)}
-#SET_start_tasks{ width: 150px; height: 25px; margin: 0px 0px 0px 950px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5)}
+#SET_start_tasks{ width: 150px; height: 25px; margin: 0px 0px 0px 320px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5)}
+#Optimisation { width: 150px; height: 25px; margin: 0px 0px 0px 450px;font-size:11px;text-align: center;font-family: Verdana, Geneva, Tahoma, sans-serif ;box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5)}
 
-/* donnees diverses */
-/* ================ */
+/* choix delay (jours, msemaines, mois) */
+/* ==================================== */
+#boite_choix_delay { position:absolute; top : 600px; left : 10px;background-color:"#f3f1ed"; width:150px; padding:24px; border-radius:3px;text-align:left; border:1px solid gray;
+ box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;}
+#text21 { width: 200px;  position:absolute; top : 590px; left : 20px;z-index: 1}
+#text22 { width: 200px;  position:absolute; top : 620px; left : 25px;z-index: 1}
+#text23 { width: 200px;  position:absolute; top : 620px; left : 80px;z-index: 1}
+#text24 { width: 200px;  position:absolute; top : 620px; left : 145px;z-index: 1}
+#Choix_jours { position:absolute; top : 630px; left : 25px;}
+#Choix_semaines { position:absolute; top : 630px; left : 85px;}
+#Choix_mois {position:absolute; top : 630px; left : 150px;}
+
+/* donnees diverses (drapeaux, sigle LLA, etc .. */
+/* ============================================= */
 #message1 {	width: 100px;  position:absolute; top : 760px; left : 160px; border: 2px solid #9C9898;}
 #message2 {	width: 100px;  position:absolute; top : 790px; left : 160px; border: 2px solid #9C9898;}
 .dessin_lla img {display: block; margin: 0 auto; height : 50px; width : 50px; position : absolute; top : 60px; left : 20px;}
@@ -120,7 +134,7 @@ input:disabled {color: black;background-color: lightgray}
 
 /* ------------ barre de progression------------- */
 /* ============================================== */
-#pwidget { position:absolute; top : 600px; left : 10px;background-color:lightgray; width:260px; padding:5px; border-radius:3px; border-radius:3px; text-align:left; border:1px solid gray;}
+#pwidget { display: none;position:absolute; top : 660px; left : 10px;background-color:lightgray; width:260px; padding:5px; border-radius:3px; border-radius:3px; text-align:left; border:1px solid gray;}
 #progressbar { width:255px; padding:1px; background-color:white; border:1px solid black; height:28px;}
 #indicator { width:0px; background-image:url("barre_progression.png"); height:28px; margin:0;}
 #progressnum { text-align:center; width:255px;}

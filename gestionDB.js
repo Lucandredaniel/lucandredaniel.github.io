@@ -73,7 +73,7 @@ function creation_base_donnees_complete(){
    base_donnees_complete[pos_index][5] = [couleur_weekend];
    base_donnees_complete[pos_index][6] = [couleur_fond_semaine];
    base_donnees_complete[pos_index][7] = [nombre_jour_travaille];
-   base_donnees_complete[pos_index][8] = ["para"];
+   base_donnees_complete[pos_index][8] = [choix_planning];
    base_donnees_complete[pos_index][9] = ["para"];
    base_donnees_complete[pos_index][10] = ["para"];
    base_donnees_complete[pos_index][11] = ["para"];
@@ -82,16 +82,17 @@ function creation_base_donnees_complete(){
 
 function delete_datas_base(){
         let reqdelete = indexedDB.deleteDatabase(name_db);
-
         reqdelete.onsuccess = function () {
             etape_write=3;
         };
         reqdelete.onerror = function () {
             CustomAlert("DB not Found","db error");
-            etape_write=3;
+            fermeture_db();
+            etape_write=99;
         };
         reqdelete.onblocked = function () {
             text_error_write_db="Couldn't delete database due to the operation being blocked"
+            fermeture_db();
             etape_write=99;
         };
 }
@@ -109,6 +110,7 @@ function open_db_save_db(){
         }
         openrequest.onerror   = function() {
             text_error_write_db="error open DB on backup";
+            fermeture_db();
             etape_write=99;
             //db = openrequest.result;
         }
@@ -242,6 +244,7 @@ function attente_fin_transaction() { /* etape 7 */
 }
 
 function fermeture_db() {
+    message(db,"essai")
     db.close();
 }
 
@@ -268,7 +271,9 @@ function valid_save_donnees_db(){
         etape_read=0;
     }
 }
-
+function attente_fin_tempo(){
+    tempo_finie=true;
+}
 function onwrite_datas() {
     if (save_donnees_base) {
          switch (etape_write) {
@@ -293,21 +298,26 @@ function onwrite_datas() {
                     CustomAlert("Votre navigateur ne supporte pas une version stable d'IndexedDB. Quelques fonctionnalités ne seront pas disponibles.","db error");
                 }
                 delete_datas_base()
+                tempo_finie=false;
+                myTimeout = setTimeout(attente_fin_tempo, 100); // 100ms
                 break;
             case 3 :
-                open_db_save_db();
+                if (tempo_finie){
+                    open_db_save_db();
+                }
                 break;
             case 4 :
                 try {
                     index_db=-1;
                     etape_write=5;
+
                 } catch (e) {
                     if (langue==1){
                         titre="Name Project : "+name_db;
                         message_avert="Unsaved project : choose another name and try again";
                     } else {
                         titre="Nom Projet : "+name_db;
-                        message_avert="Projet non sauvegardé : choisir un autre nom et reessayé";
+                        message_avert="Projet non sauvegardé : choisir un autre nom et reessayer";
                     }
                     etape_write=9;
                 }
@@ -317,9 +327,13 @@ function onwrite_datas() {
                 etape_write=6;
                 actualprogress+=1; /* pour visu barre graph */
                 affiche_progression();
+                tempo_finie=false;
+                myTimeout = setTimeout(attente_fin_tempo, 100); // 100ms
                 break;
             case 6 :
-                save_datas();
+                if (tempo_finie){
+                    save_datas();
+                }
                 break;
             case 7 : /* attente fin de transaction */
                 attente_fin_transaction();
@@ -337,7 +351,9 @@ function onwrite_datas() {
                 break;
             case 99 :
                 CustomAlert(text_error_write_db,"db error");
-                etape_write=7;
+                actualprogress=0;
+                affiche_progression();
+                etape_write=0;
                 save_donnees_base= false;
                 fermeture_db();
                 break;
@@ -370,7 +386,6 @@ function read_datas() {
 }
 
 function onread_datas() {
-    message(String(onload_donnees_base)+" "+etape_read,String(save_donnees_base)+" "+etape_write)
     if (onload_donnees_base) {
          switch (etape_read) {
             case 0 :
@@ -423,7 +438,7 @@ function onread_datas() {
                     try {
                         lecture_datas_db();
                     } catch (e) {
-                        CustomAlert(e.name + " : " + e.message,"db error");
+                        CustomAlert(e.name + " : " + e.message,"db error 1");
                         etape_read=100;
                         fermeture_db();
                     }
@@ -452,9 +467,10 @@ function onread_datas() {
                 }
                 CustomAlert(texte,"db error");
                 etape_read=7;
+                fermeture_db();
                 break;
             case 98 :
-                CustomAlert(text_error_read_db,"db error");
+                CustomAlert(text_error_read_db,"db error 0");
                 etape_read=7;
                 fermeture_db();
                 break;

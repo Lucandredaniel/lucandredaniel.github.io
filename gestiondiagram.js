@@ -36,24 +36,27 @@ function dimension_schema(graphe,drawing_area) { /* axe du jour actuel */
  	drawing_area.height=(hauteur);
  	drawing_area.width=(largeur_graph);
 }
+/* trace les lignes verticales (uniquement ci choix_planning="J") */
 function vertical_lines(graphe,drawing_area){
-    let inc_colonne=(start_column-4);
-    let decalage_axe_x_semaine=5;
-    /* zone du dessin */
-    graphe.beginPath();
-    for (let i = 1; i < number_day+3; i++) {
+    if (choix_planning=="J"){
+        let inc_colonne=(start_column-4);
+        let decalage_axe_x_semaine=5;
+        /* zone du dessin */
         graphe.beginPath();
- 	    graphe.globalAlpha = 0.6;
-        graphe.setLineDash([5, 2]); /* ligne discontinu */
-        graphe.moveTo(inc_colonne+decalage_axe_x_semaine,start_line-20); /* point de part */
-        graphe.lineTo(inc_colonne+decalage_axe_x_semaine,height_schema); /* ligne point final*/
-        graphe.strokeStyle= '#4488EE'; //Nuance de bleu
-        graphe.lineWidth= 1;
-        graphe.stroke(); /* affiche la ligne */
-        inc_colonne=start_column+(i*space_column)-4;
+        for (let i = 1; i < number_day+3; i++) {
+            graphe.beginPath();
+            graphe.globalAlpha = 0.6;
+            graphe.setLineDash([5, 2]); /* ligne discontinu */
+            graphe.moveTo(inc_colonne+decalage_axe_x_semaine,start_line-20); /* point de part */
+            graphe.lineTo(inc_colonne+decalage_axe_x_semaine,height_schema); /* ligne point final*/
+            graphe.strokeStyle= '#4488EE'; //Nuance de bleu
+            graphe.lineWidth= 1;
+            graphe.stroke(); /* affiche la ligne */
+            inc_colonne=start_column+(i*space_column)-4;
+        }
     }
 }
-
+/* trace les lignes horizontales */
 function horizontal_lines(graphe,drawing_area){
     // const number_line = (drawing_area.height/20);
     const number_line = (array_tasks_display.length+1);
@@ -74,6 +77,40 @@ function horizontal_lines(graphe,drawing_area){
     }
 }
 
+/* affichage des colonnes pour le weekend */
+function affiche_colonne_weekend(inter_space,date_start_N_jour_semaine,decalage_axe_x_semaine){
+    graphe.beginPath();
+    let int=inter_space-130;
+    largeur_graph=inter_space;
+    graphe.globalAlpha = 0.2;
+    if ((date_start_N_jour_semaine==0) ||(date_start_N_jour_semaine==6))  { /* detection du dimanche ou du samedi} */
+        graphe.fillStyle = couleur_weekend;
+        if (affichage_weekend) {
+            graphe.globalAlpha = 0.4;
+            if ((date_start_N_jour_semaine==0)&&(nombre_jour_travaille==7)) {
+                graphe.globalAlpha = 0.2;
+            }
+            if ((date_start_N_jour_semaine==6)&&(nombre_jour_travaille==6)) {
+                graphe.globalAlpha = 0.2;
+            }
+            if ((date_start_N_jour_semaine==6)&&(nombre_jour_travaille==7)) {
+                graphe.globalAlpha = 0.2;
+            }
+            graphe.fillRect(inter_space+decalage_axe_x_semaine-4, 30, space_column, height_schema);
+        }else{
+            graphe.fillRect(inter_space+decalage_axe_x_semaine-4, 30, space_column, 20);
+        }
+    }else{
+        graphe.fillStyle = couleur_fond_semaine;
+        if (colorise_semaine) {
+            graphe.fillRect(inter_space+decalage_axe_x_semaine-4, 30, space_column, height_schema);
+        }else{
+            graphe.fillRect(inter_space+decalage_axe_x_semaine-4, 30, space_column, 20);
+        }
+    }
+}
+
+
 function wrinting_text(graphe,drawing_area,texte){
     graphe.font = '48px serif';
     graphe.fillText(texte, 10, 50);
@@ -89,6 +126,7 @@ function display_arrow(graphe,drawing_area,end_column_task,inc_line_task){
     graphe.stroke(); /* affiche la ligne */
 }
 function calcul_duree_tache(depart_tache,resultat_duree_tache_n,i){
+
     let save_resultat_duree_tache=resultat_duree_tache_n;
     let longueur_tache=0;
     let index=depart_tache;
@@ -108,8 +146,9 @@ function calcul_duree_tache(depart_tache,resultat_duree_tache_n,i){
             index+=1
         }
     }
-    resultat_duree_tache_n=index-depart_tache;
-    return resultat_duree_tache_n;
+
+    save_resultat_duree_tache=index-depart_tache;
+    return save_resultat_duree_tache;
 }
 
 function draw_task (graphe,drawing_area){
@@ -127,12 +166,17 @@ function draw_task (graphe,drawing_area){
     graphe.globalAlpha = 0.8;
     graphe.fillRect(0, 0,start_column+2, 50 )
     name_db=document.getElementById("file_name_db").value;
+    let outString = name_db.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi,'');
+    if (outString!=name_db){
+        document.getElementById("file_name_db").value=outString;
+        name_db=outString;
+    }
     /* affiche le texte du graph (défini comme nom de la db) */
     if (name_db!="") {
         graphe.beginPath();
         graphe.globalAlpha = 1;
         graphe.fillStyle = "white";
-        size_font='bold '+String(letter_size+12)+'px serif'
+        size_font='bold '+String(letter_size+12)+'px Serif'
         graphe.font = size_font;
         texte=name_db;
         graphe.fillText(texte,20, 30);
@@ -142,14 +186,47 @@ function draw_task (graphe,drawing_area){
         inc_line_task=start_line+((i+1)*space_between_line)
         graphe.beginPath();
         graphe.globalAlpha = 1;
-        graphe.fillStyle = "black";
-        size_font='bold '+String(letter_size)+'px serif'
+        graphe.fillStyle = "green";
+        size_font="bold "+String(letter_size)+'px Arial'
         graphe.font = size_font;
         /* affiche le numero de la tache et le texte */
-
         texte="T"+String(i+increment_top_canvas+1)+": "
-        texte=texte+array_tasks_display[i][0];
+        graphe.font = size_font;
         graphe.fillText(texte,start_column_task, inc_line_task);
+        // texte=texte+array_tasks_display[i][0];
+        /* ecriture du texte de la tache (on recherche les blancs car si trop de caracteres on coupe la ligne */
+        let chaine1="";
+        const words_chaine = array_tasks_display[i][0].split(' ');
+        let index=0;
+        let index_ligne=0;
+        let new_size_font=size_font;
+        let color_style="black"
+        const increment_ligne=Math.round(space_between_line*0.35);
+        while (index<words_chaine.length){
+            chaine1+= words_chaine[index];
+            chaine1+=" ";
+            if (chaine1.length>40){
+                graphe.beginPath();
+                graphe.globalAlpha = 1;
+                graphe.fillStyle = color_style;
+                graphe.font = new_size_font;
+                /* affiche le numero de la tache et le texte */
+                //texte="T"+String(i+increment_top_canvas+1)+": "
+                texte=chaine1;
+                graphe.fillText(texte,start_column_task+(25+letter_size), inc_line_task+(increment_ligne*index_ligne));
+                chaine1="";
+                index_ligne+=1;
+                new_size_font="italic "+String(letter_size)+'px Arial'
+                color_style="gray";
+            }
+            index+=1;
+        }
+        graphe.beginPath();
+        graphe.globalAlpha = 1;
+        graphe.fillStyle = color_style;
+        graphe.font = new_size_font;
+        texte=chaine1;
+        graphe.fillText(texte,start_column_task+(25+letter_size), inc_line_task+(increment_ligne*index_ligne));
         /* trace longueur de la tache */
         let incrementation=int_increment;
         if (incrementation<0){incrementation=0}
@@ -181,16 +258,27 @@ function draw_task (graphe,drawing_area){
             display_arrow(graphe,drawing_area,end_column_task,inc_line_task)
         }
         /* affichage durée de la tache */
-        size_font='bold '+String(letter_size-2)+'px serif'
+        size_font='bold '+String(letter_size-1)+'px serif'
         graphe.font = size_font;
         let longueur_tache=end_column_task-deb_column_task;
-        texte=String(array_tasks_display[i][2]);
-        if (array_tasks_display[i][6]==1){texte=String(array_tasks_display[i][10])}
+        texte=String(array_tasks[i][2]);
+        let diviseur=1;
+        if (choix_planning=="S"){ diviseur=duree_semaine}
+        if (choix_planning=="M"){ diviseur=duree_mois}
+        if (array_tasks_display[i][6]==1){
+            texte="d="+String(Math.round((array_tasks_display[i][2]/diviseur)*10)/10)+"  ("
+            texte+=String(array_tasks_display[i][10]/diviseur);
+            if (langue==1){
+                texte+=" worked)";
+            }else{
+                texte+=" travaillés)";
+            }
+        }
         let position_texte=deb_column_task+longueur_tache/2.5;
         graphe.fillText(texte,position_texte, inc_line_task-5);
     }
 }
-/* ---- */
+/* ---- trace les liaisons descendantes --------- */
 function draw_liaison_task_down(graphe,drawing_area){
     var start_column_task=20;
     var interval=0;
@@ -294,7 +382,7 @@ function draw_liaison_task_down(graphe,drawing_area){
         }
     }
 }
-/* ---- */
+/* ---- trace les liaisons montantes ----- */
 function draw_liaison_task_up(graphe,drawing_area){
     var start_column_task=20;
     var interval=0;
@@ -393,7 +481,8 @@ function recupere_num_semaine(date_actuelle){
                         - 3 + (week1.getDay() + 6) % 7) / 7);
 }
 
-function writing_times (graphe,drawing_area,type_time){
+/* ---- trace Mois/Semaines/Jours ----- */
+function writing_times_JMA (graphe,drawing_area,type_time){ /* ecriture jour / mois / annees */
     let date_start = new Date();
     let aujourdhui = new Date();
     let account_day=0
@@ -416,7 +505,7 @@ function writing_times (graphe,drawing_area,type_time){
     let interval_month=0;
     let interval_week=0;
     let interval_space=0;
-    let color_month="#0ec9e6"    /* bleue*/
+    let color_month="#0ec9e6"    /* bleu*/
     let color_week="#0af25f"   /* vert */
     let decalage_axe_x_semaine=5;  /* decalage de l affichage des jours / aux semaines */
     let date_start_N_jour_semaine=date_start.getDay(); /* numero du jour de la semaine ==>0=dimanche; 1=lundi etc.. */
@@ -476,7 +565,7 @@ function writing_times (graphe,drawing_area,type_time){
                 graphe.beginPath();
                 graphe.fillStyle = color_week;
                 graphe.globalAlpha = 0.5;
-                /* trace rectangle pour les mois */
+                /* trace rectangle pour les semaines */
                 graphe.fillRect(interval_week+2, 15, inter_space-interval_week-2, 15)
             }
             interval_week=inter_space;
@@ -502,31 +591,7 @@ function writing_times (graphe,drawing_area,type_time){
         let int=inter_space-130;
         largeur_graph=inter_space;
         graphe.globalAlpha = 0.2;
-        if ((date_start_N_jour_semaine==0) ||(date_start_N_jour_semaine==6))  { /* detection du dimanche ou du samedi} */
-            graphe.fillStyle = couleur_weekend;
-            if (affichage_weekend) {
-                graphe.globalAlpha = 0.4;
-                if ((date_start_N_jour_semaine==0)&&(nombre_jour_travaille==7)) {
-                    graphe.globalAlpha = 0.2;
-                }
-                if ((date_start_N_jour_semaine==6)&&(nombre_jour_travaille==6)) {
-                    graphe.globalAlpha = 0.2;
-                }
-                if ((date_start_N_jour_semaine==6)&&(nombre_jour_travaille==7)) {
-                    graphe.globalAlpha = 0.2;
-                }
-                graphe.fillRect(inter_space+decalage_axe_x_semaine-4, 30, space_column, height_schema);
-            }else{
-                graphe.fillRect(inter_space+decalage_axe_x_semaine-4, 30, space_column, 20);
-            }
-        } else {
-            graphe.fillStyle = couleur_fond_semaine;
-            if (colorise_semaine) {
-                graphe.fillRect(inter_space+decalage_axe_x_semaine-4, 30, space_column, height_schema);
-            }else {
-                graphe.fillRect(inter_space+decalage_axe_x_semaine-4, 30, space_column, 20);
-            }
-        }
+        affiche_colonne_weekend(inter_space,date_start_N_jour_semaine,decalage_axe_x_semaine)
         start_day=start_day+nbr_m_second;
         date_start.setTime(start_day);
         date_start_N_jour_semaine=date_start.getDay();
@@ -535,9 +600,15 @@ function writing_times (graphe,drawing_area,type_time){
     /*------------------------------------------------------- */
     interval_space=interval_month+((inter_space-interval_month)/2)
     graphe.beginPath();
-    graphe.font = "bold 14px serif"
-    texte_m="M"+String(memo_month)
-    graphe.fillText(texte_m , interval_space,10 );
+    graphe.globalAlpha = 1;
+    graphe.fillStyle = "black";
+    graphe.font = "bold "+String(letter_size_month)+"px serif";
+    if (memo_month<12) {
+        texte_m="M"+String(memo_month)+"  / "+String(date_start_y)
+    }else {
+        texte_m="M"+String(memo_month)+"  / "+String(date_start_y-1)
+    }
+    graphe.fillText(texte_m,interval_space,12 );
     if (color_month == "#0ec9e6") {
         color_month="#1bb6cf";}
     else {color_month="#0ec9e6";}
@@ -552,15 +623,18 @@ function writing_times (graphe,drawing_area,type_time){
     /*------------------------------------------------------- */
     interval_space=interval_week+((inter_space-interval_week)/2)
     graphe.beginPath();
-    graphe.font = "bold 11px serif"
+    graphe.globalAlpha = 1;
+    graphe.font = "bold "+String(letter_size_semaine)+"px serif";
     graphe.fillStyle = "black";
-    texte_m="W"+String(memo_week)
-    graphe.fillText(texte_m , interval_space,25 );
+    let entete_text="W";
+    if (langue==2){entete_text="S" }
+    texte_w=entete_text+String(memo_week)
+    graphe.fillText(texte_w,interval_space,27 );
     if (color_week == "#0af25f") {
         color_week="#08d152";}
     else {color_week="#0af25f";}
     graphe.fillStyle = color_week;
-    graphe.globalAlpha = 0.3;
+    graphe.globalAlpha = 0.5;
     /* trace rectangle pour la dernière semaine */
     /* ----------------------------- */
     graphe.fillRect(interval_week+2, 15, inter_space-(interval_week-18), 15)
@@ -569,11 +643,6 @@ function writing_times (graphe,drawing_area,type_time){
 
     /* encadre les jours */
     /* ------------------- */
-   /* graphe.beginPath();
-    graphe.fillStyle = "#dbb20d";
-    graphe.globalAlpha = 0.3;
-    let int=inter_space-130;
-    graphe.fillRect(start_column, 30, int, 20); */
     largeur_graph=inter_space;
     /* trace ligne de séparation en N° de jour et le graphe */
     graphe.lineCap='round';
@@ -585,6 +654,227 @@ function writing_times (graphe,drawing_area,type_time){
     graphe.lineTo(largeur_graph,50); /* ligne point final*/
     graphe.stroke(); /* affiche la ligne */
 }
+
+/* ---- trace Mois/Semaines/Années ----- */
+function writing_times_MA (graphe,drawing_area,type_time){ /* ecriture uniquement mois / annees */
+    let date_start = new Date();
+    let aujourdhui = new Date();
+    let account_day=0
+    let nbr_m_second = 86400000 /* nbr de seconde en 1 journée */
+    /* calcul date de depart en fonction de l'increment de déplacement du canvas */
+    if (int_increment>0){
+        let start_int=start_project.getTime()
+        start_int=start_int+(int_increment*nbr_m_second);
+        start_project.setTime(start_int);
+    }
+    start_time=0 ;  /* date du jour */
+    now.getSeconds(0)
+    date_start=start_project;
+    start_day=date_start.getTime()
+    let memo_year=0;
+    let memo_month=-1;
+    let memo_week=-1;
+    let interval_year=start_column;
+    let tableau_year=[]; /* pour memorisation des spaces */
+    let index_year=0;
+    let memo_debut_rect=0;
+    let interval_month=start_column;
+    let interval_week=start_column;
+    let interval_space=0;
+    let color_month="#0ec9e6"    /* bleue*/
+    let color_week="#0af25f"     /* vert */
+    let color_year="#e28436"     /* jaune sale */
+    let decalage_axe_x_semaine=1;  /* decalage de l affichage des jours / aux semaines */
+    let date_start_N_jour_semaine=date_start.getDay(); /* numero du jour de la semaine ==>0=dimanche; 1=lundi etc.. */
+    let brouillon=0;
+    graphe.beginPath();
+    colonne_du_jour=0;
+    for (let i = 0; i < (number_day+2); i++) {
+        date_start_m   = date_start.getMonth() + 1;
+        date_start_j_m = date_start.getDate();
+        date_start_y = date_start.getFullYear();
+        date_start_w = recupere_num_semaine(date_start);
+        inter_space = (i*space_column)+start_column
+        /* memorise les années */
+        /* ----------------- */
+        if (date_start_y!=memo_year){
+            tableau_year.push([]); /* ================= */
+            tableau_year[index_year].push(date_start_y); // sauvegarde année
+            tableau_year[index_year].push(i); // début du rectangle
+            tableau_year[index_year].push(number_day+2); // fin du rectangle
+            tableau_year[index_year].push(color_year); // couleur du rectangle
+            if (index_year>0){
+                tableau_year[index_year-1][2]=i;
+            }
+            index_year+=1;
+            memo_year=date_start_y;
+        }
+        /* ecriture des mois */
+        /* ----------------- */
+        if (date_start_m!=memo_month){
+            interval_space=interval_month+((inter_space-interval_month)/2)
+            if (memo_month!=-1){
+                graphe.beginPath();
+                graphe.globalAlpha = 1;
+                graphe.fillStyle = "black";
+                graphe.font = "bold "+String(letter_size_month-1)+"px serif";
+                texte_m="M"+String(memo_month)
+                graphe.fillText(texte_m,interval_space-6,27 );
+                /* trace une ligne sur le mois */
+                if (color_month == "#0ec9e6") {
+                    color_month="#1bb6cf";}
+                else {color_month="#0ec9e6";}
+                graphe.beginPath();
+                graphe.fillStyle = color_month;
+                graphe.globalAlpha = 0.5;
+                /* trace rectangle pour les mois */
+                graphe.fillRect(interval_month+2, 12, inter_space-interval_month-2, 20)
+                /* trace ligne verticale des mois si demandé */
+                if ((choix_planning=="M") && (with_columns==1)) {
+                    graphe.beginPath();
+                    graphe.globalAlpha = 0.6;
+                    graphe.setLineDash([5, 2]); /* ligne discontinu */
+                    graphe.moveTo(interval_month,start_line-20); /* point de part */
+                    graphe.lineTo(interval_month,height_schema); /* ligne point final*/
+                    graphe.strokeStyle= '#4488EE'; //Nuance de bleu
+                    graphe.lineWidth= 1;
+                    graphe.stroke(); /* affiche la ligne */
+                }
+            }
+            interval_month=inter_space;
+            memo_month=date_start_m;
+        }
+        /* ecriture des semaines */
+        if (date_start_w!=memo_week){
+            interval_space=interval_week+((inter_space-interval_week)/2)
+            if (memo_week!=-1){
+                graphe.beginPath();
+                graphe.globalAlpha = 1;
+                graphe.fillStyle = "black";
+                graphe.font = "bold "+String(letter_size_semaine-2)+"px serif";
+                let entete_text="W";
+                if (langue==2){entete_text="S" }
+                texte_w=entete_text+String(memo_week)
+                graphe.fillText(texte_w,interval_space,45 );
+                /* trace une ligne sur la semaine */
+                if (color_week == "#0af25f") {
+                    color_week="#08d152";}
+                else {color_week="#0af25f";}
+                graphe.beginPath();
+                graphe.fillStyle = color_week;
+                graphe.globalAlpha = 0.5;
+                /* trace rectangle pour les mois */
+                graphe.fillRect(interval_week+2, 30, inter_space-interval_week-2, 20)
+                /* trace ligne verticale des mois si demandé */
+                if ((choix_planning=="S") && (with_columns==1)) {
+                    graphe.beginPath();
+                    graphe.globalAlpha = 0.6;
+                    graphe.setLineDash([5, 2]); /* ligne discontinu */
+                    graphe.moveTo(interval_week+1,start_line-20); /* point de part */
+                    graphe.lineTo(interval_week+1,height_schema); /* ligne point final*/
+                    graphe.strokeStyle= '#4488EE'; //Nuance de bleu
+                    graphe.lineWidth= 1;
+                    graphe.stroke(); /* affiche la ligne */
+                }
+            }
+            interval_week=inter_space;
+            memo_week=date_start_w;
+        }
+        /* ecriture des jours en cours */
+        /*------------------------- */
+        graphe.beginPath();
+        graphe.globalAlpha = 1;
+        graphe.fillStyle = "black";
+        graphe.font = String(letter_size_jour)+"px serif";
+        /* verifie si le jour est le jour actuel pour trace de l'axe */
+        /* ========================================================= */
+        if (date_start_j_m == aujourdhui.getDate()) {
+            if (date_start_m == (aujourdhui.getMonth() +1)) {
+                if (date_start_y == aujourdhui.getFullYear()) {
+                    colonne_du_jour=inter_space+decalage_axe_x_semaine;
+                }
+            }
+        }
+        /* trace weekend */
+        if (choix_planning=="S") {
+            affiche_colonne_weekend(inter_space+4,date_start_N_jour_semaine,decalage_axe_x_semaine)
+        }
+        start_day=start_day+nbr_m_second;
+        date_start.setTime(start_day);
+        date_start_N_jour_semaine=date_start.getDay();
+    }
+    /* ecrit le mois en cours non terminé (en fin de tableau) */
+    /*------------------------------------------------------- */
+    interval_space=interval_month+((inter_space-interval_month)/2)
+    graphe.beginPath();
+    graphe.font = "bold 14px serif"
+    texte_m="M"+String(memo_month)
+    graphe.fillText(texte_m , interval_space,27 );
+    if (color_month == "#0ec9e6") {
+        color_month="#1bb6cf";}
+    else {color_month="#0ec9e6";}
+    graphe.fillStyle = color_month;
+    graphe.globalAlpha = 0.7;
+    /* trace rectangle pour le dernier mois */
+    /* ----------------------------- */
+    graphe.fillRect(interval_month+2, 12, inter_space-(interval_month-18), 20)
+    interval_month=inter_space;
+    memo_month=date_start_m;
+    /* ecrit la semaine en cours non terminée (en fin de tableau) */
+    /*------------------------------------------------------- */
+    interval_space=interval_week+((inter_space-interval_week)/2)
+    graphe.beginPath();
+    graphe.font = "bold 11px serif"
+    graphe.fillStyle = "black";
+    texte_m="W"+String(memo_week)
+    graphe.fillText(texte_m , interval_space,45 );
+    if (color_week == "#0af25f") {
+        color_week="#08d152";}
+    else {color_week="#0af25f";}
+    graphe.fillStyle = color_week;
+    graphe.globalAlpha = 0.3;
+    /* trace rectangle pour la dernière semaine */
+    /* ----------------------------- */
+    graphe.fillRect(interval_week+2, 30, inter_space-(interval_week-18), 20)
+    interval_week=inter_space;
+    memo_week=date_start_w;
+    let debut_precedent=0;
+    /* trace rectangle pour delimiter les annees */
+    for (let i = 0; i < (tableau_year.length); i++) {
+        graphe.beginPath();
+        graphe.fillStyle = color_year;
+        if (color_year == "#e28436") {
+            color_year="#cff5a8";}
+        else {color_year="#e28436";}
+        graphe.globalAlpha = 0.5;
+        const debut=(parseInt(tableau_year[i][1])*space_column)+start_column;
+        const fin=(parseInt(tableau_year[i][2])*space_column)+start_column;
+        const longueur=(parseInt(tableau_year[i][2])-parseInt(tableau_year[i][1]))*space_column;
+        graphe.fillRect(debut+2, 0, longueur-2, 12)
+        graphe.beginPath();
+        graphe.globalAlpha = 1;
+        graphe.fillStyle = "black";
+        graphe.font = "bold "+String(letter_size_month)+"px serif";
+        texte_m=String(tableau_year[i][0]);
+        interval_space=fin-(longueur/2);
+        graphe.fillText(texte_m,interval_space,10 );
+        debut_precedent=fin;
+        }
+    /* encadre les jours */
+    /* ------------------- */
+    largeur_graph=inter_space;
+    /* trace ligne de séparation en N° de jour et le graphe */
+    graphe.lineCap='round';
+    graphe.strokeStyle= 'brown';
+    graphe.beginPath();
+ 	graphe.globalAlpha = 0.6;
+ 	graphe.setLineDash([]); /* ligne discontinu */
+    graphe.moveTo(space_column,50); /* point de part */
+    graphe.lineTo(largeur_graph,50); /* ligne point final*/
+    graphe.stroke(); /* affiche la ligne */
+}
+
+
 /* axes qui suivent le curseur dans le canvas */
 function draw_axes(graphe,drawing_area){
     if (affichage_axes){
@@ -665,6 +955,7 @@ function listen_mouse_on_canvas(graphe,drawing_area){
     drawing_area.addEventListener("dblclick", function (e) {
         if (array_tasks.length>1) { // sinon il n y a qu'une tache
             if (double_click==false) {
+                const selection = document.getSelection(); // pour permettre la déselection de l'Iframe
                 let iframe_page2=document.getElementById("entete_iframe");
                 iframe_page2.removeAttribute("hidden");
                 page2_left = iframe_page2.offsetLeft;
@@ -677,6 +968,7 @@ function listen_mouse_on_canvas(graphe,drawing_area){
                 numero_de_la_tache_a_afficher=(calcul_numero_de_la_tache_a_afficher+increment_top_canvas)
                 affiche_une_tache_specifique(numero_de_la_tache_a_afficher);
                 double_click=true;
+                selection.removeAllRanges(); // déselectionne l'Iframe sélectionné
             }
         }
     }, false);
@@ -691,13 +983,19 @@ function listen_mouse_on_canvas(graphe,drawing_area){
         delta= Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)))
     }, false);
     drawing_area.addEventListener("mousewheel", function(e){ /* pour chrome, safari, opera */
+        window.scroll(0, 0); /* remontage scroll en haut */
         document.getElementsByTagName("body")[0].style.overflow="hidden"; /* bloque le croll */
         delta= Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)))
     }, false);
     if (delta>0) {
         delta=0;
         document.getElementById("g_rows").value=space_between_line+1;
-        document.getElementById("g_columns").value=space_column+1;
+         if (space_column>1){
+            space_column=Math.trunc(space_column);
+            document.getElementById("g_columns").value=space_column+1;
+         }else{
+                document.getElementById("g_columns").value=space_column+0.1;
+         }
         incp_letter_size+=increment_pour_size_letter;
         incm_letter_size=0;
         if (incp_letter_size>1){
@@ -716,7 +1014,13 @@ function listen_mouse_on_canvas(graphe,drawing_area){
     } else{ if (delta<0){
             delta=0;
             document.getElementById("g_rows").value=space_between_line-1;
-            document.getElementById("g_columns").value=space_column-1;
+            if (space_column>0.1){
+                if (space_column>1){
+                    document.getElementById("g_columns").value=space_column-1;
+                }else{
+                    document.getElementById("g_columns").value=space_column-0.1;
+                }
+            }
             incm_letter_size+=increment_pour_size_letter;
             incp_letter_size=0;
             if (incm_letter_size>1){
