@@ -599,7 +599,7 @@ function principal(){
                 document.getElementById("drapeau_A").onclick=langue_Anglaise;
                 document.getElementById("test_divers").onclick=liste_directory;
                 /* provisoire rend les BP invisibles */
-                //inhibe_identity();
+                inhibe_identity();
                 document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").onclick=rajout_one_task;
                 document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").onclick=set_tasks;
                 document.getElementById("page2").contentWindow.document.getElementById("Optimisation").onclick=optimisation_tasks;
