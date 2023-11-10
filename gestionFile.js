@@ -16,11 +16,11 @@ async function lecture_fichier_text(file) {
 
 function analyse_file_csv(){
     if (charge_fichier_txt_fini==true) {
-
         let essai="";
         let essai1="";
         let compteur=0;
         let debut=0;
+        transfert_file1=[];
         /* decomposition du fichier */
         /* mise en forme des données identique aux donnees reçues via le serveur (voir Gestionreadf.js) */
         if (brouillon_file[0].length>0) {
@@ -47,7 +47,7 @@ function analyse_file_csv(){
             array_tasks_lecture_datas=[];
             array_tasks=[];
             array_tasks[0]=[];
-            decompose_datas(transfert_file1);
+            decompose_datas(transfert_file1); // dans gestionreadF.js
             recopy_array_2D();
             ask_write_parameters=true;
             charge_fichier_en_cours=false;

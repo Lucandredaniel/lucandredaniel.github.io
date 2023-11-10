@@ -583,8 +583,6 @@ function principal(){
             onwrite_datas();
             document.getElementById("text35").addEventListener("click",read_datas_1);
             onread_datas();
-            document.getElementById("text44").addEventListener("click",save_csv);
-            document.getElementById("text45").addEventListener("click",active_inputfile_csv);
             /* ========================================================= */
             /* si pas de lecture ecriture sur DB alors affichage possible des datas sur Iframe ==== */
              if ((transfert_datas_fini ) && (!deplace_iframe)) {
@@ -592,6 +590,8 @@ function principal(){
                 document.getElementById("text41").addEventListener("click",read_xml);
                 document.getElementById("text42").addEventListener("click",affiche_donnes_diverses);
                 document.getElementById("text43").addEventListener("click",printCanvas);
+                document.getElementById("text44").addEventListener("click",save_csv);
+                document.getElementById("text45").addEventListener("click",active_inputfile_csv);
                 /* lecture des BP */
                 document.querySelector('button[id="newproject"]').onclick=clear_project;
                 document.querySelector('button[id="display_datas"]').onclick=affiche_datas_iframe;
