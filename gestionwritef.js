@@ -64,6 +64,7 @@ function open_ecriture_php() {
   xhttp = new XMLHttpRequest();
   xhttp.timeout = 15000; // 15 secondes
   xhttp.onload = function() {myFunction_ecriture(this);}
+  //xhttp.open("POST", parametres, true);
   xhttp.open("POST", parametres, true);
   xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhttp.send(ensemble_tableau);

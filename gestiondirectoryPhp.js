@@ -41,7 +41,8 @@ function lecture_directory_php() {
     xhttp = new XMLHttpRequest();
     xhttp.timeout = 15000; // 5 seconds
     xhttp.onload = function() {myFunction_lecture_directory(this);}
-    xhttp.open("POST", parametres, true);
+    //xhttp.open("POST", parametres, true);
+    xhttp.open("GET", parametres, true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.send(ensemble_tableau);
     xhttp.onreadystatechange =  function() {
@@ -62,7 +63,8 @@ function creation_directory_php() {
     xhttp = new XMLHttpRequest();
     xhttp.timeout = 15000; // 5 seconds
     xhttp.onload = function() {myFunction_lecture_directory(this);}
-    xhttp.open("POST", parametres, true);
+    //xhttp.open("POST", parametres, true);
+    xhttp.open("GET", parametres, true);
     xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhttp.send(ensemble_tableau);
     xhttp.onreadystatechange =  function() {

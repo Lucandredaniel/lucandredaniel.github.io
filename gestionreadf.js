@@ -151,7 +151,8 @@ function open_lecture_php() {
   xhttp = new XMLHttpRequest();
   xhttp.timeout = 15000; // 5 seconds
   xhttp.onload = function() {myFunction_lecture(this);}
-  xhttp.open("POST", parametres, true);
+  //xhttp.open("POST", parametres, true);
+  xhttp.open("GET", parametres, true);
   xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   // let body=JSON.stringify("var1=tableau de texte pour essai&var2=essai encore"); // avec conversion de la variable
   //xhttp.send("var1=tableaudetextepouressai");
