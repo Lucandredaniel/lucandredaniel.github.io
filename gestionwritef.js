@@ -60,6 +60,7 @@ function ecriture_fichier_en_php(){
 }
 
 function open_ecriture_php() {
+  let urlgithub="https://github.com/Lucandredaniel/lucandredaniel.github.io/tree/31871bf73307e80f2c900e2b5b6b8d2b7ceef611/"
   let parametres="GestionSfichier.php/?name="+nom_fichier_serveur+".txt";
   xhttp = new XMLHttpRequest();
   xhttp.timeout = 15000; // 15 secondes

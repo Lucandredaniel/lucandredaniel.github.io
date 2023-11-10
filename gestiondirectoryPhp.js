@@ -37,7 +37,8 @@ function php_analyse_input_save_name(){
 }
 
 function lecture_directory_php() {
-    let parametres="GestionDirectory.php/?name="+name_directory;
+    let urlgithub="https://github.com/Lucandredaniel/lucandredaniel.github.io/tree/31871bf73307e80f2c900e2b5b6b8d2b7ceef611/";
+    let parametres=urlgithub+"GestionDirectory.php/?name="+name_directory;
     xhttp = new XMLHttpRequest();
     xhttp.timeout = 15000; // 5 seconds
     xhttp.onload = function() {myFunction_lecture_directory(this);}
@@ -59,7 +60,8 @@ function lecture_directory_php() {
 }
 
 function creation_directory_php() {
-    let parametres="gestionMkdir.php/?name="+name_directory;
+    let urlgithub="https://github.com/Lucandredaniel/lucandredaniel.github.io/tree/31871bf73307e80f2c900e2b5b6b8d2b7ceef611/";
+    let parametres=urlgithub+"gestionMkdir.php/?name="+name_directory;
     xhttp = new XMLHttpRequest();
     xhttp.timeout = 15000; // 5 seconds
     xhttp.onload = function() {myFunction_lecture_directory(this);}
