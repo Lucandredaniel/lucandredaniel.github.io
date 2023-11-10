@@ -33,7 +33,6 @@ function php_analyse_input_save_name(){
         int1=elt.value
         int2= int1.replace(/[`~!@#$%^&*()|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
         elt.value=int2;
-        m
     }
 }
 
