@@ -1,5 +1,7 @@
-/* lancement fonction en automatique de façon repetitive */
-/* ===================================================== */
+/* =============================================== */
+/* Appel PHP pour ecriture fichier sur serveur     */
+/* appel le fichier "GestionSfichier.php"          */
+/* =============================================== */
 
 function mise_en_forme_tableau(index){
     tableau_en_forme=""
@@ -9,13 +11,39 @@ function mise_en_forme_tableau(index){
 }
 
 function AAEfichier(){
+    if (!onload_donnees_base){ /* verifie si chargement non en cours */
+        abort_lecture_fichier(); // enleve la box précédente
+        demande_ecriture_fichier=true;
+        //save_datas_directory=true;
+        etape_save_sur_serveur=0;
+        document.getElementById('dialogbox1').style.display = "block";
+        document.getElementById('dialogboxhead1').style.color="white";
+        if (langue==1){
+            titre="Save project -";
+            message_avert=" ";
+            document.getElementById('input_name').placeholder="society name?";
+            document.getElementById('input_name1').placeholder="your name?";
+            document.getElementById('input_name2').placeholder="project name?";
+            document.getElementById('input_name3').placeholder="project name?";
+        } else {
+            titre="Sauvegarde du projet -";
+            message_avert=" ";
+            document.getElementById('input_name').placeholder="nom société?";
+            document.getElementById('input_name1').placeholder="votre nom?";
+            document.getElementById('input_name2').placeholder="nom projet?";
+            document.getElementById('input_name3').placeholder="nom projet?";
+        }
+        cherche_fichier_serveur(message_avert,titre);
+    }
+}
+
+function ecriture_fichier_en_php(){
     ensemble_tableau=""
     creation_base_donnees_complete();
-    etape_write=2; // etape pour DB RAZ
+    // etape_write=2;
     let tableau_int=""
     echange_datas_ecriture=true;
     etape_write_php=0;
-    /* initialise le tableau de données a transmettre */
     let index=0;
     for (let i = 0; i < base_donnees_complete.length; i++) {
         mise_en_forme_tableau(i);
@@ -24,10 +52,15 @@ function AAEfichier(){
             ensemble_tableau=ensemble_tableau+"&";
         }
     }
+   let int1=document.getElementById("input_name").value;
+   let int2=document.getElementById("input_name1").value;
+   let int3=document.getElementById("input_name3").value;
+   nom_fichier_serveur=int1+"\\"+int2+"\\"+int3;
+   abort_lecture_fichier(); // enleve la box de sauvegarde fichier
 }
 
 function open_ecriture_php() {
-  let parametres="GestionSfichier.php/?name="+name_db+".txt";
+  let parametres="GestionSfichier.php/?name="+nom_fichier_serveur+".txt";
   xhttp = new XMLHttpRequest();
   xhttp.timeout = 15000; // 15 secondes
   xhttp.onload = function() {myFunction_ecriture(this);}
@@ -56,7 +89,7 @@ function php_ecriture() {
          switch (etape_write_php) {
             case 0 :
                 if (echange_datas_ecriture) {
-                    if (name_db.length<4) {
+                    if (nom_fichier_serveur.length<4) {
                         CustomAlert("name project > 4 characters","db error");
                         etape_write_php=0;
                         echange_datas_ecriture= false;

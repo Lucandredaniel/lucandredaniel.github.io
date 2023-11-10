@@ -1,5 +1,7 @@
 <?php
- //  lecture de fichier.txt via PHP !';
+ // PRG appele par Gestionreadf.js
+ //  lecture de fichier.txt en PHP !';
+ // ===============================
 
     // initialisation des variables
     // ============================

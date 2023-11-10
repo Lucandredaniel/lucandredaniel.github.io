@@ -81,29 +81,15 @@ function conversion_tableau(reponse_php_int){
     }
 }
 
-function AALfichier(){
-        if (!onload_donnees_base){ /* verifie si chargement non en cours */
-            if (langue==1){
-                titre="READ Project";
-                message_avert="Action witch reset all datas";
-            } else {
-                titre="Lecture Projet";
-                message_avert="Action qui réinitialise toutes les données";
-            }
-            CustomConfirm_2(message_avert,titre)
-        }
-    }
-
-function ALfichier_txt(){
-    document.getElementById('dialogbox').style.display = "none";
+function appel_ajax_lecture_fichier(){
     ensemble_tableau=""
     let tableau_int=""
     echange_datas_lecture=true;
     etape_read_php=0;
 }
 
-function open_lecture_php() {
-  let parametres="GestionLfichier.php/?name="+name_db+".txt";
+function open_datas_lecture_php() {
+  let parametres="Gestion_lecture_fichier.php/?name="+name_db+".txt";
   xhttp = new XMLHttpRequest();
   xhttp.timeout = 15000; // 5 seconds
   xhttp.onload = function() {myFunction_lecture(this);}
@@ -129,25 +115,26 @@ function myFunction_lecture(php_datas) {
   reponse_php = php_datas.responseText;
 }
 
-function php_lecture() {
+function echanges_datas_php_lecture() {
+    const abort_button=document.getElementById("AbortFonctionAjax")
     if (echange_datas_lecture) {
          switch (etape_read_php) {
             case 0 :
                 if (echange_datas_lecture) {
                     if (name_db.length<4) {
-                        CustomAlert("name project > 4 characters","project error");
+                        CustomAlert("name project > 4 characters","db error");
                         etape_read_php=0;
                         echange_datas_lecture= false;
                     }else{
                         etape_read_php=1;
                         fin_chargement_xml=false;
-                        abort_php=false;
                     }
                 }
             break;
             case 1 :
+                alert("lecture")
                 try {
-                    open_lecture_php();
+                    open_datas_lecture_php();
                     etape_read_php=2;
                     actualprogress=0;
                     multiplicateur=10;
@@ -159,7 +146,7 @@ function php_lecture() {
                     array_tasks[0]=[];
                     transfert_datas_fini=false;
                 } catch (e) {
-                    message_erreur=" fichier impossible à lire"+e.message;
+                    message_erreur=" fichier impossible à créer"+e.message;
                     etape_read_php=100;
                 }
             break;
@@ -170,10 +157,11 @@ function php_lecture() {
                         actualprogress+=1; /* pour visu barre graph */
                         affiche_progression();
                         if (progression>1){progression=0}
-                        if (abort_php){
+                        abort_button.addEventListener("click",function(){
                             xhttp.abort();
-                            abort_php=false;
-                        }
+                            etape_read_php=0;
+                            echange_datas_lecture=false;
+                        },{once:true},);
                     }else {
                         etape_read_php=3;
                     }
@@ -183,56 +171,33 @@ function php_lecture() {
                     if (reponse_type==4){
                          switch (reponse_status) {
                             case 0 :
-                                if (langue==2) {
-                                    message_erreur="time_out serveur non disponible";
-                                }else {
-                                    message_erreur="time_out server not available";
-                                }
+                                message_erreur="time_out server non disponible"
                                 xhttp.abort();
                                 etape_read_php=99;
                             break;
                             case 403 :
-                                if (langue==2) {
-                                    message_erreur="lecture interdite";
-                                }else {
-                                    message_erreur="reading prohibited";
-                                }
+                                message_erreur="Requete interdite (lecture)";
                                 xhttp.abort();
                                 etape_read_php=99;
                             break;
                             case 404 :
-                                if (langue==2) {
-                                    message_erreur="projet non trouvé - serveur non disponible";
-                                }else {
-                                    message_erreur="project not found - server not available";
-                                }
+                                message_erreur="Page non trouvée - serveur non disponible";
                                 xhttp.abort();
                                 etape_read_php=99;
                             break;
                             case 200 :
-                                if (reponse_php.search("errorLLA1")>0){
-                                    valid_clear_project();
-                                    if (langue==2) {
-                                        message_erreur="projet non trouvé - serveur non disponible";
-                                    }else {
-                                        message_erreur="project not found";
-                                    }
-                                    etape_read_php=99;
-                                } else {
-                                    conversion_tableau(reponse_php);
-                                    recopy_array_2D();
-                                    ask_write_parameters=true;
-                                    message_erreur="";
-                                    etape_read_php=4;
-                                }
+                                conversion_tableau(reponse_php);
+                                recopy_array_2D();
+                                ask_write_parameters=true;
+                                message_erreur="";
+                                // xhttp.abort();
+                                etape_read_php=4;
                             break;
                         }
                     }else{
-                            if (abort_php){
-                                xhttp.abort();
-                                abort_php=false;
-                            }
-                        }
+                            abort_button.addEventListener("click",function(){xhttp.abort();
+                            },{once:true},)
+                         }
             break;
             case 4 :
                     etape_read_php=100;
@@ -242,19 +207,15 @@ function php_lecture() {
                     onload_donnees_base=false;
                     actualprogress=0;
                     affiche_progression();
-                    abort_php=false;
             break;
             case 99 :
-                CustomAlert("error on load file step 99 : ",message_erreur);
+                CustomAlert("error on load file step 99 : "+message_erreur);
                 etape_read_php=0;
                 echange_datas_lecture=false;
-                transfert_datas_fini=true;
                 break;
             case 100 :
                 etape_read_php=0;
                 echange_datas_lecture=false;
-                transfert_datas_fini=true;
-                abort_php=false;
             break;
         }
     }

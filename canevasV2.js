@@ -19,12 +19,34 @@ let ensemble_tableau="";
 let progression=0;
 let message_erreur="";
 /* variable global pour ecriture fichier avec PHP */
+/* ---------------------------------------------- */
 let echange_datas_ecriture=false;
 let etape_write_php=0;
 /* variable global pour lecture fichier avec PHP */
+/* --------------------------------------------- */
 let echange_datas_lecture=false;
 let etape_read_php=0;
 let text_hidden=0;
+
+/* variable global pour lecture repertoire et fichier avec PHP */
+/* ----------------------------------------------------------- */
+let echange_datas_directory=false;
+let etape_directory_php=0;
+let name_directory="";
+let directory_trouve=false;
+let element_directory=document.getElementsByClassName("container2");
+let element_file_directory=document.getElementsByClassName("file-content");
+let tableau_directory=[];
+let tableau_directory_time=[];
+let numero_dir=0;
+let nom_fichier_serveur="";
+let reponse_increment_php=0;
+// pour sauvegarde fichier sur serveur
+let save_datas_directory=false;
+let etape_save_sur_serveur=0;
+let demande_ecriture_fichier=false;
+let validation_de_la_creation_societe=false;
+let attente_validation_dir2=false;
 
 /* variables pour DB */
 /* ----------------- */
@@ -67,6 +89,19 @@ let nom_fichier_xml="fichier1.xml";
 let xhttp =""; /* objet pour appel fonction ajax */
 let tableau_donnees_xml=[]; /* pour sauvegarde des donnees */
 let fin_chargement_xml=false;
+
+/* variables pour lecture fichier CSV */
+/* ======================================== */
+let brouillon_file=[];
+    brouillon_file.push([]);
+let transfert_file1=[];
+let charge_fichier_en_cours=false;
+let charge_fichier_txt_fini=false;
+let reader  = new FileReader();
+let file_name_csv="";
+let load_fichier_en_cours=false;
+let laod_fichier_txt_fini=false;
+let abort_php=false;
 
 /* variables pour affichage page 2 IFRAME */
 /* ------------------------------------- */
@@ -170,29 +205,33 @@ let default_task=0;                 /* 8 tache en defaut */
 let couleur_task="#4488EE";         /* 9 couleur de la tache */
 let dure_tache_principale=0         /*10 duree de la tache principale calculee pour affichage */
 let data_spare=0                    /*11 data en spare */
+let data_spare1=0                    /*12 data en spare */
+let data_spare2=0                    /*13 data en spare */
+let data_spare3=0                    /*14 data en spare */
+let data_spare4=0                    /*15 data en spare */
 /* --- */
-let number_datas_in_array=12;
+let number_datas_in_array=16; // en date du 05-11-2023
 let number_tasks_max=50;
 let change_datas=false;
-let array_one_task1 = ["STUDIES/Engineering phase",0 ,1 ,0,0,0,1,0,0,"#4488EE",0,0];
-let array_one_task2 = ["mechanical studies"   ,0 ,9 ,0,0,3,0,0,0,"#4488EE",0,0];
-let array_one_task3 = ["electrical studies"   ,13,10 ,-3,0,4,0,0,0,"#4488EE",0,0];
-let array_one_task4 = ["automation studies"   ,24,6  , 0,0,5,0,0,0,"#4488EE",0,0];
-let array_one_task5 = ["informatique studies" ,33,15 ,-4,0,6,0,0,0,"#4488EE",0,0];
-let array_one_task6 = ["Studies acceptance"   ,50,1  , 0,1,7,0,0,0,"#4488EE",0,0];
-let array_one_task7 = ["part supply"          ,53,10 , 0,0,8,0,0,0,"#4488EE",0,0];
-let array_one_task8 = [ "ASSEMBLYING phase"   ,68,0  , 0,0,9 ,1,0,0,"#4488EE",0,0];
-let array_one_task9 = ["Assembly / wiring"    ,68,12 , 0,0,10,0,7,0,"#81daf3",0,0];
-let array_one_task10 = ["I/O tests/Dry Tests",84,4  , 0,0,11,0,0,0,"#81daf3",0,0];
-let array_one_task11 = ["FAT"                 ,90,3  , 0,0,12,0,0,0,"#81daf3",0,0];
-let array_one_task12 =["SAT"                  ,95,1  , 0,1,0,0,0,0,"#81daf3",0,0];
-let array_one_task13 =["QI"                   ,96,3  , 0,0,0,0,12,0,"#00ff00",0,0];
-let array_one_task14 =["QO"                   ,96,2  , 0,0,0,0,12,0,"#00ff00",0,0];
-let array_one_task15 =["QP 2"                 ,96,5  , 0,0,0,0,12,0,"#00ff00",0,0];
-let array_task_vide = ["--------",0 ,1,0,0,0,0,0,0,"#4488EE",0,0];
+let array_one_task1 = ["STUDIES/Engineering phase",0 ,1 ,0,0,0,1,0,0,"#4488EE",0,0,0,0,0,0];
+let array_one_task2 = ["mechanical studies"   ,0 ,9 ,0,0,3,0,0,0,"#4488EE",0,0,0,0,0,0];
+let array_one_task3 = ["electrical studies"   ,13,10 ,-3,0,4,0,0,0,"#4488EE",0,0,0,0,0,0];
+let array_one_task4 = ["automation studies"   ,24,6  , 0,0,5,0,0,0,"#4488EE",0,0,0,0,0,0];
+let array_one_task5 = ["informatique studies" ,33,15 ,-4,0,6,0,0,0,"#4488EE",0,0,0,0,0,0];
+let array_one_task6 = ["Studies acceptance"   ,50,1  , 0,1,7,0,0,0,"#4488EE",0,0,0,0,0,0];
+let array_one_task7 = ["part supply"          ,53,10 , 0,0,8,0,0,0,"#4488EE",0,0,0,0,0,0];
+let array_one_task8 = [ "ASSEMBLYING phase"   ,68,0  , 0,0,9 ,1,0,0,"#4488EE",0,0,0,0,0,0];
+let array_one_task9 = ["Assembly / wiring"    ,68,12 , 0,0,10,0,7,0,"#81daf3",0,0,0,0,0,0];
+let array_one_task10 = ["I/O tests/Dry Tests",84,4  , 0,0,11,0,0,0,"#81daf3",0,0,0,0,0,0];
+let array_one_task11 = ["FAT"                 ,90,3  , 0,0,12,0,0,0,"#81daf3",0,0,0,0,0,0];
+let array_one_task12 =["SAT"                  ,95,1  , 0,1,0,0,0,0,"#81daf3",0,0,0,0,0,0];
+let array_one_task13 =["QI"                   ,96,3  , 0,0,0,0,12,0,"#00ff00",0,0,0,0,0,0];
+let array_one_task14 =["QO"                   ,96,2  , 0,0,0,0,12,0,"#00ff00",0,0,0,0,0,0];
+let array_one_task15 =["QP 2"                 ,96,5  , 0,0,0,0,12,0,"#00ff00",0,0,0,0,0,0];
+let array_task_vide = ["--------",0 ,1,0,0,0,0,0,0,"#4488EE",0,0,0,0,0,0];
 
-let array_parametre_environnement1=["","","","","","","","","","","",""];
-let array_parametre_environnement2=["","","","","","","","","","","",""];
+let array_parametre_environnement1=["","","","","","","","","","","","","","","",""];
+let array_parametre_environnement2=["","","","","","","","","","","","","","","",""];
 let array_tasks =[];
 let array_tasks_2 =[];
 let array_tasks_lecture_datas=[]; /* pour lecture de la DB */
@@ -209,21 +248,6 @@ let reponse_boite=false; /* retour de la boite de dialogue oui ou non */
 let choix_planning="J" /* J=jours S=Semaine M=mois */
 let duree_semaine=7;
 let duree_mois=30;
-
-/* variables pour lecture fichier Txt ou CSV */
-/* ======================================== */
-let brouillon_file=[];
-    brouillon_file.push([]);
-let brouillon_file1=[];
-    brouillon_file1.push([]);
-let charge_fichier_en_cours=false;
-let charge_fichier_txt_fini=false;
-let reader  = new FileReader();
-let file_name_csv=[];
-let load_fichier_en_cours=false;
-let laod_fichier_txt_fini=false;
-let abort_php=false;
-
 
 /* bouton sur IFRAME */
 /* ================= */
@@ -278,7 +302,6 @@ function optimisation_tasks(){
             reafecte_one_donnees(numero_de_la_tache_a_afficher-1)
         }
     }
-
 }
 
 /* lecture des parametres affichés */
@@ -547,33 +570,36 @@ function principal(){
             }
             /* ======== gestion des DB read and write =================== */
             /* ======== gestion lecture ecriture fichiers de sauvegarde=== */
-            //document.getElementById("Sauvefichier").onclick=appel_ajax_ecriture_fichier;
-            //document.getElementById("lecturefichier").onclick=appel_ajax_lecture_fichier;
-            document.getElementById("text31").addEventListener("click",AAEfichier);
-            document.getElementById("text32").addEventListener("click",AALfichier);
+            /* dans menu déroulant sauvegarde */
+            document.getElementById("text31").addEventListener("click",AAEfichier); // dans gestionwritef.js
+            document.getElementById("text32").addEventListener("click",AALfichier); // dans gestionreadf.js
             document.getElementById("text33").addEventListener("click",AAAbort);
             php_ecriture();
             php_lecture();
+            php_lecture_directory();
+            php_ecriture_fichier();
+            php_analyse_input_save_name();
             document.getElementById("text34").addEventListener("click",write_datas);
             onwrite_datas();
             document.getElementById("text35").addEventListener("click",read_datas_1);
             onread_datas();
+            document.getElementById("text44").addEventListener("click",save_csv);
+            document.getElementById("text45").addEventListener("click",active_inputfile_csv);
             /* ========================================================= */
             /* si pas de lecture ecriture sur DB alors affichage possible des datas sur Iframe ==== */
              if ((transfert_datas_fini ) && (!deplace_iframe)) {
-                /* lecture des BP */
+                /* dans menu déroulant sauvegarde "TOOLS"*/
                 document.getElementById("text41").addEventListener("click",read_xml);
                 document.getElementById("text42").addEventListener("click",affiche_donnes_diverses);
                 document.getElementById("text43").addEventListener("click",printCanvas);
+                /* lecture des BP */
                 document.querySelector('button[id="newproject"]').onclick=clear_project;
                 document.querySelector('button[id="display_datas"]').onclick=affiche_datas_iframe;
                 document.getElementById("drapeau_F").onclick=langue_Francaise;
                 document.getElementById("drapeau_A").onclick=langue_Anglaise;
-                document.getElementById("test_divers").onclick=lecture_donnees_DB; /* pour lecture des projets dans DB */
-                //document.getElementById("test_divers").onclick=printCanvas ;
-                document.getElementById("test_divers").onclick=save_csv;
+                document.getElementById("test_divers").onclick=liste_directory;
                 /* provisoire rend les BP invisibles */
-                inhibe_identity();
+                //inhibe_identity();
                 document.getElementById("page2").contentWindow.document.getElementById("bouton_Iframe").onclick=rajout_one_task;
                 document.getElementById("page2").contentWindow.document.getElementById("SET_start_tasks").onclick=set_tasks;
                 document.getElementById("page2").contentWindow.document.getElementById("Optimisation").onclick=optimisation_tasks;
@@ -600,8 +626,13 @@ function principal(){
                 listen_mouse_on_canvas(graphe,drawing_area);
                 listen_mouse_on_page1();
                 listen_keypress ();
-                lecture_fichier_text();
+                analyse_file_csv();
                 onread_datas_xml();
+                /* lecture BP sur fenetre load-save fichier sur serveur */
+                document.getElementById("button_name").onclick=demande_recherche_directory_1; // dans fichier gestionDirectoryPhp.js
+                document.getElementById("button_name1").onclick=demande_recherche_directory_2; // dans fichier gestionDirectoryPhp.js
+                document.getElementById("button_name2").onclick=ALfichier_txt1; // dans fichier gestionreadf.js
+                document.getElementById("button_name3").onclick=ecriture_fichier_en_php; // dans fichier gestionwritef.js
             }
         }
     }

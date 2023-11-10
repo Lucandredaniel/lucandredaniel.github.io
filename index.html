@@ -18,6 +18,7 @@
       <script type="text/javascript" src="gestionLangue.js"> </script>
       <script type="text/javascript" src="gestionFile.js"> </script>
       <script type="text/javascript" src="gestionAjax.js"> </script>
+      <script type="text/javascript" src="gestiondirectoryPhp.js"> </script>
     </head>
     <body>
         <header id="entete_page1" class="entete"> Chart </header>
@@ -38,6 +39,8 @@
             <a id="text43" href="#">Print</a>
             <a id="text41" href="#">Help</a>
             <a id="text42" href="#">About</a>
+            <a id="text44" href="#">export file</a>
+            <a id="text45" href="#">import file</a>
           </div>
         </div>
         <!-- =========== donnees a gauche de l'ecran ============= -->
@@ -96,29 +99,81 @@
             </div>
             <div id="progressnum">0</div>
         </div>
-        <!--<div id="dialogoverlay"></div> -->
+        <!-- ========= fenetre box pour defaut ou autre information =========== -->
         <div id="dialogbox" class="slit-in-vertical">
             <div>
                 <div id="dialogboxhead"></div>
                 <div id="dialogboxbody"></div>
                 <div id="dialogboxfoot"></div>
+             </div>
+        </div>
+        <!-- ========= fenetre box pour lecture ecriture ficjier =========== -->
+        <div id="dialogbox1" class="slit-in-vertical">
+            <div>
+                <div id="dialogboxhead1"></div>
+                <div id="dialogboxbody1"></div>
+                <div id="dialogboxfoot1"></div>
+                <!-- ========= demande nom societe =========== -->
+                <div class="container1">
+                  <div class="name-style-input">
+                    <input id="input_name" type="text" placeholder="society name?"> </input>
+                    <button id="button_name" type="submit"> ></input>
+                  </div>
+                </div>
+                <!-- ========= demande your name =========== -->
+                <div class="container2" >
+                  <div class="name-style-input1">
+                    <input id="input_name1" type="text" placeholder="your name?"> </input>
+                    <button id="button_name1" type="submit"> ></input>
+                  </div>
+                </div>
+                <!-- ========= demande project name lecture ===== -->
+                <div class="container3" >
+                  <div class="name-style-input2">
+                    <input id="input_name2" type="text" placeholder="project name?"> </input>
+                    <button id="button_name2" type="submit"> ></input>
+                  </div>
+                </div>
+                <!-- ========= demande project name ecriture ======= -->
+                <div class="container4" >
+                  <div class="name-style-input3">
+                    <input id="input_name3" type="text" placeholder="project name?"> </input>
+                    <button id="button_name3" type="submit"> ></input>
+                  </div>
+                </div>
+                 <!-- ========= demande confirmation =========== -->
+                <div class="container5" >
+                  <div class="confirmation">
+                    <label id="text50" for="validation">company creation confirmation</label>
+                    <button id="validation" class="pure-material-button-ok" onclick="validation()" >OK </button>
+                    <button class="pure-material-button-Nok" onclick="non_validation()">NOK</button>
+                  </div>
+                </div>
+                 <!-- ========= affichage repertoire =========== -->
+                <div class="file-content">
+                </div>
+
             </div>
         </div>
         <!-- suite utilisée uniquement pour essai et mise au point -->
+        <!-- ===================================================== -->
         <label> <input type="text" id="message1" value="" size="100"> </label></p>
         <label> <input type="text" id="message2" value="" size="100"> </label></p>
         <button id="essai_file" >lire fichier texte </button>
         <button id="test_divers" >test_divers </button>
-        <input type="file" name="inputfile" id="inputfile" accept=".txt, .csv" <br>
+        <input type="file" name="inputfile" id="inputfile" accept=".txt, .csv" onchange="lecture_fichier_text(this.files[0])" <br>
         <pre id="output"></pre>
         <pre id="output2"></pre>
         <!-- Entête de l'IFRAME utilisé pour déplacement de l'Iframe uniquement -->
+        <!-- ================================================================== -->
         <div id="entete_iframe" > Set tasks </div>
         <!-- ==== ouverture du canvas pour graphique ========== -->
+        <!-- ================================================== -->
         <canvas class="diagramme" id = "schema" height = "500" width = "1500" style="border:1px solid">
             <p>Votre navigateur ne supporte pas la balise canvas</p>
         </canvas>
         <!-- =========== ouverture de l'Iframe pour affichage des données du graphique =========== -->
-          <iframe title="myFrame1" id="page2" src="canevas2.html" name="iframe_datas" hidden="hidden"></iframe>
+        <!-- ===================================================================================== -->
+         <iframe title="myFrame1" id="page2" src="canevas2.html" name="iframe_datas" hidden="hidden"></iframe>
      </body>
 </html>

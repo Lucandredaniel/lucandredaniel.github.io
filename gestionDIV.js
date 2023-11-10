@@ -112,6 +112,14 @@ function CustomConfirm_2(message,title){
     document.getElementById('dialogboxfoot').innerHTML = '<button class="pure-material-button-ok active" onclick="ALfichier_txt()">OK</button> <button class="pure-material-button-Nok active" onclick="Bpok()">NOK</button>';
 }
 
+/* confirmation pour creation societe */
+function validation(){
+    validation_de_la_creation_societe=1;
+}
+function non_validation(){
+    validation_de_la_creation_societe=2;
+}
+
 /* utiliser pour clear le projet en cours */
 function CustomConfirm(message,title){
     // document.body.innerHTML = document.body.innerHTML + '<div id="dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>';
@@ -238,6 +246,27 @@ function Bpok() {
     document.getElementById('dialogbox').style.display = "none";
     //document.getElementById('dialogoverlay').style.display = "none";
 }
+/* laod ou save fichier sur serveur */
+function cherche_fichier_serveur(message,title){
+    // document.body.innerHTML = document.body.innerHTML + '<div id="dialogoverlay"></div><div id="dialogbox" class="slit-in-vertical"><div><div id="dialogboxhead"></div><div id="dialogboxbody"></div><div id="dialogboxfoot"></div></div></div>';
+    let dialogbox = document.getElementById('dialogbox1');
+    let winH = window.innerHeight;
+    //dialogoverlay.style.height = winH+"px";
+    dialogbox.style.position="absolute";
+    dialogbox.style.top = "120px";
+    dialogbox.style.left = "500px";
+    dialogbox.style.height="200px"
+    dialogbox.style.width="1000px"
+    dialogbox.style.display = "block";
+    //document.getElementById('dialogboxhead').style.display = 'block';
+    if(typeof title === 'undefined') {
+      document.getElementById('dialogboxhead1').style.display = 'none';
+    } else {
+      document.getElementById('dialogboxhead1').innerHTML = '<i class="fa fa-exclamation-circle" aria-hidden="true"></i> '+ title;
+    }
+    document.getElementById('dialogboxbody1').innerHTML = message;
+    document.getElementById('dialogboxfoot1').innerHTML = '<button class="pure-material-button-ok active" onclick="abort_lecture_fichier()">abort</button>';
+}
 
 function save_image_png(graphe,drawing_area){
       save_img_canvas.addEventListener('click', function(e) {
@@ -255,7 +284,8 @@ function affiche_progression(){
   let indicator = document.getElementById("indicator");
   let visu= actualprogress*multiplicateur;
   let pwidget=document.getElementById("pwidget");
-  if (((etape_read!=0)||(etape_write!=0))&&(actualprogress>0)){
+  message_divers(String(actualprogress),String(etape_read)+" : "+String(etape_write))
+  if ((etape_read!=0)||(etape_write!=0)||(actualprogress>0)){
     pwidget.style.display = "block";
   }else{
     pwidget.style.display = "none";
@@ -273,7 +303,7 @@ function affiche_donnes_diverses() { /* fonction qui affiche des donnes diverses
     //alert(array_tasks_display_save);
 }
 
-function message(text_message1,text_message2){
+function message_divers(text_message1,text_message2){
     if (text_message1!= "" )  {
         area_draw = document.getElementById("message1");
         area_draw.value=text_message1 ;

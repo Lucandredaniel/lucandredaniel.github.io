@@ -74,10 +74,9 @@ function creation_base_donnees_complete(){
    base_donnees_complete[pos_index][6] = [couleur_fond_semaine];
    base_donnees_complete[pos_index][7] = [nombre_jour_travaille];
    base_donnees_complete[pos_index][8] = [choix_planning];
-   base_donnees_complete[pos_index][9] = ["para"];
+   base_donnees_complete[pos_index][9] = [name_db];
    base_donnees_complete[pos_index][10] = ["para"];
    base_donnees_complete[pos_index][11] = ["para"];
-   etape_write=2;
 }
 
 function delete_datas_base(){
@@ -244,7 +243,6 @@ function attente_fin_transaction() { /* etape 7 */
 }
 
 function fermeture_db() {
-    message(db,"essai")
     db.close();
 }
 
@@ -290,6 +288,7 @@ function onwrite_datas() {
                 break;
             case 1 :
                 creation_base_donnees_complete();
+                etape_write=2;
                 actualprogress=0; /* pour visu barre graph */
                 multiplicateur=4,1;
                 break;
@@ -343,10 +342,10 @@ function onwrite_datas() {
                 etape_write=9;
                 break;
             case 9 :
+                etape_write=0;
                 actualprogress=0;
                 affiche_progression();
                 save_donnees_base=false;
-                etape_write=0;
                 fermeture_db();
                 break;
             case 99 :
@@ -450,7 +449,7 @@ function onread_datas() {
                     fermeture_db();
                 break;
             case 7 :
-                    etape_read=7;
+                    etape_read=0;
                     transfert_datas_fini=true;
                     iframe_hidden=true;
                     affiche_datas_iframe();

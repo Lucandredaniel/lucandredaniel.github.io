@@ -158,7 +158,7 @@ function read_one_task(int_indice){ /* lecture donnees dans l iframe */
     variable1 = document.getElementById("page2").contentWindow.document.getElementById(idvar);
     let instring=variable1.value;
     // let outString = instring.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
-    let outString = instring.replace(/[`~!@#$%^&*()_|+=?;:'",.<>\{\}\[\]\\]/gi, '');
+    let outString = instring.replace(/[`~!@#$%^&*()_|+=?;'",.<>\{\}\[\]\\]/gi, '');
     variable1.value=outString;
     array_tasks[int_indice-1][0]=String(outString);
     idvar="start_task"+String(int_indice);

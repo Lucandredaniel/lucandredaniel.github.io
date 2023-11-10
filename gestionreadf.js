@@ -1,5 +1,7 @@
-/* lancement fonction en automatique de façon repetitive */
-/* ===================================================== */
+/* =============================================== */
+/* Appel PHP pour lecture fichier .TXT sur serveur */
+/* appel le fichier "GestionLfichier.php"          */
+/* =============================================== */
 
 function conversion_tableau(reponse_php_int){
     /* recopy string recu dans tableau par tache */
@@ -10,7 +12,7 @@ function conversion_tableau(reponse_php_int){
     //let recherche_texte="finlla2";
     let word_restant=String(reponse_php_int);
     tableau_de_reception=[];
-    // separe le ligne via les separateurs <DIV> et </DIV>
+    // separe les lignes via les separateurs <DIV> et </DIV>
     // enleve le premier <DIV> de la string
     word_restant=word_restant.slice(index_DIV,word_restant.length-index_DIV);
     while (!analyse_fini){
@@ -25,6 +27,9 @@ function conversion_tableau(reponse_php_int){
             j++;
         }
     }
+    decompose_datas(tableau_de_reception);
+}
+function decompose_datas(tableau_de_reception){
     /* decomposition des donnees de chaque tache */
     /* ==========================================*/
     let index_virgule=0;
@@ -82,28 +87,67 @@ function conversion_tableau(reponse_php_int){
 }
 
 function AALfichier(){
-        if (!onload_donnees_base){ /* verifie si chargement non en cours */
-            if (langue==1){
-                titre="READ Project";
-                message_avert="Action witch reset all datas";
-            } else {
-                titre="Lecture Projet";
-                message_avert="Action qui réinitialise toutes les données";
-            }
-            CustomConfirm_2(message_avert,titre)
+    if (!onload_donnees_base){ /* verifie si chargement non en cours */
+        abort_lecture_fichier(); // enleve la box précédente
+        demande_ecriture_fichier=false;
+        document.getElementById('dialogbox1').style.display = "block";
+        document.getElementById('dialogboxhead1').style.color="white";
+        if (langue==1){
+            titre="READ Project - Action witch reset all datas";
+            message_avert="Action witch reset all datas";
+            document.getElementById('input_name').placeholder="society name?";
+            document.getElementById('input_name1').placeholder="your name?";
+            document.getElementById('input_name2').placeholder="project name?";
+            document.getElementById('input_name3').placeholder="project name?";
+        } else {
+            titre="Lecture Projet - Action qui réinitialise toutes les données";
+            message_avert="Action qui réinitialise toutes les données";
+            document.getElementById('input_name').placeholder="nom société?";
+            document.getElementById('input_name1').placeholder="votre nom?";
+            document.getElementById('input_name2').placeholder="nom projet?";
+            document.getElementById('input_name3').placeholder="nom projet?";
+        }
+        cherche_fichier_serveur(message_avert,titre);
+    }
+}
+
+function ALfichier_txt1(){
+    let nom_fichier=document.getElementById('input_name2').value;
+    let dir1=document.getElementById('input_name').value;
+    let dir2=document.getElementById('input_name1').value;
+    // vérifie si fichier existant
+    let erreur=true;
+    for (let i = 0; i < tableau_directory.length; i++) {
+        if (tableau_directory[i].includes(nom_fichier)){
+            erreur=false;
         }
     }
-
-function ALfichier_txt(){
-    document.getElementById('dialogbox').style.display = "none";
-    ensemble_tableau=""
-    let tableau_int=""
-    echange_datas_lecture=true;
-    etape_read_php=0;
+    if (!erreur){
+        nom_fichier_serveur=dir1+"\\"+dir2+"\\"+nom_fichier;
+        ensemble_tableau=""
+        let tableau_int=""
+        echange_datas_lecture=true;
+        etape_read_php=0;
+        if (langue==2) {
+            message_erreur="fichier trouvé";
+        }else {
+            message_erreur="file found";
+        }
+        document.getElementById('dialogboxhead1').style.color="white";
+        document.getElementById('dialogboxhead1').innerHTML=message_erreur;
+    }else {
+        if (langue==2) {
+            message_erreur="fichier inexistant";
+        }else {
+            message_erreur="file not found";
+        }
+        document.getElementById('dialogboxhead1').style.color="red";
+        document.getElementById('dialogboxhead1').innerHTML=message_erreur;
+    }
 }
 
 function open_lecture_php() {
-  let parametres="GestionLfichier.php/?name="+name_db+".txt";
+  let parametres="GestionLfichier.php/?name="+nom_fichier_serveur+".txt";
   xhttp = new XMLHttpRequest();
   xhttp.timeout = 15000; // 5 seconds
   xhttp.onload = function() {myFunction_lecture(this);}
@@ -134,7 +178,7 @@ function php_lecture() {
          switch (etape_read_php) {
             case 0 :
                 if (echange_datas_lecture) {
-                    if (name_db.length<4) {
+                    if (nom_fichier_serveur.length<4) {
                         CustomAlert("name project > 4 characters","project error");
                         etape_read_php=0;
                         echange_datas_lecture= false;
@@ -151,12 +195,7 @@ function php_lecture() {
                     etape_read_php=2;
                     actualprogress=0;
                     multiplicateur=10;
-                    iframe_hidden=false;
-                    affiche_datas_iframe();
-                    remove_datas_iframe();
-                    array_tasks_lecture_datas=[];
-                    array_tasks=[];
-                    array_tasks[0]=[];
+
                     transfert_datas_fini=false;
                 } catch (e) {
                     message_erreur=" fichier impossible à lire"+e.message;
@@ -169,7 +208,7 @@ function php_lecture() {
                         // attente car transaction en cours
                         actualprogress+=1; /* pour visu barre graph */
                         affiche_progression();
-                        if (progression>1){progression=0}
+                        //if (progression>1){progression=0}
                         if (abort_php){
                             xhttp.abort();
                             abort_php=false;
@@ -219,7 +258,14 @@ function php_lecture() {
                                     }
                                     etape_read_php=99;
                                 } else {
+                                    iframe_hidden=false;
+                                    affiche_datas_iframe();
+                                    remove_datas_iframe();
+                                    array_tasks_lecture_datas=[];
+                                    array_tasks=[];
+                                    array_tasks[0]=[];
                                     conversion_tableau(reponse_php);
+                                    document.getElementById('file_name_db').value=document.getElementById('input_name2').value;
                                     recopy_array_2D();
                                     ask_write_parameters=true;
                                     message_erreur="";

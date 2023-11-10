@@ -201,6 +201,14 @@ function init_langue(){
     array_langue[35].push("text24");
     array_langue[35].push("months");
     array_langue[35].push("mois");
+    array_langue.push([]); /* ================= */
+    array_langue[36].push("text44");
+    array_langue[36].push("export file");
+    array_langue[36].push("exporte CSV");
+    array_langue.push([]); /* ================= */
+    array_langue[37].push("text45");
+    array_langue[37].push("import file");
+    array_langue[37].push("importe CSV");
     /*============================ texte dans Iframe ==================*/
     array_langue_iframe.push([]); /* ================= */
     array_langue_iframe[0].push("entete_iframe");

@@ -47,4 +47,12 @@
     <FRANCAIS>  * lecture donnees du serveur (pour plusieurs utilisateurs) :  BP charge/serveur</FRANCAIS>
     <ANGLAIS>   * Server datas load : BP load/server </ANGLAIS>
 </TACHE>
+    <TACHE>
+    <FRANCAIS>  ------------------------</FRANCAIS>
+    <ANGLAIS>   ---------------</ANGLAIS>
+</TACHE>
+<TACHE>
+    <FRANCAIS>  * Touche "esc" affiche ou non les donnees du diagramme</FRANCAIS>
+    <ANGLAIS>   * Touch "esc" display or not, chart datas</ANGLAIS>
+</TACHE>
 </CATALOG>
